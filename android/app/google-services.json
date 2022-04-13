@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "982846620366",
+    "project_id": "rolffit-e5676",
+    "storage_bucket": "rolffit-e5676.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982846620366:android:64a99b2b76b020f649c69f",
+        "android_client_info": {
+          "package_name": "com.rolffit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982846620366-ruah2ibtqp8d33ontrt0qai4q4ju1av1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsEVrZyR9SoSrrBfCO-YGriWxCH2qP22Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982846620366-ruah2ibtqp8d33ontrt0qai4q4ju1av1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
