@@ -7,6 +7,7 @@ import {navigationRef} from './Navigator/NavigationService';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Entypo} from '@native-base/icons';
 import {Icon} from 'native-base';
+import {useState} from 'react';
 
 const Stack = createNativeStackNavigator();
 function HomeScreen() {
