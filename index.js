@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {APP_STATE, NOTIFDATA} from './src/constant/AppConstant';
 import {NotifHandler} from './src/utility/NotifHandler';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import codePush from 'react-native-code-push';
 
 if (__DEV__) {
   import('./ReactotronConfig');
@@ -76,4 +77,9 @@ PushNotification.configure({
   requestPermissions: true,
 });
 
-AppRegistry.registerComponent(appName, () => App);
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+};
+const Init = codePush(codePushOptions)(App);
+
+AppRegistry.registerComponent(appName, () => Init);

@@ -1,13 +1,14 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {navigationRef} from './Navigator/NavigationService';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Entypo} from '@native-base/icons';
-import {Icon} from 'native-base';
+import {Heading, Icon} from 'native-base';
 import {useState} from 'react';
+import Colors from './constant/Colors';
 
 const Stack = createNativeStackNavigator();
 function HomeScreen() {
@@ -54,7 +55,11 @@ function Appnavigator() {
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Home"
-            component={MyTabs}
+            component={() => (
+              <View style={styles.colCenter}>
+                <Heading size="3xl">Coming soon</Heading>
+              </View>
+            )}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
@@ -64,3 +69,14 @@ function Appnavigator() {
 }
 
 export default Appnavigator;
+
+const styles = StyleSheet.create({
+  colCenter: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: Colors.white,
+  },
+});
