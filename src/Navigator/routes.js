@@ -3,4 +3,5 @@ export default {
   Signin: 'Signin',
   Settings: 'Settings',
   Booking: 'Booking',
+  Options: 'Options',
 };

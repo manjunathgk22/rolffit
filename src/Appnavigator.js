@@ -88,17 +88,20 @@ function Appnavigator() {
           navigationRef.current = ref;
         }}>
         <Stack.Navigator
-          initialRouteName={
-            globalStore.loginData && false ? 'HomeScreen' : 'Signin'
-          }>
+          initialRouteName={globalStore.loginData ? 'HomeScreen' : 'Signin'}>
           <Stack.Screen
-            name="HomeScreen"
+            name={routes.HomeScreen}
             component={HomeScreen}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Signin"
+            name={routes.Signin}
             component={Signin}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.Options}
+            component={Options}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

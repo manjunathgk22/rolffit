@@ -42,14 +42,16 @@ export function Signin({navigation}) {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       printLog(userInfo.user);
+
       const res = await createUser({
         username: userInfo.user?.email,
         first_name: userInfo.user?.name,
         photo_url: userInfo.user?.photo,
       });
+      printLog('qwqwqw', res);
       if (res) {
         storeData({key: LOGIN_DATA, value: res});
-        globalDispatch(setLoginData(userInfo.user));
+        globalDispatch(setLoginData(res));
         await initApiClients();
         NavigationService.replace(routes.HomeScreen);
       } else {
@@ -72,22 +74,13 @@ export function Signin({navigation}) {
       }
     } finally {
       setsigninDisabled(false);
-      errorToast();
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* <NeuView width={300}> */}
       <RfBold mb={6}>Login with official Google account</RfBold>
-      {/* </NeuView> */}
-      {/* <GoogleSigninButton
-        style={{width: 192, height: 48}}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={signIn}
-        disabled={signinDisabled}
-      /> */}
+
       <NeuButton
         width={230}
         height={50}
@@ -96,8 +89,8 @@ export function Signin({navigation}) {
         borderRadius={16}
         flexDirection={'row'}
         style={{flexDirection: 'row'}}>
-        <Icon size={'sm'} color="rf.dark" as={AntDesign} name="google" />
-        <Text ml={2}>Sign in with Google</Text>
+        <Icon size={'md'} color="rf.dark" as={AntDesign} name="google" />
+        <RfText ml={2}> Sign in with Google</RfText>
       </NeuButton>
     </View>
   );
