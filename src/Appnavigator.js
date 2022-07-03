@@ -1,30 +1,23 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Text, View, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {navigationRef} from './Navigator/NavigationService';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Entypo} from '@native-base/icons';
+import {Entypo, Ionicons, AntDesign} from '@native-base/icons';
 import {Heading, Icon} from 'native-base';
-import {useState} from 'react';
 import Colors from './constant/Colors';
+import HomeScreen from './pages/Home/Home';
+import {Signin} from './pages/Signin/Signin';
+import {GlobalContext} from './ContextApi/GlobalContextProvider';
+import {printLog} from './utility/AppUtility';
+import Options from './pages/Options/Options';
+import routes from './Navigator/routes';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Stack = createNativeStackNavigator();
-function HomeScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Settings</Text>
-    </View>
-  );
-}
+
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -32,34 +25,80 @@ function MyTabs() {
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
-          return <Icon as={Entypo} name="aircraft" />;
+          if (route.name === routes.Booking) {
+            if (focused) {
+              return (
+                <Icon
+                  size={'sm'}
+                  color="primary.700"
+                  as={Entypo}
+                  name="calendar"
+                />
+              );
+            } else {
+              return <Icon size={'sm'} as={AntDesign} name="calendar" />;
+            }
+          }
+          if (focused) {
+            return (
+              <Icon
+                size={'sm'}
+                color="primary.700"
+                as={Ionicons}
+                name="options"
+              />
+            );
+          } else {
+            return <Icon size={'sm'} as={Ionicons} name="options" />;
+          }
         },
       })}>
       <Tab.Screen
-        name="Home111"
+        name={routes.Booking}
         component={HomeScreen}
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name={routes.Settings}
+        component={Options}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
   );
 }
+const Drawer = createDrawerNavigator();
+
+const MyDrawer = () => {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={() => <Text>qqqq</Text>}>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Notifications" component={Options} />
+    </Drawer.Navigator>
+  );
+};
+
 function Appnavigator() {
+  const {globalStore, globalDispatch} = useContext(GlobalContext);
   return (
     <SafeAreaProvider>
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator initialRouteName="Home">
+      <NavigationContainer
+        ref={ref => {
+          navigationRef.current = ref;
+        }}>
+        <Stack.Navigator
+          initialRouteName={
+            globalStore.loginData && false ? 'HomeScreen' : 'Signin'
+          }>
           <Stack.Screen
-            name="Home"
-            component={() => (
-              <View style={styles.colCenter}>
-                <Heading size="3xl">Coming soon</Heading>
-              </View>
-            )}
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Signin"
+            component={Signin}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

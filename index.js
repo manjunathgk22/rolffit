@@ -13,6 +13,7 @@ import {APP_STATE, NOTIFDATA} from './src/constant/AppConstant';
 import {NotifHandler} from './src/utility/NotifHandler';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import codePush from 'react-native-code-push';
+import 'react-native-gesture-handler';
 
 if (__DEV__) {
   import('./ReactotronConfig');
@@ -20,6 +21,8 @@ if (__DEV__) {
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
+  largeIcon: 'ic_launcher_round',
+  smallIcon: 'ic_notification_foreground',
   foreground: true,
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {

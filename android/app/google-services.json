@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "982846620366-2glsmmcip09q153i1koo9kjt8a6rf64u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rolffit",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "982846620366-jh09se4v7758862elmp5hj5iqpe3ujg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rolffit",
+            "certificate_hash": "2a79b3be84e63667e01e0a5e81b5e221152e53c5"
+          }
+        },
+        {
           "client_id": "982846620366-ruah2ibtqp8d33ontrt0qai4q4ju1av1.apps.googleusercontent.com",
           "client_type": 3
         }

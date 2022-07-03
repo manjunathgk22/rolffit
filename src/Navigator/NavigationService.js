@@ -1,5 +1,7 @@
 import {StackActions, CommonActions} from '@react-navigation/native';
 
+import {_rootStore} from '../App';
+
 import * as React from 'react';
 
 /**
@@ -25,7 +27,7 @@ function navigate(routeName, params) {
   //         params
   //     })
   // );
-  navigationRef.current?.navigate(routeName, params, Math.random() * 10000);
+  navigationRef.current?.navigate(routeName, params);
 }
 const replace = (routeName, params) => {
   navigationRef.current?.dispatch(StackActions.replace(routeName, params));
@@ -44,6 +46,10 @@ function pop() {
  * @param params Route parameters.
  */
 function navigateAndReset(routeName, params = {}, action = {}) {
+  // if(!_rootStore.handleHirePlan(routeName, params, action, navigator)){
+  //     return
+  // }
+
   try {
     const resetAction = CommonActions.reset({
       index: 0,

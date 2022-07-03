@@ -9,57 +9,76 @@
 
 import React, {Fragment} from 'react';
 import {StyleSheet} from 'react-native';
-import {Box, NativeBaseProvider, StatusBar, Image, View} from 'native-base';
+import {Box, NativeBaseProvider, StatusBar, extendTheme} from 'native-base';
 import {Center, HStack, Text, Spacer} from 'native-base';
 import Appnavigator from './src/Appnavigator';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useEffect, useState} from 'react';
 import Colors from './src/constant/Colors';
+import GlobalProvider from './src/ContextApi/GlobalContextProvider';
+import SplashScreen from './src/pages/SplashScreen/SplashScreen';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+const theme = extendTheme({
+  colors: {
+    rf: {
+      dark: '#101010',
+      bg: '#eef2f9',
+      error: '#e3324a',
+    },
+  },
+  fontConfig: {
+    geomanist: {
+      400: {
+        normal: 'Geomanist-Regular',
+      },
+      600: {
+        normal: 'Geomanist-Medium',
+      },
+      700: {
+        normal: 'Geomanist-Bold',
+      },
+    },
+    comfortaa: {
+      300: {
+        normal: 'Comfortaa-Thin',
+      },
+      400: {
+        normal: 'Comfortaa-Regular',
+      },
+      600: {
+        normal: 'Comfortaa-Bold',
+      },
+    },
+  },
+
+  // Make sure values below matches any of the keys in `fontConfig`
+  fonts: {
+    geomanist: 'geomanist',
+    comfortaa: 'comfortaa',
+  },
+});
+GoogleSignin.configure();
 const App = () => {
-  const [render, setrender] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
-      setrender(true);
-    }, 4000);
+    GoogleSignin.configure();
   }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <NativeBaseProvider>
-        <StatusBar
-          translucent={true}
-          animated={true}
-          backgroundColor={Colors.dark}
-          barStyle="light-content"
-          hidden={false}
-        />
-        {!render ? (
-          <View style={styles.colCenter}>
-            <Image
-              resizeMode={'contain'}
-              style={{width: 300, height: 300}}
-              source={require('./src/assets/images/logo_animation_black.gif')}
-              alt="logo"
-            />
-          </View>
-        ) : (
-          <Fragment>
-            <Appnavigator />
-          </Fragment>
-        )}
+      <NativeBaseProvider theme={theme}>
+        <GlobalProvider>
+          <StatusBar
+            translucent={true}
+            animated={true}
+            backgroundColor={Colors.dark}
+            barStyle="light-content"
+            hidden={false}
+          />
+          <SplashScreen />
+        </GlobalProvider>
       </NativeBaseProvider>
     </SafeAreaView>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  colCenter: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    backgroundColor: Colors.white,
-  },
-});

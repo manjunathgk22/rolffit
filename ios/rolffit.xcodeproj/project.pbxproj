@@ -30,6 +30,12 @@
 		2912886F5C3B46A3866726E8 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 264B455ADD1D48E1AC1E1546 /* Octicons.ttf */; };
 		C36399F3912C456DA6A6628B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B78C35A0D74CFF9EC57BF4 /* SimpleLineIcons.ttf */; };
 		C5C3452B39B049A580686B5C /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 813F37BD4B544F5CA2EF43CB /* Zocial.ttf */; };
+		B369E619E0B1473D8EB740C3 /* Geomanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFF63D13556C4F88959B48DF /* Geomanist-Bold.ttf */; };
+		362FF508DC4B4E569AF1C47C /* Geomanist-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 428F7A1768F74E0D896C8125 /* Geomanist-Medium.ttf */; };
+		15E67B2F4D9F440380FD93F0 /* Geomanist-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA9FA012ABD24F7AAE19AC93 /* Geomanist-Regular.ttf */; };
+		B2F4AB4F1E03454792ADE2E4 /* Comfortaa-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE44265DB8E84522A032C031 /* Comfortaa-Bold.ttf */; };
+		095758477F964D438A1A5FFD /* Comfortaa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3602B7E89DCC45AA9E188A9C /* Comfortaa-Regular.ttf */; };
+		62A7586DE0204F1F8DDCD6AC /* Comfortaa-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 771B73AC0ECC47FAB8721DAB /* Comfortaa-Thin.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +82,12 @@
 		264B455ADD1D48E1AC1E1546 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		89B78C35A0D74CFF9EC57BF4 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		813F37BD4B544F5CA2EF43CB /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BFF63D13556C4F88959B48DF /* Geomanist-Bold.ttf */ = {isa = PBXFileReference; name = "Geomanist-Bold.ttf"; path = "../src/assets/fonts/Geomanist-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		428F7A1768F74E0D896C8125 /* Geomanist-Medium.ttf */ = {isa = PBXFileReference; name = "Geomanist-Medium.ttf"; path = "../src/assets/fonts/Geomanist-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FA9FA012ABD24F7AAE19AC93 /* Geomanist-Regular.ttf */ = {isa = PBXFileReference; name = "Geomanist-Regular.ttf"; path = "../src/assets/fonts/Geomanist-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BE44265DB8E84522A032C031 /* Comfortaa-Bold.ttf */ = {isa = PBXFileReference; name = "Comfortaa-Bold.ttf"; path = "../src/assets/fonts/Comfortaa-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3602B7E89DCC45AA9E188A9C /* Comfortaa-Regular.ttf */ = {isa = PBXFileReference; name = "Comfortaa-Regular.ttf"; path = "../src/assets/fonts/Comfortaa-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		771B73AC0ECC47FAB8721DAB /* Comfortaa-Thin.ttf */ = {isa = PBXFileReference; name = "Comfortaa-Thin.ttf"; path = "../src/assets/fonts/Comfortaa-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +212,12 @@
 				264B455ADD1D48E1AC1E1546 /* Octicons.ttf */,
 				89B78C35A0D74CFF9EC57BF4 /* SimpleLineIcons.ttf */,
 				813F37BD4B544F5CA2EF43CB /* Zocial.ttf */,
+				BFF63D13556C4F88959B48DF /* Geomanist-Bold.ttf */,
+				428F7A1768F74E0D896C8125 /* Geomanist-Medium.ttf */,
+				FA9FA012ABD24F7AAE19AC93 /* Geomanist-Regular.ttf */,
+				BE44265DB8E84522A032C031 /* Comfortaa-Bold.ttf */,
+				3602B7E89DCC45AA9E188A9C /* Comfortaa-Regular.ttf */,
+				771B73AC0ECC47FAB8721DAB /* Comfortaa-Thin.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -318,6 +336,12 @@
 				2912886F5C3B46A3866726E8 /* Octicons.ttf in Resources */,
 				C36399F3912C456DA6A6628B /* SimpleLineIcons.ttf in Resources */,
 				C5C3452B39B049A580686B5C /* Zocial.ttf in Resources */,
+				B369E619E0B1473D8EB740C3 /* Geomanist-Bold.ttf in Resources */,
+				362FF508DC4B4E569AF1C47C /* Geomanist-Medium.ttf in Resources */,
+				15E67B2F4D9F440380FD93F0 /* Geomanist-Regular.ttf in Resources */,
+				B2F4AB4F1E03454792ADE2E4 /* Comfortaa-Bold.ttf in Resources */,
+				095758477F964D438A1A5FFD /* Comfortaa-Regular.ttf in Resources */,
+				62A7586DE0204F1F8DDCD6AC /* Comfortaa-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
