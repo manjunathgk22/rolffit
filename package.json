@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "adb": "adb reverse tcp:9090 tcp:9090",
+    "adb": "adb reverse tcp:8097 tcp:8097",
     "test": "jest",
     "lint": "eslint .",
     "bundle-release": "cd android/ && ./gradlew clean && ./gradlew bundleRelease",
@@ -46,6 +46,7 @@
     "react-native-snap-carousel": "3.9.1",
     "react-native-svg": "12.3.0",
     "react-native-vector-icons": "^9.1.0",
+    "react-native-webview": "11.22.4",
     "reactotron-react-native": "^5.0.1"
   },
   "resolutions": {

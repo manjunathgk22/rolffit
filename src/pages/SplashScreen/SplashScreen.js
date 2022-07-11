@@ -32,14 +32,12 @@ function SplashScreen() {
 
   return !render ? (
     <View style={styles.colCenter}>
-      <NeuView color={Colors.bg} height={350} width={350} borderRadius={16}>
-        <Image
-          resizeMode={'contain'}
-          style={{width: '200%', height: '200%'}}
-          source={require('../../assets/images/logo_animation_black.gif')}
-          alt="logo"
-        />
-      </NeuView>
+      <Image
+        resizeMode={'contain'}
+        style={{width: '200%', height: '200%'}}
+        source={require('../../assets/images/logo_animation_black.gif')}
+        alt="logo"
+      />
     </View>
   ) : (
     <Fragment>

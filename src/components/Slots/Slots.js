@@ -1,29 +1,120 @@
 /* eslint-disable react-native/no-inline-styles */
-import {HStack, Text, View, VStack} from 'native-base';
-import React from 'react';
+import {Center, HStack, Text, View, VStack} from 'native-base';
+import React, {useContext, useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {windowHeight} from '../../constant/AppConstant';
+import Colors from '../../constant/Colors';
 import NeuButton from '../../HOC/NeuView/NeuButton';
+import {HomeContext} from '../../pages/Home/ContextApi/HomeProvider';
+import {tConvert} from '../../utility/AppUtility';
+import RfBold from '../RfBold/RfBold';
 import RfText from '../RfText/RfText';
 
-const Slots = () => {
+const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
+  const [todaySlots, settodaySlots] = useState([]);
+  const [tomorrowSlots, settomorrowSlots] = useState([]);
+  const [selectedDateSlots, setselectedDateSlots] = useState([]);
+  // const [selectedSlot, setselectedSlot] = useState({});
+
+  const {
+    homeStore: {
+      slotsData: {
+        data: {TODAY, TOMORROW},
+      },
+    },
+    homeDispatch,
+  } = useContext(HomeContext);
+  useEffect(() => {
+    settodaySlots(
+      TODAY.slot_sessions.map(item => {
+        return {
+          ...item,
+          slot: {
+            ...item.slot,
+            time: tConvert(item.slot.start_time),
+          },
+        };
+      }),
+    );
+    settomorrowSlots(
+      TOMORROW.slot_sessions.map(item => {
+        return {
+          ...item,
+          slot: {
+            ...item.slot,
+            time: tConvert(item.slot.start_time),
+          },
+        };
+      }),
+    );
+  }, [TODAY, TOMORROW, tabSelect]);
+
+  useEffect(() => {
+    if (tabSelect === 1) {
+      setselectedDateSlots(todaySlots);
+    } else if (tabSelect === 2) {
+      setselectedDateSlots(tomorrowSlots);
+    }
+  }, [todaySlots, tomorrowSlots, tabSelect]);
+
+  useEffect(() => {
+    setselectedSlot(null);
+  }, [setselectedSlot, tabSelect]);
+
+  const handleSlotSelection = selectedItem => {
+    if (tabSelect === 1) {
+      settodaySlots(
+        todaySlots.map(item => {
+          if (selectedItem.id === item.id) {
+            setselectedSlot(selectedItem);
+          }
+          item.isSelected = selectedItem.id === item.id;
+
+          return item;
+        }),
+      );
+    } else {
+      settomorrowSlots(
+        tomorrowSlots.map(item => {
+          if (selectedItem.id === item.id) {
+            setselectedSlot(selectedItem);
+          }
+          item.isSelected = selectedItem.id === item.id;
+          return item;
+        }),
+      );
+    }
+  };
+
   return (
-    <View style={{height: windowHeight - 300}}>
+    <View style={{height: windowHeight - 360}}>
       <ScrollView contentContainerStyle={{flexGrow: 0}}>
         <VStack>
-          <HStack mt={6} flexWrap={'wrap'} justifyContent={'flex-start'}>
-            {dummySlots.map((slot, i) => (
+          <HStack mt={6} pl={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
+            {selectedDateSlots.map((item, i) => (
               <NeuButton
+                active={item.has_booked}
+                onPress={() => {
+                  !item.has_booked && handleSlotSelection(item);
+                }}
+                {...(item.isSelected
+                  ? {convex: true, customGradient: Colors.gradient}
+                  : {})}
                 key={i}
-                width={100}
+                width={95}
                 borderRadius={8}
                 height={50}
                 style={{
                   marginBottom: 10,
                   marginRight: (i + 1) % 3 === 0 ? 0 : 10,
+                  marginLeft: i % 3 === 0 ? 5 : 0,
                 }}>
-                <RfText> {slot.time}</RfText>
+                {item.isSelected ? (
+                  <RfBold color={Colors.white}>{item.slot.time}</RfBold>
+                ) : (
+                  <RfText>{item.slot.time}</RfText>
+                )}
               </NeuButton>
             ))}
           </HStack>
@@ -34,72 +125,3 @@ const Slots = () => {
 };
 
 export default Slots;
-
-const dummySlots = [
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-  {
-    time: '10:00 AM',
-  },
-];

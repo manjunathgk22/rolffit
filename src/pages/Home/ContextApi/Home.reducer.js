@@ -1,16 +1,30 @@
 import produce from 'immer';
-import {SET_LOGIN_DATA, TEST_MUTATE} from './Home.actionTypes';
+import {
+  GET_SLOTS,
+  GET_SLOTS_FAILURE,
+  GET_SLOTS_SUCCESS,
+} from './Home.actionTypes';
 
 export const homeContextReducer = (state, action) => {
   switch (action.type) {
-    case TEST_MUTATE:
-      return {
-        ...state,
-        testData: action.payload,
-      };
-    case SET_LOGIN_DATA:
+    case GET_SLOTS:
       return produce(state, draft => {
-        draft.loginData = action.payload;
+        draft.slotsData.loading = true;
+        draft.slotsData.error = null;
+        return draft;
+      });
+    case GET_SLOTS_SUCCESS:
+      return produce(state, draft => {
+        draft.slotsData.data = action.payload;
+        draft.slotsData.loading = false;
+        draft.slotsData.error = null;
+        return draft;
+      });
+    case GET_SLOTS_FAILURE:
+      return produce(state, draft => {
+        draft.slotsData.data = null;
+        draft.slotsData.loading = false;
+        draft.slotsData.error = true;
         return draft;
       });
   }

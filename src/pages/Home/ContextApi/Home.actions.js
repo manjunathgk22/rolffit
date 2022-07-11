@@ -1,15 +1,20 @@
-import {SET_LOGIN_DATA, TEST_MUTATE} from './GlobalContext.actionTypes';
+import {
+  GET_SLOTS,
+  GET_SLOTS_SUCCESS,
+  GET_SLOTS_FAILURE,
+} from './Home.actionTypes';
 
-export const mutateTest = payload => {
-  return {
-    type: TEST_MUTATE,
-    payload,
-  };
-};
+export const getSlots = payload => ({
+  type: GET_SLOTS,
+  payload,
+});
 
-export const setLoginData = payload => {
-  return {
-    type: SET_LOGIN_DATA,
-    payload,
-  };
-};
+export const getSlotsSuccess = payload => ({
+  type: GET_SLOTS_SUCCESS,
+  payload,
+});
+
+export const getSlotsFailure = payload => ({
+  type: GET_SLOTS_FAILURE,
+  payload,
+});

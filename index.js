@@ -14,7 +14,10 @@ import {NotifHandler} from './src/utility/NotifHandler';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import codePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
-
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreLogs(['Could not']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 if (__DEV__) {
   import('./ReactotronConfig');
 }

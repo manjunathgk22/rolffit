@@ -1,10 +1,11 @@
 import {Text} from 'native-base';
 import React from 'react';
+import Colors from '../../constant/Colors';
 
 const RfBold = props => {
   return (
     <Text
-      color={'#000'}
+      color={Colors.dark}
       style={{fontFamily: 'Geomanist-Bold'}}
       fontSize={'lg'}
       {...props}>

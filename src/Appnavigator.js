@@ -15,69 +15,9 @@ import {printLog} from './utility/AppUtility';
 import Options from './pages/Options/Options';
 import routes from './Navigator/routes';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import BookedScreen from './pages/BookedScreen/BookedScreen';
 
 const Stack = createNativeStackNavigator();
-
-const Tab = createBottomTabNavigator();
-
-function MyTabs() {
-  return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          if (route.name === routes.Booking) {
-            if (focused) {
-              return (
-                <Icon
-                  size={'sm'}
-                  color="primary.700"
-                  as={Entypo}
-                  name="calendar"
-                />
-              );
-            } else {
-              return <Icon size={'sm'} as={AntDesign} name="calendar" />;
-            }
-          }
-          if (focused) {
-            return (
-              <Icon
-                size={'sm'}
-                color="primary.700"
-                as={Ionicons}
-                name="options"
-              />
-            );
-          } else {
-            return <Icon size={'sm'} as={Ionicons} name="options" />;
-          }
-        },
-      })}>
-      <Tab.Screen
-        name={routes.Booking}
-        component={HomeScreen}
-        options={{headerShown: false}}
-      />
-      <Tab.Screen
-        name={routes.Settings}
-        component={Options}
-        options={{headerShown: false}}
-      />
-    </Tab.Navigator>
-  );
-}
-const Drawer = createDrawerNavigator();
-
-const MyDrawer = () => {
-  return (
-    <Drawer.Navigator
-      initialRouteName="Home"
-      drawerContent={() => <Text>qqqq</Text>}>
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Notifications" component={Options} />
-    </Drawer.Navigator>
-  );
-};
 
 function Appnavigator() {
   const {globalStore, globalDispatch} = useContext(GlobalContext);
@@ -102,6 +42,11 @@ function Appnavigator() {
           <Stack.Screen
             name={routes.Options}
             component={Options}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.BookedScreen}
+            component={BookedScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

@@ -3,8 +3,11 @@ import {homeContextReducer} from './Home.reducer';
 
 export const HomeContext = createContext();
 const initialState = {
-  testData: 'qqq',
-  loginData: null,
+  slotsData: {
+    data: {},
+    loading: true,
+    error: null,
+  },
 };
 const HomeProvider = ({children}) => {
   const [state, dispatch] = useReducer(homeContextReducer, initialState);

@@ -4,4 +4,5 @@ export default {
   Settings: 'Settings',
   Booking: 'Booking',
   Options: 'Options',
+  BookedScreen: 'BookedScreen',
 };

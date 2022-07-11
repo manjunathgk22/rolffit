@@ -60,6 +60,7 @@ const NeuButton = props => {
         <View>
           <NeuView
             {...props}
+            borderRadius={8}
             concave={noPressEffect ? false : active ? true : toggleEffect}
             convex={noPressEffect ? false : active ? false : !toggleEffect}>
             {children}
@@ -82,6 +83,7 @@ const NeuButton = props => {
       <View>
         <NeuView
           {...props}
+          borderRadius={8}
           inset={noPressEffect ? false : active ? active : toggleEffect}>
           {children}
         </NeuView>
@@ -93,7 +95,7 @@ const NeuButton = props => {
 NeuButton.propTypes = {
   isConvex: PropTypes.bool,
   active: PropTypes.bool,
-  color: PropTypes.string.isRequired,
+  // color: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   noPressEffect: PropTypes.bool,

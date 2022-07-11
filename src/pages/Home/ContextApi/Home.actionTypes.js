@@ -1,2 +1,3 @@
-export const TEST_MUTATE = 'TEST_MUTATE';
-export const SET_LOGIN_DATA = 'SET_LOGIN_DATA';
+export const GET_SLOTS = 'GET_SLOTS';
+export const GET_SLOTS_SUCCESS = 'GET_SLOTS_SUCCESS';
+export const GET_SLOTS_FAILURE = 'GET_SLOTS_FAILURE';

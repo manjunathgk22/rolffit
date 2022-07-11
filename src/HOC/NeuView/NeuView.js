@@ -139,11 +139,13 @@ const NeuView = props => {
             angleCenter={{x: 0.5, y: 0.5}}
             style={{
               borderRadius,
+              ...style,
             }}>
             <View
               style={{
                 ...styles.view,
                 ...containerStyle,
+
                 backgroundColor: 'transparent',
               }}>
               {children}

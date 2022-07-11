@@ -1,24 +1,24 @@
 import React from 'react';
-import Animated, { Easing } from 'react-native-reanimated';
-import { runInfinite } from './utils/animation/presets';
+import Animated, {Easing} from 'react-native-reanimated';
+import {runInfinite} from './utils/animation/presets';
 import NeuView from './NeuView';
 import PropTypes from 'prop-types';
 
 const NeuSpinner = props => {
-  const { Clock, concat } = Animated;
+  const {Clock, concat} = Animated;
 
   const {
     color,
     indicatorColor = '#000',
     duration = 1000,
     size = 50,
-    easingType = Easing.linear
+    easingType = Easing.linear,
   } = props;
 
   const rotation = runInfinite(new Clock(), 0, 360, duration, easingType);
 
-  const defaultSize = size < 50 ? 50 : size;
-  const innerSize = defaultSize - 15;
+  const defaultSize = size;
+  const innerSize = defaultSize - 5;
 
   return (
     <NeuView
@@ -26,25 +26,23 @@ const NeuSpinner = props => {
       width={defaultSize}
       height={defaultSize}
       borderRadius={1000}
-      inset
-    >
+      inset>
       <NeuView
         color={color}
         width={innerSize}
         height={innerSize}
-        borderRadius={1000}
-      >
+        borderRadius={1000}>
         <Animated.View
           style={{
             borderLeftColor: indicatorColor,
             borderTopColor: indicatorColor,
             borderBottomColor: indicatorColor,
-            borderWidth: 6,
+            borderWidth: 3,
             borderRightColor: 'transparent',
-            transform: [{ rotate: concat(rotation, 'deg') }],
+            transform: [{rotate: concat(rotation, 'deg')}],
             borderRadius: 100,
             width: defaultSize,
-            height: defaultSize
+            height: defaultSize,
           }}
         />
       </NeuView>
@@ -58,7 +56,7 @@ NeuSpinner.propTypes = {
   duration: PropTypes.number,
   size: PropTypes.number.isRequired,
   easingType: PropTypes.func,
-  ...NeuView.propTypes
+  ...NeuView.propTypes,
 };
 
 export default NeuSpinner;

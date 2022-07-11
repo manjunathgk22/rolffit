@@ -46,7 +46,6 @@ initApiClients();
 export const callAPIs = async apiMethodToCall => {
   try {
     const response = {...(await apiMethodToCall)};
-
     apiResponse.status_code = response.status;
     if (response.data.error != null) {
       apiResponse.status = STATUS.ERROR;
@@ -75,3 +74,14 @@ export async function createUserAPI(json) {
   }
   return userApiClient.post('rolffit/centraluser/app/create/', json);
 }
+export const getSlotsApi = async () => {
+  return userApiClient.get('rolffit/slots/app/sessions/');
+};
+
+export const bookSlotApi = async slotId => {
+  return userApiClient.post(`rolffit/slots/app/sessions/${slotId}/book/`);
+};
+
+export const getMybookingApi = async () => {
+  return userApiClient.get('rolffit/slots/app/employee/bookings/');
+};

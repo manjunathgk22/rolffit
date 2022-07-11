@@ -42,7 +42,6 @@ export function Signin({navigation}) {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       printLog(userInfo.user);
-
       const res = await createUser({
         username: userInfo.user?.email,
         first_name: userInfo.user?.name,
@@ -72,6 +71,7 @@ export function Signin({navigation}) {
         // some other error happened
         printLog('some other error happened', error);
       }
+      console.log(error);
     } finally {
       setsigninDisabled(false);
     }
