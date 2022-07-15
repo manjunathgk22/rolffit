@@ -5,6 +5,7 @@ import {ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {windowHeight} from '../../constant/AppConstant';
 import Colors from '../../constant/Colors';
+import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import NeuButton from '../../HOC/NeuView/NeuButton';
 import {HomeContext} from '../../pages/Home/ContextApi/HomeProvider';
 import {tConvert} from '../../utility/AppUtility';
@@ -22,12 +23,14 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
       slotsData: {
         data: {TODAY, TOMORROW},
       },
+      futureBookings: {loading, error, data: futureBookingData},
     },
     homeDispatch,
   } = useContext(HomeContext);
+
   useEffect(() => {
     settodaySlots(
-      TODAY.slot_sessions.map(item => {
+      TODAY?.slot_sessions?.map(item => {
         return {
           ...item,
           slot: {
@@ -38,7 +41,7 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
       }),
     );
     settomorrowSlots(
-      TOMORROW.slot_sessions.map(item => {
+      TOMORROW?.slot_sessions?.map(item => {
         return {
           ...item,
           slot: {
@@ -88,15 +91,18 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
   };
 
   return (
-    <View style={{height: windowHeight - 360}}>
+    <View
+      style={{
+        height: futureBookingData ? windowHeight - 360 : windowHeight - 260,
+      }}>
       <ScrollView contentContainerStyle={{flexGrow: 0}}>
         <VStack>
           <HStack mt={6} pl={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
             {selectedDateSlots.map((item, i) => (
               <NeuButton
-                active={item.has_booked}
+                active={item.is_booked}
                 onPress={() => {
-                  !item.has_booked && handleSlotSelection(item);
+                  !item.is_booked && handleSlotSelection(item);
                 }}
                 {...(item.isSelected
                   ? {convex: true, customGradient: Colors.gradient}

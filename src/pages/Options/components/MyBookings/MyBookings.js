@@ -1,6 +1,9 @@
 import {Center, Text, View, VStack} from 'native-base';
 import React, {useContext, useState, useEffect} from 'react';
+import {ScrollView} from 'react-native';
 import Loader from '../../../../components/Loader/Loader';
+import {windowHeight} from '../../../../constant/AppConstant';
+import Colors from '../../../../constant/Colors';
 import {getMybookingApiHelper} from '../../apiService';
 import {
   getMybooking,
@@ -8,6 +11,7 @@ import {
   getMybookingSuccess,
 } from '../../ContextApi/Options.actions';
 import {OptionsContext} from '../../ContextApi/OptionsProvider';
+import BookingCard from '../BookingCard/BookingCard';
 
 const MyBookings = () => {
   const {
@@ -36,9 +40,11 @@ const MyBookings = () => {
       <Loader />
     </Center>
   ) : (
-    <VStack>
-      <Text> asdasd</Text>
-    </VStack>
+    <Center>
+      {data && data.length > 0
+        ? data.map(booking => <BookingCard booking={booking} />)
+        : null}
+    </Center>
   );
 };
 

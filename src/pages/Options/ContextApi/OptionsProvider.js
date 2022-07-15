@@ -3,7 +3,7 @@ import {optionsContextReducer} from './Options.reducer';
 export const OptionsContext = createContext();
 const initialState = {
   myBookings: {
-    data: {},
+    data: null,
     loading: true,
     error: null,
   },

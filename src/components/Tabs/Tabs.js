@@ -12,7 +12,7 @@ const Tabs = ({tabSelect, settabSelect}) => {
   const {
     homeStore: {
       slotsData: {
-        data: {TODAY, TOMORROW},
+        data: {TODAY = {}, TOMORROW = {}},
       },
     },
     homeDispatch,

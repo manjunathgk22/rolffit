@@ -9,12 +9,14 @@ import PushNotification from 'react-native-push-notification';
 import {printLog} from './src/utility/AppUtility';
 import {getMacAddress} from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {APP_STATE, NOTIFDATA} from './src/constant/AppConstant';
+import {APP_STATE, LOGIN_DATA, NOTIFDATA} from './src/constant/AppConstant';
 import {NotifHandler} from './src/utility/NotifHandler';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import codePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
 import {LogBox} from 'react-native';
+import {getData} from './src/utility/StorageUtility';
+import {callAPIs, sendFCMToken} from './src/api/apiRequest';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreLogs(['Could not']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -36,6 +38,11 @@ PushNotification.configure({
       device_id,
       fcm_registration_id: token.token,
     };
+    const res = await getData({key: LOGIN_DATA});
+    if (res) {
+      json.user_id = res?.user?.id;
+    }
+    callAPIs(sendFCMToken(json));
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened

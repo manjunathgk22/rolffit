@@ -8,6 +8,11 @@ const initialState = {
     loading: true,
     error: null,
   },
+  futureBookings: {
+    data: null,
+    loading: true,
+    error: null,
+  },
 };
 const HomeProvider = ({children}) => {
   const [state, dispatch] = useReducer(homeContextReducer, initialState);

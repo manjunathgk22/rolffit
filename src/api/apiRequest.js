@@ -44,8 +44,13 @@ initApiClients();
  *
  */
 export const callAPIs = async apiMethodToCall => {
+  console.log('11');
   try {
+    console.log('22');
+
     const response = {...(await apiMethodToCall)};
+    console.log('44');
+
     apiResponse.status_code = response.status;
     if (response.data.error != null) {
       apiResponse.status = STATUS.ERROR;
@@ -57,6 +62,8 @@ export const callAPIs = async apiMethodToCall => {
       return apiResponse;
     }
   } catch (error) {
+    console.log('33');
+
     printLog(error);
     if (error.response) {
       apiResponse.data = error.response.data;
@@ -68,12 +75,12 @@ export const callAPIs = async apiMethodToCall => {
   }
 };
 
-export async function createUserAPI(json) {
+export const createUserAPI = async json => {
   if (!userApiClient) {
     await initApiClients();
   }
   return userApiClient.post('rolffit/centraluser/app/create/', json);
-}
+};
 export const getSlotsApi = async () => {
   return userApiClient.get('rolffit/slots/app/sessions/');
 };
@@ -84,4 +91,15 @@ export const bookSlotApi = async slotId => {
 
 export const getMybookingApi = async () => {
   return userApiClient.get('rolffit/slots/app/employee/bookings/');
+};
+export const getFutureBookingApi = async () => {
+  return userApiClient.get('rolffit/slots/app/employee/upcoming-bookings/');
+};
+
+export const rescheduleApi = async json => {
+  return userApiClient.put(`rolffit/slots/app/employee/bookings/`, json);
+};
+
+export const sendFCMToken = json => {
+  return userApiClient.post('rolffit/centraluser/app/device/detail/', json);
 };

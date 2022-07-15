@@ -8,14 +8,22 @@ import Colors from '../../constant/Colors';
 import RfBold from '../../components/RfBold/RfBold';
 import RfText from '../../components/RfText/RfText';
 import routes from '../../Navigator/routes';
+import LottieView from 'lottie-react-native';
+
 const BookedScreen = ({navigation}) => {
   return (
     <Center flex={1}>
-      <Image
+      {/* <Image
         resizeMode={'contain'}
         style={{width: 200, height: 200}}
         source={require('../../assets/images/relax.png')}
         alt="logo"
+      /> */}
+      <LottieView
+        style={{height: 200, width: '100%'}}
+        autoPlay
+        loop
+        source={require('../../assets/lottie/relax.json')}
       />
       <RfBold mt={8} fontSize="2xl">
         Congratulation

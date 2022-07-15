@@ -1,4 +1,4 @@
-import {Text} from 'native-base';
+import {Center, Text} from 'native-base';
 import React, {Fragment, useContext, useEffect, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 // import {NeuView} from 'react-native-neu-element';
@@ -31,14 +31,14 @@ function SplashScreen() {
   };
 
   return !render ? (
-    <View style={styles.colCenter}>
+    <Center backgroundColor={Colors.bg}>
       <Image
         resizeMode={'contain'}
-        style={{width: '200%', height: '200%'}}
+        style={{width: '150%', height: '150%', marginTop: '-50%'}}
         source={require('../../assets/images/logo_animation_black.gif')}
         alt="logo"
       />
-    </View>
+    </Center>
   ) : (
     <Fragment>
       <Appnavigator />

@@ -30,3 +30,8 @@ export function tConvert(time) {
   }
   return time.join(''); // return adjusted time or original string
 }
+
+export function isObjectEmpty(obj) {
+  for (const i in obj) return false;
+  return true;
+}

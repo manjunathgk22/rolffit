@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Center, HStack, Icon, useToast, VStack} from 'native-base';
+import {Center, HStack, Icon, Text, useToast, VStack} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import Colors from '../../constant/Colors';
@@ -13,28 +13,50 @@ import routes from '../../Navigator/routes';
 import Loader from '../../components/Loader/Loader';
 import {WebView} from 'react-native-webview';
 import {
+  getFutureBooking,
+  getFutureBookingFailure,
+  getFutureBookingSuccess,
   getSlots,
   getSlotsFailure,
   getSlotsSuccess,
 } from './ContextApi/Home.actions';
-import {bookSlotApiHelper, getSlotsApiHelper} from './apiService';
+import {
+  bookSlotApiHelper,
+  futureBookingApiHelper,
+  getSlotsApiHelper,
+} from './apiService';
 import RfBold from '../../components/RfBold/RfBold';
 import {View} from 'react-native';
-import {windowWidth} from '../../constant/AppConstant';
+import {LOGIN_DATA, windowWidth} from '../../constant/AppConstant';
 import RfText from '../../components/RfText/RfText';
 import SimpleLoader from '../../components/SimpleLoader/SimpleLoader';
 import ToastMessage from '../../components/ToastMessage/ToastMessage';
 import HomeProvider, {HomeContext} from './ContextApi/HomeProvider';
+import {useIsFocused} from '@react-navigation/native';
+import Carousel from 'react-native-snap-carousel';
+import FutureBooking from './components/FutureBooking';
+import {isObjectEmpty} from '../../utility/AppUtility';
+import {removeData} from '../../utility/StorageUtility';
+import {setLoginData} from '../../ContextApi/GlobalContext.actions';
+import RescheduleActionSheet from './components/RescheduleActionSheet';
 function HomeScreen({navigation}) {
   const {
     homeStore: {
-      slotsData: {loading, error},
+      slotsData: {loading, error, data},
     },
     homeDispatch,
   } = useContext(HomeContext);
-  const [tabSelect, settabSelect] = useState(1);
-  const [selectedSlot, setselectedSlot] = useState({});
-  const [apiLoading, setapiLoading] = useState(false);
+  const {
+    globalStore: {loginData},
+    globalDispatch,
+  } = useContext(GlobalContext);
+
+  const [tabSelect, settabSelect] = useState(1); // tabs
+  const [selectedSlot, setselectedSlot] = useState({}); //current selected slot
+  const [apiLoading, setapiLoading] = useState(false); //
+  const [showReschedulePopup, setshowReschedulePopup] = useState(false); // reeschedule popup
+  const [pastSelectedSlot, setpastSelectedSlot] = useState(null);
+
   const toast = useToast();
   const errorToast = msg => {
     toast.show({
@@ -43,22 +65,55 @@ function HomeScreen({navigation}) {
       },
     });
   };
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    getData();
-    navigation.navigate(routes.Options);
-  }, []);
+    //Update the state you want to be updated
+    isFocused && getData();
+  }, [isFocused]);
+
+  useEffect(() => {
+    // getData();
+    if (tabSelect === 1 && data?.TODAY?.booked) {
+      setpastSelectedSlot(data?.TODAY?.booked);
+    }
+  }, [tabSelect, data]);
 
   const getData = async () => {
     homeDispatch(getSlots());
-    const res = await getSlotsApiHelper();
-    if (res) {
-      homeDispatch(getSlotsSuccess(res));
+    homeDispatch(getFutureBooking());
+    // const slots = await getSlotsApiHelper();
+    // const futurebooking = await futureBookingApiHelper();
+    const [slots, futurebooking] = await Promise.all([
+      getSlotsApiHelper(),
+      futureBookingApiHelper(),
+    ]);
+    if (slots) {
+      homeDispatch(getSlotsSuccess(slots));
     } else {
       homeDispatch(getSlotsFailure());
     }
+    if (futurebooking) {
+      homeDispatch(getFutureBookingSuccess(futurebooking));
+    } else {
+      homeDispatch(getFutureBookingFailure());
+    }
   };
+
+  const handleRescheduleFLow = () => {
+    // errorToast('booked');
+    setshowReschedulePopup(true);
+  };
+
   const handleBooking = async () => {
     if (!selectedSlot || apiLoading) return;
+    if (
+      (tabSelect === 1 && data?.TODAY?.booked) ||
+      (tabSelect === 2 && data?.TOMORROW?.booked)
+    ) {
+      handleRescheduleFLow();
+      return;
+    }
     setapiLoading(true);
     const res = await bookSlotApiHelper(selectedSlot.id);
     if (res.is_booked) {
@@ -69,7 +124,26 @@ function HomeScreen({navigation}) {
     setapiLoading(false);
   };
 
-  return (
+  const handleLogout = async () => {
+    await removeData({key: LOGIN_DATA});
+    globalDispatch(setLoginData(null));
+    navigation.reset({
+      index: 0,
+      routes: [{name: routes.Signin}],
+    });
+  };
+
+  const onReschedule = () => {};
+
+  return isObjectEmpty(loginData?.user.employee) &&
+    isObjectEmpty(loginData?.user.therapist) ? (
+    // not our customer flow
+    <Center backgroundColor={Colors.bg}>
+      <NeuButton onPress={handleLogout} height={50}>
+        <RfBold>Logout</RfBold>
+      </NeuButton>
+    </Center>
+  ) : (
     <VStack p={4} flex={1} backgroundColor={Colors.bg}>
       <HStack>
         <NeuButton
@@ -82,15 +156,14 @@ function HomeScreen({navigation}) {
           <Icon as={SimpleLineIcons} name="menu" color={Colors.dark} />
         </NeuButton>
       </HStack>
-
-      <Center p={4} mt={4}>
-        <FutureBookingCard />
+      <Center paddingX={4} mt={2}>
+        <FutureBooking />
         {loading ? (
           <View height={300}>
             <Loader />
           </View>
         ) : (
-          <VStack mt={6}>
+          <VStack mt={4}>
             <Tabs settabSelect={settabSelect} tabSelect={tabSelect} />
             <Slots
               setselectedSlot={setselectedSlot}
@@ -116,6 +189,15 @@ function HomeScreen({navigation}) {
           </VStack>
         )}
       </Center>
+      {showReschedulePopup ? (
+        <RescheduleActionSheet
+          errorToast={errorToast}
+          open={showReschedulePopup}
+          currentSlot={pastSelectedSlot}
+          newSlot={selectedSlot}
+          onClose={() => setshowReschedulePopup(false)}
+        />
+      ) : null}
     </VStack>
   );
 }

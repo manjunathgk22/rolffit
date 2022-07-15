@@ -12,7 +12,7 @@ import Svg, {
 function hexToRgb(hex) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+  hex = hex.replace(shorthandRegex, function (m, r, g, b) {
     return r + r + g + g + b + b;
   });
 
@@ -77,7 +77,6 @@ const Shadow = props => {
   const outerRadius =
     borderRadius > 0 ? Math.max(0, borderRadius + spread + blur / 2) : blur;
   const borderWidth = (rectOuterWidth - rectInnerWidth) / 2;
-
   const rgb = hexToRgb(color);
 
   const linear = key => {
