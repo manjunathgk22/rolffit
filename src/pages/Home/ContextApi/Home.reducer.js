@@ -6,6 +6,9 @@ import {
   GET_SLOTS,
   GET_SLOTS_FAILURE,
   GET_SLOTS_SUCCESS,
+  GET_THERAPIST_SLOTS,
+  GET_THERAPIST_SLOTS_FAILURE,
+  GET_THERAPIST_SLOTS_SUCCESS,
 } from './Home.actionTypes';
 
 export const homeContextReducer = (state, action) => {
@@ -50,6 +53,28 @@ export const homeContextReducer = (state, action) => {
         draft.futureBookings.data = null;
         draft.futureBookings.loading = false;
         draft.futureBookings.error = true;
+        return draft;
+      });
+
+    case GET_THERAPIST_SLOTS:
+      return produce(state, draft => {
+        draft.therapistData.loading = true;
+        draft.therapistData.error = null;
+
+        return draft;
+      });
+    case GET_THERAPIST_SLOTS_SUCCESS:
+      return produce(state, draft => {
+        draft.therapistData.data = action.payload;
+        draft.therapistData.loading = false;
+        draft.therapistData.error = null;
+        return draft;
+      });
+    case GET_THERAPIST_SLOTS_FAILURE:
+      return produce(state, draft => {
+        draft.therapistData.data = {};
+        draft.therapistData.loading = false;
+        draft.therapistData.error = true;
         return draft;
       });
   }

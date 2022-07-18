@@ -5,7 +5,7 @@ import NeuView from '../../HOC/NeuView/NeuView';
 const Card = props => {
   return (
     <NeuView borderRadius={8} {...props}>
-      <Text>asjkdnkajsd</Text>
+      {props.children}
     </NeuView>
   );
 };

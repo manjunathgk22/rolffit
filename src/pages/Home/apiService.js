@@ -1,8 +1,12 @@
 import {
   bookSlotApi,
   callAPIs,
+  employeeCheckinApi,
+  employeeCheckoutApi,
   getFutureBookingApi,
   getSlotsApi,
+  getTherapistSlotsApi,
+  rateMassageApi,
   rescheduleApi,
   STATUS,
 } from '../../api/apiRequest';
@@ -75,6 +79,43 @@ export const futureBookingApiHelper = async () => {
 
 export const rescheduleApiHelper = async json => {
   const response = await callAPIs(rescheduleApi(json));
+  if (response.status_code === STATUS.SUCCESS) {
+    return response.data;
+  } else {
+    return false;
+  }
+};
+
+export const getTherapistSlotsApiHelper = async () => {
+  const response = await callAPIs(getTherapistSlotsApi());
+  if (response.status_code === STATUS.SUCCESS) {
+    return response.data?.slot_bookings;
+  } else {
+    return false;
+  }
+};
+
+export const employeeCheckinApiHelper = async json => {
+  const response = await callAPIs(employeeCheckinApi(json));
+  if (response.status_code === STATUS.SUCCESS) {
+    return response.data;
+  } else {
+    return false;
+  }
+};
+
+export const employeeCheckoutApiHelper = async json => {
+  const response = await callAPIs(employeeCheckoutApi(json));
+  console.log('qq', response);
+  if (response.status_code === STATUS.SUCCESS) {
+    return response.data;
+  } else {
+    return false;
+  }
+};
+
+export const rateMassageApiHelper = async json => {
+  const response = await callAPIs(rateMassageApi(json));
   if (response.status_code === STATUS.SUCCESS) {
     return response.data;
   } else {

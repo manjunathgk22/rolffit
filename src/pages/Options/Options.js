@@ -28,15 +28,6 @@ function Options({navigation}) {
   const [showLogout, setshowLogout] = useState(false);
   const {globalDispatch} = useContext(GlobalContext);
 
-  const handleLogout = async () => {
-    await removeData({key: LOGIN_DATA});
-    globalDispatch(setLoginData(null));
-    navigation.reset({
-      index: 0,
-      routes: [{name: routes.Signin}],
-    });
-  };
-
   return (
     <>
       <VStack
@@ -77,7 +68,7 @@ function Options({navigation}) {
       <LogoutActionSheet
         showLogout={showLogout}
         setshowLogout={setshowLogout}
-        handleLogout={handleLogout}
+        navigation={navigation}
       />
     </>
   );

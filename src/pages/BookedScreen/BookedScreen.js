@@ -9,8 +9,14 @@ import RfBold from '../../components/RfBold/RfBold';
 import RfText from '../../components/RfText/RfText';
 import routes from '../../Navigator/routes';
 import LottieView from 'lottie-react-native';
+import {tConvert} from '../../utility/AppUtility';
 
-const BookedScreen = ({navigation}) => {
+const BookedScreen = ({
+  navigation,
+  route: {
+    params: {selectedSlot},
+  },
+}) => {
   return (
     <Center flex={1}>
       {/* <Image
@@ -28,7 +34,10 @@ const BookedScreen = ({navigation}) => {
       <RfBold mt={8} fontSize="2xl">
         Congratulation
       </RfBold>
-      <RfText>Lorem epsum lorem Epsum</RfText>
+      <HStack mt={6}>
+        <RfText>You have booked a session at {` `}</RfText>
+        <RfBold>{tConvert(selectedSlot.slot.start_time)}</RfBold>
+      </HStack>
       <VStack mt={8}>
         <NeuButton
           onPress={() => navigation.navigate(routes.HomeScreen)}

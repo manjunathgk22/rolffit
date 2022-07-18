@@ -1,12 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Actionsheet, HStack, VStack} from 'native-base';
 import NeuView from '../../../../HOC/NeuView/NeuView';
-import {windowWidth} from '../../../../constant/AppConstant';
+import {LOGIN_DATA, windowWidth} from '../../../../constant/AppConstant';
 import RfBold from '../../../../components/RfBold/RfBold';
 import NeuButton from '../../../../HOC/NeuView/NeuButton';
 import RfText from '../../../../components/RfText/RfText';
+import {removeData} from '../../../../utility/StorageUtility';
+import {GlobalContext} from '../../../../ContextApi/GlobalContextProvider';
+import {setLoginData} from '../../../../ContextApi/GlobalContext.actions';
+import routes from '../../../../Navigator/routes';
 
-const LogoutActionSheet = ({showLogout, setshowLogout, handleLogout}) => {
+const LogoutActionSheet = ({showLogout, setshowLogout, navigation}) => {
+  const {globalDispatch} = useContext(GlobalContext);
+
+  const handleLogout = async () => {
+    await removeData({key: LOGIN_DATA});
+    globalDispatch(setLoginData(null));
+    navigation.reset({
+      index: 0,
+      routes: [{name: routes.Signin}],
+    });
+  };
   return (
     <Actionsheet
       hideDragIndicator

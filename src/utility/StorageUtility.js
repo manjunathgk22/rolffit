@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {printLog} from './AppUtility';
-
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 export const storeData = async ({value, key}) => {
   try {
     const jsonValue = JSON.stringify(value);
@@ -27,4 +27,5 @@ export const removeData = async ({key}) => {
     // error reading value
     printLog('error storage', e);
   }
+  await GoogleSignin.signOut();
 };

@@ -39,6 +39,7 @@ import {isObjectEmpty} from '../../utility/AppUtility';
 import {removeData} from '../../utility/StorageUtility';
 import {setLoginData} from '../../ContextApi/GlobalContext.actions';
 import RescheduleActionSheet from './components/RescheduleActionSheet';
+import TherapistHome from './components/TherapistHome';
 function HomeScreen({navigation}) {
   const {
     homeStore: {
@@ -68,8 +69,10 @@ function HomeScreen({navigation}) {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    //Update the state you want to be updated
-    isFocused && getData();
+    if (!isObjectEmpty(loginData?.user.employee)) {
+      //Update the state you want to be updated
+      isFocused && getData();
+    }
   }, [isFocused]);
 
   useEffect(() => {
@@ -117,7 +120,9 @@ function HomeScreen({navigation}) {
     setapiLoading(true);
     const res = await bookSlotApiHelper(selectedSlot.id);
     if (res.is_booked) {
-      navigation.navigate(routes.BookedScreen);
+      navigation.navigate(routes.BookedScreen, {
+        selectedSlot,
+      });
     } else {
       errorToast(res.error?.message);
     }
@@ -133,17 +138,16 @@ function HomeScreen({navigation}) {
     });
   };
 
-  const onReschedule = () => {};
-
   return isObjectEmpty(loginData?.user.employee) &&
     isObjectEmpty(loginData?.user.therapist) ? (
     // not our customer flow
-    <Center backgroundColor={Colors.bg}>
+    <Center flex={1} backgroundColor={Colors.bg}>
+      <RfBold>You are not ROLF.FIT partner</RfBold>
       <NeuButton onPress={handleLogout} height={50}>
         <RfBold>Logout</RfBold>
       </NeuButton>
     </Center>
-  ) : (
+  ) : !isObjectEmpty(loginData?.user.employee) ? (
     <VStack p={4} flex={1} backgroundColor={Colors.bg}>
       <HStack>
         <NeuButton
@@ -199,6 +203,8 @@ function HomeScreen({navigation}) {
         />
       ) : null}
     </VStack>
+  ) : (
+    <TherapistHome navigation={navigation} />
   );
 }
 

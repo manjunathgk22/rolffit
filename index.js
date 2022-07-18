@@ -7,7 +7,7 @@ import App from './App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
 import {printLog} from './src/utility/AppUtility';
-import {getMacAddress} from 'react-native-device-info';
+import {getMacAddress, getUniqueId} from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {APP_STATE, LOGIN_DATA, NOTIFDATA} from './src/constant/AppConstant';
 import {NotifHandler} from './src/utility/NotifHandler';
@@ -33,16 +33,18 @@ PushNotification.configure({
   onRegister: async function (token) {
     printLog('TOKEN:', token);
     let data = null;
-    const device_id = await getMacAddress();
+    const device_id = getUniqueId();
     let json = {
-      device_id,
+      device_id: device_id,
       fcm_registration_id: token.token,
     };
     const res = await getData({key: LOGIN_DATA});
     if (res) {
       json.user_id = res?.user?.id;
     }
-    callAPIs(sendFCMToken(json));
+    setTimeout(() => {
+      callAPIs(sendFCMToken(json));
+    }, 1000);
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened

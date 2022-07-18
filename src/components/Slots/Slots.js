@@ -93,7 +93,9 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
   return (
     <View
       style={{
-        height: futureBookingData ? windowHeight - 360 : windowHeight - 260,
+        height: futureBookingData?.length
+          ? windowHeight - 360
+          : windowHeight - 240,
       }}>
       <ScrollView contentContainerStyle={{flexGrow: 0}}>
         <VStack>

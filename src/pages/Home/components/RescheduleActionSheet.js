@@ -36,7 +36,9 @@ const RescheduleActionSheet = ({
     const response = await rescheduleApiHelper(json);
     if (response) {
       onClose();
-      NavigationService.navigate(routes.BookedScreen);
+      NavigationService.navigate(routes.BookedScreen, {
+        selectedSlot: newSlot,
+      });
     } else {
       errorToast('Something went wrong');
     }

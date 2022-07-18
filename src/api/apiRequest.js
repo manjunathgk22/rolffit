@@ -18,7 +18,10 @@ export const apiResponse = {
 let headers, userApiClient;
 
 export const initApiClients = async () => {
-  const token = await getToken();
+  let token;
+  try {
+    token = await getToken();
+  } catch (error) {}
   headers = {
     Authorization: token || '',
     'x-api-key': 'SpEbM4sCarPRwnFg', //'M+T*JxXLuCD?65u%_PMs%Q'
@@ -102,4 +105,18 @@ export const rescheduleApi = async json => {
 
 export const sendFCMToken = json => {
   return userApiClient.post('rolffit/centraluser/app/device/detail/', json);
+};
+
+export const getTherapistSlotsApi = () => {
+  return userApiClient.get('rolffit/slots/app/therapists/bookings/');
+};
+
+export const employeeCheckinApi = json => {
+  return userApiClient.put('rolffit/slots/app/therapists/checkin/', json);
+};
+export const employeeCheckoutApi = json => {
+  return userApiClient.put('rolffit/slots/app/therapists/checkout/', json);
+};
+export const rateMassageApi = json => {
+  return userApiClient.post('rolffit/ratingreview/v1/', json);
 };
