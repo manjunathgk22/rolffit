@@ -28,7 +28,9 @@ function Appnavigator() {
           navigationRef.current = ref;
         }}>
         <Stack.Navigator
-          initialRouteName={globalStore.loginData ? 'HomeScreen' : 'Signin'}>
+          initialRouteName={
+            globalStore.loginData ? routes.HomeScreen : routes.Signin
+          }>
           <Stack.Screen
             name={routes.HomeScreen}
             component={HomeScreen}

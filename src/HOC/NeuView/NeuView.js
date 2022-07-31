@@ -109,10 +109,11 @@ const NeuView = props => {
       return (
         <>
           <LinearGradient
-            colors={customGradient ? customGradient : [mid, light]}
+            colors={customGradient ? customGradient.reverse() : [mid, light]}
             useAngle={true}
             angle={145}
-            angleCenter={{x: 0.5, y: 0.5}}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
             style={{
               borderRadius,
             }}>
@@ -133,7 +134,7 @@ const NeuView = props => {
       return (
         <>
           <LinearGradient
-            colors={customGradient ? customGradient.reverse() : [light, mid]}
+            colors={customGradient ? customGradient : [light, mid]}
             useAngle={true}
             angle={145}
             angleCenter={{x: 0.5, y: 0.5}}

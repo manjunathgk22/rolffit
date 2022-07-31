@@ -1,4 +1,4 @@
-import {Box, Icon, Text, useToast, View} from 'native-base';
+import {Box, Icon, ScrollView, Text, useToast, View, VStack} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {mutateTest, setLoginData} from '../../ContextApi/GlobalContext.actions';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
@@ -12,11 +12,15 @@ import Loader from '../../components/Loader/Loader';
 import {createUser} from './apiService';
 import Colors from '../../constant/Colors';
 import {storeData} from '../../utility/StorageUtility';
-import {LOGIN_DATA} from '../../constant/AppConstant';
+import {
+  LOGIN_DATA,
+  windowHeight,
+  windowWidth,
+} from '../../constant/AppConstant';
 import NavigationService from '../../Navigator/NavigationService';
 import routes from '../../Navigator/routes';
 import {initApiClients} from '../../api/apiRequest';
-import {StyleSheet} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {constainerStyle} from '../../utility/Styles';
 import NeuView from '../../HOC/NeuView/NeuView';
 import {AntDesign} from '@native-base/icons';
@@ -24,6 +28,7 @@ import RfBold from '../../components/RfBold/RfBold';
 import NeuButton from '../../HOC/NeuView/NeuButton';
 import RfText from '../../components/RfText/RfText';
 import ToastMessage from '../../components/ToastMessage/ToastMessage';
+
 export function Signin({navigation}) {
   const {globalStore, globalDispatch} = useContext(GlobalContext);
   const [signinDisabled, setsigninDisabled] = useState(false);
@@ -78,24 +83,59 @@ export function Signin({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
-      <RfBold mb={6}>Login with official Google account</RfBold>
-
-      <NeuButton
-        width={230}
-        height={50}
-        onPress={signIn}
-        active={signinDisabled}
-        borderRadius={16}
-        flexDirection={'row'}
-        style={{flexDirection: 'row'}}>
-        <Icon size={'md'} color="rf.dark" as={AntDesign} name="google" />
-        <RfText ml={2}> Sign in with Google</RfText>
-      </NeuButton>
+    <View height={windowHeight} flex={1}>
+      <ScrollView contentContainerStyle={styles.container} flex={1}>
+        <View style={styles.container}>
+          <NeuView
+            style={{marginBottom: 10}}
+            height={370}
+            width={windowWidth - 40}
+            borderRadius={12}>
+            <Image
+              source={require('../../assets/images/kind.png')}
+              style={styles.image}
+              resizeMode={'contain'}
+            />
+          </NeuView>
+          <RfBold textAlign={'center'} fontSize={'4xl'}>
+            Be kind
+          </RfBold>
+          <RfBold mt={-4} textAlign={'center'} fontSize={'4xl'}>
+            to your mind
+          </RfBold>
+          <RfText fontSize={'sm'}>
+            Signup with your official google account
+          </RfText>
+          <View mt={8}>
+            <NeuButton
+              width={230}
+              height={50}
+              onPress={signIn}
+              active={signinDisabled}
+              borderRadius={16}
+              flexDirection={'row'}
+              style={{flexDirection: 'row'}}>
+              {/* <Icon size={'md'} color="rf.dark" as={AntDesign} name="google" /> */}
+              <Image
+                resizeMode="contain"
+                style={styles.google}
+                source={require(`../../assets/images/google.png`)}
+              />
+              <RfBold ml={0}> Sign in with Google</RfBold>
+            </NeuButton>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: constainerStyle,
+  image: {
+    height: '100%',
+  },
+  google: {
+    height: 30,
+  },
 });

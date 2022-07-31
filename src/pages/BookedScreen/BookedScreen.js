@@ -10,45 +10,44 @@ import RfText from '../../components/RfText/RfText';
 import routes from '../../Navigator/routes';
 import LottieView from 'lottie-react-native';
 import {tConvert} from '../../utility/AppUtility';
+import NeuView from '../../HOC/NeuView/NeuView';
+import {windowWidth} from '../../constant/AppConstant';
 
-const BookedScreen = ({
-  navigation,
-  route: {
-    params: {selectedSlot},
-  },
-}) => {
+const BookedScreen = ({navigation, route: {params}}) => {
+  const {selectedSlot} = params || {};
   return (
-    <Center flex={1}>
+    <Center background={Colors.bg} flex={1}>
       {/* <Image
         resizeMode={'contain'}
         style={{width: 200, height: 200}}
         source={require('../../assets/images/relax.png')}
         alt="logo"
       /> */}
-      <LottieView
-        style={{height: 200, width: '100%'}}
-        autoPlay
-        loop
-        source={require('../../assets/lottie/relax.json')}
-      />
-      <RfBold mt={8} fontSize="2xl">
-        Congratulation
-      </RfBold>
-      <HStack mt={6}>
-        <RfText>You have booked a session at {` `}</RfText>
-        <RfBold>{tConvert(selectedSlot.slot.start_time)}</RfBold>
-      </HStack>
-      <VStack mt={8}>
-        <NeuButton
-          onPress={() => navigation.navigate(routes.HomeScreen)}
-          convex={true}
-          customGradient={Colors.gradient}
-          height={38}
-          width={150}
-          borderRadius={8}>
-          <RfBold color={Colors.white}>Continue</RfBold>
-        </NeuButton>
-      </VStack>
+      <NeuView borderRadius={12} width={windowWidth - 40} height={440}>
+        <Image
+          resizeMode="contain"
+          height={180}
+          source={require('../../assets/images/booked.png')}
+        />
+        <RfBold mt={4} fontSize="3xl">
+          Congratulation
+        </RfBold>
+        <HStack mt={2}>
+          <RfText>You have booked a session at {` `}</RfText>
+          <RfBold>{tConvert(selectedSlot?.slot.start_time)}</RfBold>
+        </HStack>
+        <VStack mt={8}>
+          <NeuButton
+            onPress={() => navigation.navigate(routes.HomeScreen)}
+            convex={true}
+            customGradient={Colors.gradient}
+            height={40}
+            width={180}
+            borderRadius={8}>
+            <RfBold color={Colors.white}>Continue</RfBold>
+          </NeuButton>
+        </VStack>
+      </NeuView>
     </Center>
   );
 };

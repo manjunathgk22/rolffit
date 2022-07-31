@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Center, HStack, Icon, Text, useToast, VStack} from 'native-base';
+import {Center, HStack, Icon, Image, Text, useToast, VStack} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import Colors from '../../constant/Colors';
@@ -157,7 +157,8 @@ function HomeScreen({navigation}) {
           height={40}
           width={40}
           borderRadius={50}>
-          <Icon as={SimpleLineIcons} name="menu" color={Colors.dark} />
+          {/* <Icon as={SimpleLineIcons} name="menu" color={Colors.dark} /> */}
+          <Image source={require('../../assets/images/menu.png')} />
         </NeuButton>
       </HStack>
       <Center paddingX={4} mt={2}>
@@ -174,19 +175,22 @@ function HomeScreen({navigation}) {
               selectedSlot={selectedSlot}
               tabSelect={tabSelect}
             />
-            <Center mt={3}>
+            <Center opacity={selectedSlot ? 1 : 0.5} mt={3}>
               <NeuButton
                 active={!selectedSlot}
                 borderRadius={8}
                 height={40}
                 width={windowWidth - 60}
+                {...(true
+                  ? {convex: true, customGradient: Colors.gradient}
+                  : {})}
                 onPress={handleBooking}>
                 {apiLoading ? (
                   <SimpleLoader />
                 ) : selectedSlot ? (
-                  <RfBold>Book</RfBold>
+                  <RfBold color={Colors.white}>Confirm Booking</RfBold>
                 ) : (
-                  <RfText>Book</RfText>
+                  <RfBold color={Colors.white}>Confirm Booking</RfBold>
                 )}
               </NeuButton>
             </Center>

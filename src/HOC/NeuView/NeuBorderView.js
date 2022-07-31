@@ -15,7 +15,7 @@ const NeuBorderView = props => {
     customDarkShadow,
     customInsetLightShadow,
     customInsetDarkShadow,
-    style
+    style,
   } = props;
   return (
     <NeuView
@@ -25,8 +25,7 @@ const NeuBorderView = props => {
       borderRadius={borderRadius}
       style={style}
       customDarkShadow={customDarkShadow}
-      customLightShadow={customLightShadow}
-    >
+      customLightShadow={customLightShadow}>
       <NeuView
         inset
         color={color}
@@ -37,14 +36,13 @@ const NeuBorderView = props => {
         customInsetDarkShadow={{
           offsetX: -1,
           offsetY: -1,
-          ...customInsetDarkShadow
+          ...customInsetDarkShadow,
         }}
         customInsetLightShadow={{
           offsetX: 1,
           offsetY: 1,
-          ...customInsetLightShadow
-        }}
-      >
+          ...customInsetLightShadow,
+        }}>
         {children}
       </NeuView>
     </NeuView>
@@ -58,7 +56,7 @@ NeuBorderView.propTypes = {
   borderRadius: PropTypes.number.isRequired,
   borderWidth: PropTypes.number.isRequired,
   containerStyle: PropTypes.object.isRequired,
-  style: PropTypes.object.isRequired
+  style: PropTypes.object.isRequired,
 };
 
 export default NeuBorderView;

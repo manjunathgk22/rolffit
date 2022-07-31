@@ -22,8 +22,8 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 const theme = extendTheme({
   colors: {
     rf: {
-      dark: '#101010',
-      bg: '#eef2f9',
+      dark: Colors.dark,
+      bg: Colors.bg,
       error: '#e3324a',
     },
   },
@@ -70,8 +70,8 @@ const App = () => {
           <StatusBar
             translucent={true}
             animated={true}
-            backgroundColor={Colors.dark}
-            barStyle="light-content"
+            backgroundColor={Colors.bg}
+            barStyle="dark-content"
             hidden={false}
           />
           <SplashScreen />

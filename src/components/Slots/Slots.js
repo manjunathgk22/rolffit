@@ -94,8 +94,8 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
     <View
       style={{
         height: futureBookingData?.length
-          ? windowHeight - 360
-          : windowHeight - 240,
+          ? windowHeight - 440
+          : windowHeight - 320,
       }}>
       <ScrollView contentContainerStyle={{flexGrow: 0}}>
         <VStack>
@@ -114,14 +114,14 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
                 borderRadius={8}
                 height={50}
                 style={{
-                  marginBottom: 10,
+                  marginBottom: 15,
                   marginRight: (i + 1) % 3 === 0 ? 0 : 10,
                   marginLeft: i % 3 === 0 ? 5 : 0,
                 }}>
                 {item.isSelected ? (
                   <RfBold color={Colors.white}>{item.slot.time}</RfBold>
                 ) : (
-                  <RfText>{item.slot.time}</RfText>
+                  <RfText fontWeight={'bold'}>{item.slot.time}</RfText>
                 )}
               </NeuButton>
             ))}
