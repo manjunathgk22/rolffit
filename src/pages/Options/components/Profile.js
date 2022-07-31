@@ -25,7 +25,7 @@ function Profile() {
     }
   }, [loginData]);
   return (
-    <Center>
+    <Center mt={20}>
       <NeuView height={150} borderRadius={150} width={150}>
         {userData.photo_url ? (
           <Image
@@ -37,16 +37,20 @@ function Profile() {
             alt="Alternate Text"
           />
         ) : (
-          <Text
-            color={Colors.dark}
-            style={{fontFamily: 'Geomanist-Bold'}}
-            textTransform={'uppercase'}
-            fontSize={'6xl'}>
-            {userData.dispName}
-          </Text>
+          <NeuView inset height={130} borderRadius={130} width={130}>
+            <Text
+              color={Colors.dark}
+              style={{fontFamily: 'Geomanist-Bold'}}
+              textTransform={'uppercase'}
+              fontSize={'6xl'}>
+              {userData.dispName}
+            </Text>
+          </NeuView>
         )}
       </NeuView>
-      <RfBold mt={4}>{userData.first_name}</RfBold>
+      <RfBold fontSize={'3xl'} textTransform={'uppercase'} mt={4}>
+        {userData.first_name}
+      </RfBold>
       <RfText>{userData.username}</RfText>
     </Center>
   );

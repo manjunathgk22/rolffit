@@ -2,7 +2,8 @@ import {Center, Text, View, VStack} from 'native-base';
 import React, {useContext, useState, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import Loader from '../../../../components/Loader/Loader';
-import {windowHeight} from '../../../../constant/AppConstant';
+import RfBold from '../../../../components/RfBold/RfBold';
+import {windowHeight, windowWidth} from '../../../../constant/AppConstant';
 import Colors from '../../../../constant/Colors';
 import {GlobalContext} from '../../../../ContextApi/GlobalContextProvider';
 import {rateMassageApiHelper} from '../../../Home/apiService';
@@ -73,11 +74,14 @@ const MyBookings = () => {
   };
 
   return loading ? (
-    <Center flex={1}>
+    <Center minHeight={200} flex={1}>
       <Loader />
     </Center>
   ) : (
-    <Center>
+    <Center mt={8} mb={8}>
+      <View width={windowWidth - 40} justifyContent={'flex-start'}>
+        <RfBold>My Bookings</RfBold>
+      </View>
       {bookingData && bookingData.length > 0
         ? bookingData.map((booking, i) => (
             <BookingCard

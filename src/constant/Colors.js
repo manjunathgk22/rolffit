@@ -7,6 +7,6 @@ export default {
   error: '#e3324a',
   bg: '#e3edf7',
   bg_dark: '#27292c',
-  blue: '#809dff',
+  blue: '#077BFF',
   gradient: ['#50CAFF', '#077BFF', '#0478FF'],
 };

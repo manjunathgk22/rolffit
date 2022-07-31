@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   Center,
   Divider,
+  HStack,
   Icon,
   Image,
   ScrollView,
@@ -11,6 +12,7 @@ import {
 } from 'native-base';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import {AntDesign} from '@native-base/icons';
+import {Ionicons} from '@native-base/icons';
 import Colors from '../../constant/Colors';
 import {StyleSheet} from 'react-native';
 import {setLoginData} from '../../ContextApi/GlobalContext.actions';
@@ -23,6 +25,7 @@ import LogoutActionSheet from './components/LogoutActionSheet/LogoutActionSheet'
 import Profile from './components/Profile';
 import MyBookings from './components/MyBookings/MyBookings';
 import OptionsProvider from './ContextApi/OptionsProvider';
+import RfBold from '../../components/RfBold/RfBold';
 
 function Options({navigation}) {
   const [showLogout, setshowLogout] = useState(false);
@@ -32,37 +35,53 @@ function Options({navigation}) {
     <>
       <VStack
         width={windowWidth}
-        mt={4}
+        // mt={4}
         // p={4}
         flex={1}
         style={styles.container}>
         <ScrollView>
           <Profile />
-          <Divider backgroundColor={Colors.dark} mt={4} thickness={0.5} />
+          {/* <Divider backgroundColor={Colors.dark} mt={4} thickness={0.5} /> */}
           <MyBookings />
         </ScrollView>
-        <View position={'absolute'} left={5} top={0}>
-          <NeuButton
-            onPress={() => {
-              navigation.pop();
-            }}
-            height={40}
-            width={40}
-            borderRadius={50}>
-            <Icon as={AntDesign} name="arrowleft" color={Colors.dark} />
-          </NeuButton>
-        </View>
-
-        <View position={'absolute'} right={5} top={0}>
-          <NeuButton
-            onPress={() => {
-              setshowLogout(true);
-            }}
-            height={40}
-            width={40}
-            borderRadius={50}>
-            <Icon as={AntDesign} name="logout" color={Colors.dark} />
-          </NeuButton>
+        <View
+          flexDirection={'row'}
+          justifyContent={'space-between'}
+          position={'absolute'}
+          // left={5}
+          width={'100%'}
+          background={Colors.bg}
+          pt={4}
+          // top={4}
+        >
+          <HStack ml={5} alignItems={'center'}>
+            <NeuButton
+              onPress={() => {
+                navigation.pop();
+              }}
+              height={40}
+              width={40}
+              borderRadius={50}>
+              <Icon
+                as={Ionicons}
+                size={8}
+                name="ios-chevron-back"
+                color={Colors.dark}
+              />
+            </NeuButton>
+            <RfBold ml={3}>Account details</RfBold>
+          </HStack>
+          <VStack mr={5}>
+            <NeuButton
+              onPress={() => {
+                setshowLogout(true);
+              }}
+              height={40}
+              width={40}
+              borderRadius={50}>
+              <Icon as={AntDesign} name="logout" color={Colors.dark} />
+            </NeuButton>
+          </VStack>
         </View>
       </VStack>
       <LogoutActionSheet

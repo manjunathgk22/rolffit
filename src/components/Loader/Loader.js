@@ -7,7 +7,7 @@ import NeuSpinner from '../../HOC/NeuView/NeuSpinner';
 function Loader() {
   return (
     <Center flex={1}>
-      <NeuSpinner indicatorColor={Colors.dark} size={40} color={Colors.bg} />
+      <NeuSpinner indicatorColor={Colors.blue} size={40} color={Colors.bg} />
     </Center>
   );
 }
