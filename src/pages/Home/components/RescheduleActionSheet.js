@@ -4,6 +4,7 @@ import Loader from '../../../components/Loader/Loader';
 import RfBold from '../../../components/RfBold/RfBold';
 import RfText from '../../../components/RfText/RfText';
 import {windowWidth} from '../../../constant/AppConstant';
+import Colors from '../../../constant/Colors';
 import NeuButton from '../../../HOC/NeuView/NeuButton';
 import NeuView from '../../../HOC/NeuView/NeuView';
 import NavigationService from '../../../Navigator/NavigationService';
@@ -51,7 +52,7 @@ const RescheduleActionSheet = ({
     <Actionsheet hideDragIndicator isOpen={open} onClose={onClose}>
       <Actionsheet.Content padding={0}>
         {rescheduleState.loading ? (
-          <Center height={300}>
+          <Center width={'100%'} background={Colors.bg} height={300}>
             <Loader />
           </Center>
         ) : (
@@ -61,13 +62,18 @@ const RescheduleActionSheet = ({
                 <RfText>You already have a booking at </RfText>
                 <RfBold>{tConvert(currentSlot.slot.start_time)}</RfBold>
               </HStack>
-              <HStack>
-                <RfText>Do you want to reschedult it to </RfText>
+              <HStack mt={0}>
+                <RfText>Do you want to reschedule it to </RfText>
                 <RfBold>{tConvert(newSlot.slot.start_time)}</RfBold>
               </HStack>
               <Center mt={6}>
-                <NeuButton onPress={onReschedule} height={40} width={120}>
-                  <RfBold>Reschedule</RfBold>
+                <NeuButton
+                  convex={true}
+                  customGradient={Colors.gradient}
+                  onPress={onReschedule}
+                  height={44}
+                  width={150}>
+                  <RfBold color={Colors.white}>Reschedule</RfBold>
                 </NeuButton>
               </Center>
             </VStack>
