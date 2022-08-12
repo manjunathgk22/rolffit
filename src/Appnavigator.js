@@ -16,11 +16,30 @@ import Options from './pages/Options/Options';
 import routes from './Navigator/routes';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import BookedScreen from './pages/BookedScreen/BookedScreen';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 const Stack = createNativeStackNavigator();
 
 function Appnavigator() {
   const {globalStore, globalDispatch} = useContext(GlobalContext);
+
+  useEffect(() => {
+    dynamicLinks().onLink(link => {
+      if (link) {
+        console.log('dynamiclinnk', link);
+        // handleDeepLinknavigation(link.url);
+      }
+    });
+    dynamicLinks()
+      .getInitialLink()
+      .then(link => {
+        console.log('dynamiclinnk2', link);
+        if (link) {
+          // handleDeepLinknavigation(link.url);
+        }
+      });
+  }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer
