@@ -58,11 +58,13 @@ const theme = extendTheme({
     comfortaa: 'comfortaa',
   },
 });
-GoogleSignin.configure();
+GoogleSignin.configure({
+  scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+  webClientId:
+    '982846620366-ruah2ibtqp8d33ontrt0qai4q4ju1av1.apps.googleusercontent.com',
+});
 const App = () => {
-  useEffect(() => {
-    GoogleSignin.configure();
-  }, []);
+  useEffect(() => {}, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <NativeBaseProvider theme={theme}>
