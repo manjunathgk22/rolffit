@@ -59,7 +59,7 @@ const theme = extendTheme({
   },
 });
 GoogleSignin.configure({
-  scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+  // scopes: ['https://www.googleapis.com/auth/drive.readonly'],
   webClientId:
     '982846620366-ruah2ibtqp8d33ontrt0qai4q4ju1av1.apps.googleusercontent.com',
 });
