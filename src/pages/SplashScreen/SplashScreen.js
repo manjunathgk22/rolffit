@@ -20,7 +20,7 @@ function SplashScreen() {
     getLoginData();
     setTimeout(() => {
       setrender(true);
-    }, 4000);
+    }, 3800);
   }, []);
 
   const getLoginData = async () => {
@@ -31,7 +31,7 @@ function SplashScreen() {
   };
 
   return !render ? (
-    <Center backgroundColor={Colors.bg}>
+    <Center backgroundColor={Colors.white}>
       <Image
         resizeMode={'contain'}
         style={{width: '150%', height: '150%', marginTop: '-50%'}}

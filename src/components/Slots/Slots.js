@@ -3,7 +3,7 @@ import {Center, HStack, Text, View, VStack} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {windowHeight} from '../../constant/AppConstant';
+import {windowHeight, windowWidth} from '../../constant/AppConstant';
 import Colors from '../../constant/Colors';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import NeuButton from '../../HOC/NeuView/NeuButton';
@@ -94,11 +94,11 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
     <View
       style={{
         height: futureBookingData?.length
-          ? windowHeight - (320 + 140)
+          ? windowHeight - (320 + 0)
           : windowHeight - 320,
       }}>
       <ScrollView contentContainerStyle={{flexGrow: 0}}>
-        <VStack>
+        <VStack pb={10}>
           <HStack mt={6} pl={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
             {selectedDateSlots.map((item, i) => (
               <NeuButton
@@ -110,16 +110,28 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
                   ? {convex: true, customGradient: Colors.gradient}
                   : {})}
                 key={i}
-                width={95}
+                flex={1}
+                flexBasis={10}
+                width={windowWidth < 380 ? 85 : 95}
                 borderRadius={8}
                 height={50}
+                {...(item.has_user_booked
+                  ? {convex: true, customGradient: Colors.gradient}
+                  : {})}
                 style={{
                   marginBottom: 15,
                   marginRight: (i + 1) % 3 === 0 ? 0 : 10,
                   marginLeft: i % 3 === 0 ? 5 : 0,
                 }}>
-                {item.isSelected ? (
-                  <RfBold color={Colors.white}>{item.slot.time}</RfBold>
+                {item.isSelected || item.has_user_booked ? (
+                  <RfBold
+                    textAlign="center"
+                    lineHeight={23}
+                    color={Colors.white}>
+                    {item.has_user_booked
+                      ? 'Booked ' + item.slot.time
+                      : item.slot.time}
+                  </RfBold>
                 ) : (
                   <RfText fontWeight={'bold'}>{item.slot.time}</RfText>
                 )}

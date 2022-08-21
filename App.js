@@ -73,7 +73,7 @@ const App = () => {
             translucent={true}
             animated={true}
             backgroundColor={Colors.bg}
-            barStyle="dark-content"
+            barStyle="light-content"
             hidden={false}
           />
           <SplashScreen />

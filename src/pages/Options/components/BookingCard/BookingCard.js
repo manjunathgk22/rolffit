@@ -16,7 +16,7 @@ const BookingCard = ({booking, index, handleRating}) => {
   return (
     <Center mt={4} width={windowWidth}>
       <NeuView
-        height={!(booking?.rating_and_reviews?.rating || index) ? 135 : 85}
+        height={booking.show_nps ? 135 : 85}
         width={windowWidth - 40}
         borderRadius={8}>
         <VStack height={'100%'} py={4}>
@@ -31,34 +31,45 @@ const BookingCard = ({booking, index, handleRating}) => {
               </NeuView>
               <VStack ml={4}>
                 <RfText>
-                  {moment(booking.slot_session.date, 'yyyy-mm-dd').format(
-                    'DD MMM',
+                  {moment(booking.slot_session.date, 'YYYY-MM-DD').format(
+                    'Do MMM',
                   )}
                 </RfText>
-                <RfBold mt={-2}>
+                <RfBold mt={-1}>
                   {tConvert(booking.slot_session.slot.start_time)}
+                  {' - '}
+                  {tConvert(booking.slot_session.slot.end_time)}
                 </RfBold>
               </VStack>
             </View>
             {booking?.rating_and_reviews?.rating ? (
               <Image
+                mt={2}
                 style={styles.icon}
                 source={starMapping[booking?.rating_and_reviews?.rating]?.url}
               />
             ) : null}
           </HStack>
-          {!(booking?.rating_and_reviews?.rating || index) ? (
+          {booking.show_nps ? (
             <HStack mt={2} flex={1} justifyContent={'space-around'}>
               {nps.reverse().map(smiley => (
                 <TouchableOpacity
                   onPress={() => {
                     handleRating(booking, smiley.star);
                   }}>
-                  <Image style={styles.icon} source={smiley.url} />
+                  <VStack alignItems={'center'}>
+                    <Image style={styles.icon} source={smiley.url} />
+                    {/* <RfText>{smiley.text}</RfText> */}
+                  </VStack>
                 </TouchableOpacity>
               ))}
             </HStack>
           ) : null}
+          <View position={'absolute'} right={0} top={1}>
+            <RfBold fontSize={14} color={Colors.white}>
+              {booking.status_display}
+            </RfBold>
+          </View>
         </VStack>
       </NeuView>
     </Center>
@@ -78,6 +89,7 @@ const nps = [
   {
     url: require('../../../../assets/images/star.png'),
     star: 5,
+    text: 'Loved it!',
   },
   {
     url: require('../../../../assets/images/hello.png'),

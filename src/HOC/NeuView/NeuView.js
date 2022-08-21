@@ -19,7 +19,7 @@ const NeuView = props => {
     customDarkShadow = {},
     customInsetLightShadow = {},
     customInsetDarkShadow = {},
-    customGradient,
+    customGradient = Colors.darkGradient,
     borderRadius = 0,
     inset,
     convex,
@@ -31,7 +31,7 @@ const NeuView = props => {
 
   const {h, s, l} = hexToHsl(color);
   const light = hslToHex(h - 2 < 0 ? 0 : h - 2, s, l + 5 > 100 ? 100 : l + 5);
-  const dark = hslToHex(h, s, l - 8 < 0 ? 0 : l - 20);
+  const dark = hslToHex(h, s, l - 20 < 0 ? 0 : l - 20);
   const mid = hslToHex(h, s, l - 5 < 0 ? 0 : l - 5);
 
   const lightSetting = {
@@ -130,13 +130,13 @@ const NeuView = props => {
       );
     }
 
-    if (convex) {
+    if (convex || true) {
       return (
         <>
           <LinearGradient
             colors={customGradient ? customGradient : [light, mid]}
             useAngle={true}
-            angle={145}
+            angle={180}
             angleCenter={{x: 0.5, y: 0.5}}
             style={{
               borderRadius,

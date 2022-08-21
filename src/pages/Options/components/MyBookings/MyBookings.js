@@ -77,7 +77,7 @@ const MyBookings = () => {
     <Center minHeight={200} flex={1}>
       <Loader />
     </Center>
-  ) : (
+  ) : bookingData && bookingData.length > 0 ? (
     <Center mt={8} mb={8}>
       <View width={windowWidth - 40} justifyContent={'flex-start'}>
         <RfBold>My Bookings</RfBold>
@@ -92,7 +92,7 @@ const MyBookings = () => {
           ))
         : null}
     </Center>
-  );
+  ) : null;
 };
 
 export default MyBookings;

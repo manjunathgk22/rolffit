@@ -22,8 +22,10 @@ import {rescheduleApiHelper} from '../../pages/Home/apiService';
 import ToastMessage from '../ToastMessage/ToastMessage';
 import Loader from '../Loader/Loader';
 import GenericPopup from '../GenericPopup/GenericPopup';
+import moment from 'moment';
 
 const FutureBookingCard = ({time, getData, booking}) => {
+  console.log('qwqw', booking.slot_session.slot_start_time);
   const [loading, setloading] = useState(false);
   const [showCancelPopup, setshowCancelPopup] = useState(false);
   const toast = useToast();
@@ -48,6 +50,7 @@ const FutureBookingCard = ({time, getData, booking}) => {
     }
     setloading(false);
   };
+
   return (
     <NeuView height={140} borderRadius={8} width={windowWidth - 40}>
       <Center>
@@ -76,14 +79,21 @@ const FutureBookingCard = ({time, getData, booking}) => {
                       />
                     </NeuView>
                     <View>
-                      <RfText ml={5}>Upcoming relaxation </RfText>
-                      <GradientText
-                        ml={5}
-                        fontWeight={'bold'}
-                        fontSize={'lg'}
-                        colors={Colors.gradient.reverse()}>
-                        {time}
-                      </GradientText>
+                      <RfText ml={5}>Upcoming booking </RfText>
+                      <HStack alignItems={'baseline'}>
+                        <GradientText
+                          ml={5}
+                          fontWeight={'bold'}
+                          fontSize={'lg'}
+                          colors={Colors.gradient.reverse()}>
+                          {time}
+                        </GradientText>
+                        <RfText ml={2} fontSize="sm">
+                          {moment(booking.slot_session.slot_start_time).format(
+                            'Do MMM',
+                          )}
+                        </RfText>
+                      </HStack>
                     </View>
                   </HStack>
                 </NeuView>

@@ -31,6 +31,7 @@ import {
 } from '../ContextApi/Home.actions';
 import {HomeContext} from '../ContextApi/HomeProvider';
 import {AntDesign} from '@native-base/icons';
+import moment from 'moment';
 
 const TherapistHome = ({navigation}) => {
   const {
@@ -109,7 +110,7 @@ const TherapistHome = ({navigation}) => {
             {therapistData.map((slot, i) => (
               <VStack mt={4}>
                 <NeuView
-                  height={i === 0 ? 150 : 100}
+                  height={i === 0 ? 170 : 120}
                   borderRadius={8}
                   width={windowWidth - 60}>
                   <VStack
@@ -128,6 +129,11 @@ const TherapistHome = ({navigation}) => {
                           {tConvert(slot.slot_session.slot?.start_time)}
                         </RfBold>
                       </HStack>
+                      <RfText ml={2} fontSize="sm">
+                        {moment(slot.slot_session.slot_start_time).format(
+                          'Do MMM',
+                        )}
+                      </RfText>
                     </Center>
                     {i === 0 ? (
                       <HStack

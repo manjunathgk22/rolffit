@@ -2,6 +2,7 @@ import {Center, HStack, Text, View, VStack} from 'native-base';
 import React, {useContext, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {windowWidth} from '../../constant/AppConstant';
+import Colors from '../../constant/Colors';
 import NeuBorderView from '../../HOC/NeuView/NeuBorderView';
 import NeuButton from '../../HOC/NeuView/NeuButton';
 import NeuView from '../../HOC/NeuView/NeuView';
@@ -32,9 +33,11 @@ const Tabs = ({tabSelect, settabSelect}) => {
             <NeuButton height={50} width={TOMORROW?.slot_sessions ? 160 : 315}>
               <VStack>
                 <Center>
-                  <RfBold>{TODAY.title}</RfBold>
+                  <RfBold color={Colors.blue}>{TODAY.title}</RfBold>
                   {TODAY.sub_title ? (
-                    <RfBold fontSize="xs">{TODAY.sub_title}</RfBold>
+                    <RfBold color={Colors.blue} fontSize="xs">
+                      {TODAY.sub_title}
+                    </RfBold>
                   ) : null}
                 </Center>
               </VStack>
@@ -44,23 +47,21 @@ const Tabs = ({tabSelect, settabSelect}) => {
               onPress={() => {
                 settabSelect(1);
               }}>
-              <VStack>
-                <Center width={TOMORROW?.slot_sessions ? 160 : 315} mt={2}>
+              <Center width={TOMORROW?.slot_sessions ? 160 : 315}>
+                <RfText
+                  style={{fontFamily: 'Comfortaa-Bold'}}
+                  textAlign="center">
+                  {TODAY.title}
+                </RfText>
+                {TODAY.sub_title ? (
                   <RfText
+                    fontSize="xs"
                     style={{fontFamily: 'Comfortaa-Bold'}}
                     textAlign="center">
-                    {TODAY.title}
+                    {TODAY.sub_title}
                   </RfText>
-                  {TODAY.sub_title ? (
-                    <RfText
-                      fontSize="xs"
-                      style={{fontFamily: 'Comfortaa-Bold'}}
-                      textAlign="center">
-                      {TODAY.sub_title}
-                    </RfText>
-                  ) : null}
-                </Center>
-              </VStack>
+                ) : null}
+              </Center>
             </TouchableOpacity>
           )}
           {TOMORROW?.slot_sessions ? (
@@ -69,9 +70,11 @@ const Tabs = ({tabSelect, settabSelect}) => {
                 <NeuButton height={50} width={160}>
                   <VStack>
                     <Center>
-                      <RfBold>{TOMORROW.title}</RfBold>
+                      <RfBold color={Colors.blue}>{TOMORROW.title}</RfBold>
                       {TOMORROW.sub_title ? (
-                        <RfBold fontSize="xs">{TOMORROW.sub_title}</RfBold>
+                        <RfBold color={Colors.blue} fontSize="xs">
+                          {TOMORROW.sub_title}
+                        </RfBold>
                       ) : null}
                     </Center>
                   </VStack>
@@ -81,23 +84,21 @@ const Tabs = ({tabSelect, settabSelect}) => {
                   onPress={() => {
                     settabSelect(2);
                   }}>
-                  <VStack>
-                    <Center width={160} mt={2}>
+                  <Center width={160}>
+                    <RfText
+                      style={{fontFamily: 'Comfortaa-Bold'}}
+                      textAlign="center">
+                      {TOMORROW.title}
+                    </RfText>
+                    {TOMORROW.sub_title ? (
                       <RfText
+                        fontSize="xs"
                         style={{fontFamily: 'Comfortaa-Bold'}}
                         textAlign="center">
-                        {TOMORROW.title}
+                        {TOMORROW.sub_title}
                       </RfText>
-                      {TOMORROW.sub_title ? (
-                        <RfText
-                          fontSize="xs"
-                          style={{fontFamily: 'Comfortaa-Bold'}}
-                          textAlign="center">
-                          {TOMORROW.sub_title}
-                        </RfText>
-                      ) : null}
-                    </Center>
-                  </VStack>
+                    ) : null}
+                  </Center>
                 </TouchableOpacity>
               )}
             </>

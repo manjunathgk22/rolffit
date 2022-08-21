@@ -64,7 +64,7 @@ export const bookSlotApiHelper = async slotId => {
   if (response.status_code === STATUS.SUCCESS) {
     return response.data;
   } else {
-    return false;
+    return response.data;
   }
 };
 

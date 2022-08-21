@@ -1,5 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Center, HStack, View, Image, Text, useToast, VStack} from 'native-base';
+import {
+  Center,
+  HStack,
+  View,
+  Image,
+  Text,
+  useToast,
+  VStack,
+  Icon,
+} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import Colors from '../../constant/Colors';
@@ -45,6 +54,8 @@ import {constainerStyle} from '../../utility/Styles';
 import NotOurPratner from './components/NotOurPratner';
 import {sendEvent} from './util';
 import {LAND_ON_HOME} from '../../constant/analyticsConstant';
+import Entypo from 'react-native-vector-icons/Entypo';
+
 function HomeScreen({navigation}) {
   const {
     homeStore: {
@@ -67,7 +78,7 @@ function HomeScreen({navigation}) {
   const errorToast = msg => {
     toast.show({
       render: () => {
-        return <ToastMessage text={msg} />;
+        return <ToastMessage width={300} viewProps={{p: 2}} text={msg} />;
       },
     });
   };
@@ -133,7 +144,8 @@ function HomeScreen({navigation}) {
         selectedSlot,
       });
     } else {
-      errorToast(res.error?.message);
+      console.log('1212', res);
+      errorToast(res.error);
     }
     setapiLoading(false);
   };
@@ -144,17 +156,34 @@ function HomeScreen({navigation}) {
     <NotOurPratner navigation={navigation} />
   ) : !isObjectEmpty(loginData?.user.employee) ? (
     <VStack p={4} flex={1} backgroundColor={Colors.bg}>
-      <HStack>
-        <NeuButton
+      <HStack justifyContent={'space-between'} alignItems={'center'}>
+        <HStack alignItems={'center'}>
+          <NeuButton
+            onPress={() => {
+              NavigationService.navigate(routes.Options);
+            }}
+            height={40}
+            width={40}
+            borderRadius={50}>
+            {/* <Icon as={SimpleLineIcons} name="menu" color={Colors.white} /> */}
+            <Image source={require('../../assets/images/menu.png')} />
+          </NeuButton>
+          <RfBold ml={4}>Book your slot </RfBold>
+        </HStack>
+        <HStack alignItems={'center'}>
+          <Icon as={Entypo} name="location" color={Colors.white} />
+          <RfBold ml={2}>{loginData?.user?.business_partner?.name}</RfBold>
+        </HStack>
+
+        {/* <NeuButton
           onPress={() => {
             NavigationService.navigate(routes.Options);
           }}
           height={40}
           width={40}
           borderRadius={50}>
-          {/* <Icon as={SimpleLineIcons} name="menu" color={Colors.dark} /> */}
           <Image source={require('../../assets/images/menu.png')} />
-        </NeuButton>
+        </NeuButton> */}
       </HStack>
       <Center paddingX={4} mt={2}>
         <FutureBooking getData={getData} />
@@ -198,7 +227,7 @@ function HomeScreen({navigation}) {
               {...(true ? {convex: true, customGradient: Colors.gradient} : {})}
               onPress={handleBooking}>
               {apiLoading ? (
-                <SimpleLoader />
+                <SimpleLoader color={Colors.white} />
               ) : selectedSlot ? (
                 <RfBold color={Colors.white}>Confirm Booking</RfBold>
               ) : (

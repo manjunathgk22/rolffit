@@ -83,6 +83,7 @@ const CoworkingModal = ({onClose}) => {
                   keyboardType: 'number',
                   // autoFocus: true,
                   color: Colors.dark,
+                  placeholderTextColor: Colors.dark,
                   textAlign: 'center',
                   placeholder: 'Enter code',
                 }}

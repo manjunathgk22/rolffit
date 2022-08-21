@@ -32,8 +32,13 @@ const BookedScreen = ({navigation, route: {params}}) => {
         <RfBold mt={4} fontSize="3xl">
           Congratulation
         </RfBold>
-        <HStack mt={2}>
-          <RfText>You have booked a session at {` `}</RfText>
+        <HStack
+          maxWidth={windowWidth - 40}
+          flexWrap={'wrap'}
+          justifyContent={'center'}
+          textAlign="center"
+          mt={2}>
+          <RfText>You have booked a session at </RfText>
           <RfBold>{tConvert(selectedSlot?.slot.start_time)}</RfBold>
         </HStack>
         <VStack mt={8}>
