@@ -17,26 +17,43 @@ import routes from './Navigator/routes';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import BookedScreen from './pages/BookedScreen/BookedScreen';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
+import {storeData} from './utility/StorageUtility';
+import {URL, URLSearchParams} from 'react-native-url-polyfill';
+import {BUSINESS_PARTNER_ID} from './constant/AppConstant';
 
 const Stack = createNativeStackNavigator();
 
 function Appnavigator() {
   const {globalStore, globalDispatch} = useContext(GlobalContext);
 
-  useEffect(() => {
-    dynamicLinks().onLink(link => {
-      if (link) {
-        console.log('dynamiclinnk', link);
-        // handleDeepLinknavigation(link.url);
+  const handleDeeplink = async link => {
+    if (link) {
+      console.log('dynamiclinnk', link);
+      if (link.url) {
+        const url = new URL(link.url);
+        const urlParams = new URLSearchParams(url.search);
+        console.log('dynamiclinnk2323', link.url);
+        try {
+          const businessPartner = urlParams.get('unique_code');
+          console.log('dynamiclinnk333', businessPartner);
+          await storeData({key: BUSINESS_PARTNER_ID, value: businessPartner});
+        } catch (error) {
+          console.log('dynamiclinnk333444', error);
+        }
       }
+      // handleDeepLinknavigation(link.url);
+    }
+  };
+
+  useEffect(() => {
+    dynamicLinks().onLink(async link => {
+      handleDeeplink(link);
     });
     dynamicLinks()
       .getInitialLink()
-      .then(link => {
+      .then(async link => {
         console.log('dynamiclinnk2', link);
-        if (link) {
-          // handleDeepLinknavigation(link.url);
-        }
+        await handleDeeplink(link);
       });
   }, []);
 

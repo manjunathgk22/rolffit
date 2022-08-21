@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, StyleSheet, View } from 'react-native';
+import {TextInput, StyleSheet, View} from 'react-native';
 import NeuView from './NeuView';
 import PropTypes from 'prop-types';
 
@@ -11,43 +11,43 @@ const NeuInput = props => {
     onChangeText = () => {},
     value = '',
     prefix: Prefix,
+    inputProps = {},
     ...rest
   } = props;
 
   const styles = StyleSheet.create({
     input: {
       borderBottomWidth: 0,
-      flex: 1
-    }
+      flex: 1,
+    },
   });
 
   return (
-    <NeuView {...rest} style={{ ...style, alignItems: 'stretch' }} inset>
+    <NeuView {...rest} style={{...style, alignItems: 'stretch'}} inset>
       <View
         style={{
           flexDirection: 'row',
-          paddingHorizontal: 12
-        }}
-      >
+          paddingHorizontal: 12,
+        }}>
         {Prefix && (
           <View
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              marginRight: 6
-            }}
-          >
+              marginRight: 6,
+            }}>
             {Prefix}
           </View>
         )}
         <TextInput
           style={{
             ...styles.input,
-            ...textStyle
+            ...textStyle,
           }}
           onChangeText={onChangeText}
           placeholder={placeholder}
           value={value}
+          {...inputProps}
         />
       </View>
     </NeuView>
@@ -60,6 +60,6 @@ NeuInput.propTypes = {
   placeholder: PropTypes.string,
   onChangeText: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  ...NeuView.propTypes
+  ...NeuView.propTypes,
 };
 export default NeuInput;

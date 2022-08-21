@@ -12,7 +12,8 @@
     "bundle-release": "cd android/ && ./gradlew clean && ./gradlew bundleRelease",
     "build-release": "cd android/ && ./gradlew clean && ./gradlew assembleRelease",
     "code-push-prod": "appcenter codepush release-react -a manjunathgk/rolf.fit -d Production",
-    "code-push-stag": "appcenter codepush release-react -a manjunathgk/rolf.fit -d Staging"
+    "code-push-stag": "appcenter codepush release-react -a manjunathgk/rolf.fit -d Staging",
+    "report": "cd android && ./gradlew signingReport"
   },
   "dependencies": {
     "@native-base/icons": "^0.0.11",
@@ -20,7 +21,7 @@
     "@react-native-community/masked-view": "0.1.11",
     "@react-native-community/push-notification-ios": "^1.10.1",
     "@react-native-firebase/analytics": "^14.7.0",
-    "@react-native-firebase/app": "^14.7.0",
+    "@react-native-firebase/app": "15.3.0",
     "@react-native-firebase/dynamic-links": "^14.7.0",
     "@react-native-firebase/messaging": "^14.7.0",
     "@react-native-google-signin/google-signin": "^7.2.2",
@@ -30,6 +31,7 @@
     "@react-navigation/native-stack": "^6.6.1",
     "axios": "0.27.2",
     "axios-retry": "3.3.0",
+    "email-providers": "1.13.1",
     "immer": "^9.0.15",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "5.1.3",
@@ -48,9 +50,13 @@
     "react-native-screens": "^3.13.1",
     "react-native-snap-carousel": "3.9.1",
     "react-native-svg": "12.3.0",
+    "react-native-url-polyfill": "1.3.0",
     "react-native-vector-icons": "^9.1.0",
     "react-native-webview": "11.22.4",
-    "reactotron-react-native": "^5.0.1"
+    "reactotron-react-native": "^5.0.1",
+    "rn-async-storage-flipper": "0.0.10",
+    "tld-extract": "2.0.1",
+    "url": "0.11.0"
   },
   "resolutions": {
     "react": "17.0.2"

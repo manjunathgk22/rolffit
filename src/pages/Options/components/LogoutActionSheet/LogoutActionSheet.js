@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Actionsheet, HStack, VStack} from 'native-base';
 import NeuView from '../../../../HOC/NeuView/NeuView';
 import {LOGIN_DATA, windowWidth} from '../../../../constant/AppConstant';
@@ -9,10 +9,14 @@ import {removeData} from '../../../../utility/StorageUtility';
 import {GlobalContext} from '../../../../ContextApi/GlobalContextProvider';
 import {setLoginData} from '../../../../ContextApi/GlobalContext.actions';
 import routes from '../../../../Navigator/routes';
+import {sendEvent} from '../../../Home/util';
+import {LAND_ON_LOGOUT} from '../../../../constant/analyticsConstant';
 
 const LogoutActionSheet = ({showLogout, setshowLogout, navigation}) => {
   const {globalDispatch} = useContext(GlobalContext);
-
+  useEffect(() => {
+    sendEvent({event: LAND_ON_LOGOUT});
+  }, []);
   const handleLogout = async () => {
     await removeData({key: LOGIN_DATA});
     globalDispatch(setLoginData(null));

@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {printLog} from '../../utility/AppUtility';
+import analytics from '@react-native-firebase/analytics';
 
 export const DAY = {
   Sunday: 0,
@@ -25,4 +26,16 @@ export const getDates = () => {
   }
   printLog(dates);
   return dates;
+};
+
+export const sendEvent = async ({event = 'nothing', data = {}}) => {
+  try {
+    await analytics().logEvent(event, {
+      ...(global.userData ? global.userData : {}),
+      ...data,
+    });
+    console.error('qqqq', 'done');
+  } catch (error) {
+    console.error('qqqq', error);
+  }
 };

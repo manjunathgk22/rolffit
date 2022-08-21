@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Center, HStack, Icon, Image, Text, useToast, VStack} from 'native-base';
+import {Center, HStack, View, Image, Text, useToast, VStack} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import Colors from '../../constant/Colors';
@@ -26,7 +26,7 @@ import {
   getSlotsApiHelper,
 } from './apiService';
 import RfBold from '../../components/RfBold/RfBold';
-import {View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {LOGIN_DATA, windowWidth} from '../../constant/AppConstant';
 import RfText from '../../components/RfText/RfText';
 import SimpleLoader from '../../components/SimpleLoader/SimpleLoader';
@@ -40,6 +40,11 @@ import {removeData} from '../../utility/StorageUtility';
 import {setLoginData} from '../../ContextApi/GlobalContext.actions';
 import RescheduleActionSheet from './components/RescheduleActionSheet';
 import TherapistHome from './components/TherapistHome';
+import NeuView from '../../HOC/NeuView/NeuView';
+import {constainerStyle} from '../../utility/Styles';
+import NotOurPratner from './components/NotOurPratner';
+import {sendEvent} from './util';
+import {LAND_ON_HOME} from '../../constant/analyticsConstant';
 function HomeScreen({navigation}) {
   const {
     homeStore: {
@@ -67,6 +72,10 @@ function HomeScreen({navigation}) {
     });
   };
   const isFocused = useIsFocused();
+
+  useEffect(() => {
+    sendEvent({event: LAND_ON_HOME});
+  }, []);
 
   useEffect(() => {
     if (!isObjectEmpty(loginData?.user.employee)) {
@@ -129,24 +138,10 @@ function HomeScreen({navigation}) {
     setapiLoading(false);
   };
 
-  const handleLogout = async () => {
-    await removeData({key: LOGIN_DATA});
-    globalDispatch(setLoginData(null));
-    navigation.reset({
-      index: 0,
-      routes: [{name: routes.Signin}],
-    });
-  };
-
   return isObjectEmpty(loginData?.user.employee) &&
     isObjectEmpty(loginData?.user.therapist) ? (
     // not our customer flow
-    <Center flex={1} backgroundColor={Colors.bg}>
-      <RfBold>You are not ROLF.FIT partner</RfBold>
-      <NeuButton onPress={handleLogout} height={50}>
-        <RfBold>Logout</RfBold>
-      </NeuButton>
-    </Center>
+    <NotOurPratner navigation={navigation} />
   ) : !isObjectEmpty(loginData?.user.employee) ? (
     <VStack p={4} flex={1} backgroundColor={Colors.bg}>
       <HStack>
@@ -162,9 +157,9 @@ function HomeScreen({navigation}) {
         </NeuButton>
       </HStack>
       <Center paddingX={4} mt={2}>
-        <FutureBooking />
+        <FutureBooking getData={getData} />
         {loading ? (
-          <View height={300}>
+          <View height={380}>
             <Loader />
           </View>
         ) : (
@@ -175,25 +170,6 @@ function HomeScreen({navigation}) {
               selectedSlot={selectedSlot}
               tabSelect={tabSelect}
             />
-            <Center opacity={selectedSlot ? 1 : 0.5} mt={3}>
-              <NeuButton
-                active={!selectedSlot}
-                borderRadius={8}
-                height={40}
-                width={windowWidth - 60}
-                {...(true
-                  ? {convex: true, customGradient: Colors.gradient}
-                  : {})}
-                onPress={handleBooking}>
-                {apiLoading ? (
-                  <SimpleLoader />
-                ) : selectedSlot ? (
-                  <RfBold color={Colors.white}>Confirm Booking</RfBold>
-                ) : (
-                  <RfBold color={Colors.white}>Confirm Booking</RfBold>
-                )}
-              </NeuButton>
-            </Center>
           </VStack>
         )}
       </Center>
@@ -206,6 +182,32 @@ function HomeScreen({navigation}) {
           onClose={() => setshowReschedulePopup(false)}
         />
       ) : null}
+      {loading ? null : (
+        <View
+          position={'absolute'}
+          bottom={0}
+          width={windowWidth}
+          pb={2}
+          bg={Colors.bg}>
+          <Center opacity={selectedSlot ? 1 : 0.5} mt={3}>
+            <NeuButton
+              active={!selectedSlot}
+              borderRadius={8}
+              height={40}
+              width={windowWidth - 60}
+              {...(true ? {convex: true, customGradient: Colors.gradient} : {})}
+              onPress={handleBooking}>
+              {apiLoading ? (
+                <SimpleLoader />
+              ) : selectedSlot ? (
+                <RfBold color={Colors.white}>Confirm Booking</RfBold>
+              ) : (
+                <RfBold color={Colors.white}>Confirm Booking</RfBold>
+              )}
+            </NeuButton>
+          </Center>
+        </View>
+      )}
     </VStack>
   ) : (
     <TherapistHome navigation={navigation} />
@@ -218,3 +220,13 @@ const WrappedHomeScreen = props => (
   </HomeProvider>
 );
 export default WrappedHomeScreen;
+
+const styles = StyleSheet.create({
+  container: constainerStyle,
+  image: {
+    height: '100%',
+  },
+  google: {
+    height: 30,
+  },
+});

@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:982846620366:android:64a99b2b76b020f649c69f",
+        "mobilesdk_app_id": "1:982846620366:android:e0b4a70484d2b3b549c69f",
         "android_client_info": {
           "package_name": "com.rolffit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "982846620366-2glsmmcip09q153i1koo9kjt8a6rf64u.apps.googleusercontent.com",
+          "client_id": "982846620366-46ijkqnb0ecv8qvvdd3sfb199njgl267.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rolffit",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "982846620366-jh09se4v7758862elmp5hj5iqpe3ujg0.apps.googleusercontent.com",
+          "client_id": "982846620366-7h11kv12glgdl1e4uopv0mvin476s6u1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rolffit",

@@ -47,13 +47,8 @@ initApiClients();
  *
  */
 export const callAPIs = async apiMethodToCall => {
-  console.log('11');
   try {
-    console.log('22');
-
     const response = {...(await apiMethodToCall)};
-    console.log('44');
-
     apiResponse.status_code = response.status;
     if (response.data.error != null) {
       apiResponse.status = STATUS.ERROR;
@@ -65,8 +60,6 @@ export const callAPIs = async apiMethodToCall => {
       return apiResponse;
     }
   } catch (error) {
-    console.log('33');
-
     printLog(error);
     if (error.response) {
       apiResponse.data = error.response.data;
@@ -120,3 +113,6 @@ export const employeeCheckoutApi = json => {
 export const rateMassageApi = json => {
   return userApiClient.post('rolffit/ratingreview/v1/', json);
 };
+
+export const setUniqueCode = json =>
+  userApiClient.post('rolffit/centraluser/app/unique-code/', json);

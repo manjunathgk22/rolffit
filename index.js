@@ -17,17 +17,21 @@ import 'react-native-gesture-handler';
 import {LogBox} from 'react-native';
 import {getData} from './src/utility/StorageUtility';
 import {callAPIs, sendFCMToken} from './src/api/apiRequest';
+import RNAsyncStorageFlipper from 'rn-async-storage-flipper';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreLogs(['Could not']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
-if (__DEV__) {
-  import('./ReactotronConfig');
-}
+// if (__DEV__) {
+//   import('./ReactotronConfig');
+// }
+
+global.userData = null;
+RNAsyncStorageFlipper(AsyncStorage);
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   largeIcon: 'ic_launcher_round',
-  smallIcon: 'ic_notification_foreground',
+  smallIcon: 'ic_launcher_round',
   foreground: true,
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {

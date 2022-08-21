@@ -11,8 +11,13 @@ import {printLog} from '../../utility/AppUtility';
 import Loader from '../../components/Loader/Loader';
 import {createUser} from './apiService';
 import Colors from '../../constant/Colors';
-import {storeData} from '../../utility/StorageUtility';
 import {
+  getData,
+  removeSingleData,
+  storeData,
+} from '../../utility/StorageUtility';
+import {
+  BUSINESS_PARTNER_ID,
   LOGIN_DATA,
   windowHeight,
   windowWidth,
@@ -28,6 +33,12 @@ import RfBold from '../../components/RfBold/RfBold';
 import NeuButton from '../../HOC/NeuView/NeuButton';
 import RfText from '../../components/RfText/RfText';
 import ToastMessage from '../../components/ToastMessage/ToastMessage';
+import {sendEvent} from '../Home/util';
+import {
+  LAND_ON_SIGNIN,
+  SIGNIN_FAIL,
+  SIGNIN_SUCCESS,
+} from '../../constant/analyticsConstant';
 
 export function Signin({navigation}) {
   const {globalStore, globalDispatch} = useContext(GlobalContext);
@@ -41,18 +52,31 @@ export function Signin({navigation}) {
     });
   };
 
+  useEffect(() => {
+    sendEvent({event: LAND_ON_SIGNIN});
+  }, []);
+
   const signIn = async () => {
     try {
       setsigninDisabled(true);
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      // store it in global for analytics
+      global.userData = userInfo.user;
       printLog(userInfo.user);
+      sendEvent({event: SIGNIN_SUCCESS});
+      const businessPartner = await getData({key: BUSINESS_PARTNER_ID});
+      console.log('dynamiclinnk6666333', businessPartner);
       const res = await createUser({
-        username: userInfo.user?.email,
+        username: '123@test.com',
         first_name: userInfo.user?.name,
         photo_url: userInfo.user?.photo,
+        ...(businessPartner ? {unique_code: +businessPartner} : {}),
       });
-      printLog('qwqwqw', res);
+      if (businessPartner) {
+        removeSingleData({key: BUSINESS_PARTNER_ID});
+      }
+      // printLog('qwqwqw', res);
       if (res) {
         storeData({key: LOGIN_DATA, value: res});
         globalDispatch(setLoginData(res));
@@ -63,6 +87,7 @@ export function Signin({navigation}) {
       }
       // globalDispatch(setLoginData(userInfo.user));
     } catch (error) {
+      sendEvent({event: SIGNIN_FAIL});
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         printLog('user cancelled the login flow');
         // user cancelled the login flow
@@ -94,7 +119,7 @@ export function Signin({navigation}) {
             <Image
               source={require('../../assets/images/kind.png')}
               style={styles.image}
-              resizeMode={'contain'}
+              resizeMode={'cover'}
             />
           </NeuView>
           <RfBold textAlign={'center'} fontSize={'4xl'}>

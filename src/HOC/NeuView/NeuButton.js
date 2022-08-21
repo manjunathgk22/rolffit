@@ -18,6 +18,7 @@ const NeuButton = props => {
     accessibilityStates,
     accessibilityLabel,
     testID,
+    borderRadius = 8,
   } = props;
 
   const pressOut = () => {
@@ -60,7 +61,7 @@ const NeuButton = props => {
         <View>
           <NeuView
             {...props}
-            borderRadius={8}
+            borderRadius={borderRadius}
             concave={noPressEffect ? false : active ? true : toggleEffect}
             convex={noPressEffect ? false : active ? false : !toggleEffect}>
             {children}

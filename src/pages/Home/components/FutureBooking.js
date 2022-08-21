@@ -7,7 +7,7 @@ import Colors from '../../../constant/Colors';
 import {tConvert} from '../../../utility/AppUtility';
 import {HomeContext} from '../ContextApi/HomeProvider';
 
-const FutureBooking = () => {
+const FutureBooking = ({getData}) => {
   const {
     homeStore: {
       futureBookings: {loading, error, data},
@@ -17,6 +17,8 @@ const FutureBooking = () => {
   const _renderItem = ({item: booking}) => (
     <Center paddingY={4} paddingX={10}>
       <FutureBookingCard
+        getData={getData}
+        booking={booking}
         time={tConvert(booking.slot_session.slot.start_time)}
       />
     </Center>
