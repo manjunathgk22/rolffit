@@ -16,7 +16,9 @@ const BookingCard = ({booking, index, handleRating}) => {
   return (
     <Center mt={4} width={windowWidth}>
       <NeuView
-        height={booking.show_nps ? 135 : 85}
+        height={
+          booking.show_nps && !booking?.rating_and_reviews?.rating ? 135 : 85
+        }
         width={windowWidth - 40}
         borderRadius={8}>
         <VStack height={'100%'} py={4}>
@@ -50,7 +52,7 @@ const BookingCard = ({booking, index, handleRating}) => {
               />
             ) : null}
           </HStack>
-          {booking.show_nps ? (
+          {booking.show_nps && !booking?.rating_and_reviews?.rating ? (
             <HStack mt={2} flex={1} justifyContent={'space-around'}>
               {nps.reverse().map(smiley => (
                 <TouchableOpacity

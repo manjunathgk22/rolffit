@@ -2,7 +2,11 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Center, HStack, Icon, Image, View, VStack} from 'native-base';
 import Colors from '../../../constant/Colors';
 import NeuView from '../../../HOC/NeuView/NeuView';
-import {LOGIN_DATA, windowWidth} from '../../../constant/AppConstant';
+import {
+  LOGIN_DATA,
+  windowHeight,
+  windowWidth,
+} from '../../../constant/AppConstant';
 import NeuButton from '../../../HOC/NeuView/NeuButton';
 import RfBold from '../../../components/RfBold/RfBold';
 import {constainerStyle} from '../../../utility/Styles';
@@ -22,6 +26,7 @@ import {NOT_OUR_PARTNER} from '../../../constant/analyticsConstant';
 import CoworkingModal from './CoworkingModal';
 import GenericPopup from '../../../components/GenericPopup/GenericPopup';
 import {isPersonalEmail, openEmail} from '../../../utility/emailUtil';
+import GradientView from '../../../components/GradientView/GradientView';
 
 const NotOurPratner = ({navigation}) => {
   const [showCoworkingModal, setshowCoworkingModal] = useState(false);
@@ -46,37 +51,21 @@ const NotOurPratner = ({navigation}) => {
   };
   return (
     // not our customer flow
-    <View backgroundColor={Colors.bg} flex={1}>
-      <ScrollView flex={1}>
-        <View mt={4} flex={1} backgroundColor={Colors.bg}>
-          <VStack my={5} px={6}>
-            <HStack>
-              <RfBold>Welcome, {loginData?.user?.first_name}</RfBold>
-            </HStack>
-            <RfText>We were not able to identify you.</RfText>
-          </VStack>
-          <Center>
-            <TouchableOpacity
-              onPress={() => {
-                setshowCoworkingModal(true);
-              }}
-              style={{marginBottom: 30}}
-              activeOpacity={0.8}>
-              <NeuView height={220} width={windowWidth - 40} borderRadius={12}>
-                <Center>
-                  <Image
-                    resizeMode="stretch"
-                    height={220}
-                    style={{borderRadius: 12}}
-                    source={require('../../../assets/images/cowork.png')}
-                  />
-                </Center>
-                {/*  */}
-              </NeuView>
-            </TouchableOpacity>
-            {isPersonalEmail(loginData?.user?.username) ? (
+    <GradientView style={{width: windowWidth, height: windowHeight}}>
+      <View flex={1}>
+        <ScrollView flex={1}>
+          <View mt={4} flex={1}>
+            <VStack my={5} px={6}>
+              <HStack>
+                <RfBold>Welcome, {loginData?.user?.first_name}</RfBold>
+              </HStack>
+              <RfText>We were not able to identify you.</RfText>
+            </VStack>
+            <Center>
               <TouchableOpacity
-                onPress={handleLogout}
+                onPress={() => {
+                  setshowCoworkingModal(true);
+                }}
                 style={{marginBottom: 30}}
                 activeOpacity={0.8}>
                 <NeuView
@@ -88,47 +77,70 @@ const NotOurPratner = ({navigation}) => {
                       resizeMode="stretch"
                       height={220}
                       style={{borderRadius: 12}}
-                      source={require('../../../assets/images/independent.png')}
+                      source={require('../../../assets/images/cowork.png')}
+                    />
+                  </Center>
+                  {/*  */}
+                </NeuView>
+              </TouchableOpacity>
+              {isPersonalEmail(loginData?.user?.username) ? (
+                <TouchableOpacity
+                  onPress={handleLogout}
+                  style={{marginBottom: 30}}
+                  activeOpacity={0.8}>
+                  <NeuView
+                    height={220}
+                    width={windowWidth - 40}
+                    borderRadius={12}>
+                    <Center>
+                      <Image
+                        resizeMode="stretch"
+                        height={220}
+                        style={{borderRadius: 12}}
+                        source={require('../../../assets/images/independent.png')}
+                      />
+                    </Center>
+                  </NeuView>
+                </TouchableOpacity>
+              ) : null}
+
+              <TouchableOpacity
+                onPress={() => {
+                  openEmail('collaboration@rolf.fit');
+                }}
+                style={{marginBottom: 30}}
+                activeOpacity={0.8}>
+                <NeuView
+                  height={220}
+                  width={windowWidth - 40}
+                  borderRadius={12}>
+                  <Center>
+                    <Image
+                      resizeMode="stretch"
+                      height={220}
+                      style={{borderRadius: 12}}
+                      source={require('../../../assets/images/contact.png')}
                     />
                   </Center>
                 </NeuView>
               </TouchableOpacity>
-            ) : null}
-
-            <TouchableOpacity
-              onPress={() => {
-                openEmail('collaboration@rolf.fit');
-              }}
-              style={{marginBottom: 30}}
-              activeOpacity={0.8}>
-              <NeuView height={220} width={windowWidth - 40} borderRadius={12}>
-                <Center>
-                  <Image
-                    resizeMode="stretch"
-                    height={220}
-                    style={{borderRadius: 12}}
-                    source={require('../../../assets/images/contact.png')}
-                  />
-                </Center>
-              </NeuView>
-            </TouchableOpacity>
-          </Center>
-          {/*  */}
-        </View>
-      </ScrollView>
-      {showCoworkingModal ? (
-        <CoworkingModal onClose={() => setshowCoworkingModal(false)} />
-      ) : null}
-      {showIndependentOfficeModal ? (
-        <GenericPopup
-          onSelect={handleLogout}
-          title="lorem epsum"
-          onClose={() => setshowIndependentOfficeModal(false)}
-          primaryBtn="Continue"
-          space={10}
-        />
-      ) : null}
-      {/* <View position={'absolute'} right={4} top={4}>
+            </Center>
+            {/*  */}
+          </View>
+        </ScrollView>
+        {showCoworkingModal ? (
+          <CoworkingModal onClose={() => setshowCoworkingModal(false)} />
+        ) : null}
+        {showIndependentOfficeModal ? (
+          <GenericPopup
+            onSelect={handleLogout}
+            title="lorem epsum"
+            onClose={() => setshowIndependentOfficeModal(false)}
+            primaryBtn="Continue"
+            space={10}
+          />
+        ) : null}
+        {/* <View position={'absolute'} right={4} top={4}>
         <NeuButton
           onPress={handleLogout}
           height={40}
@@ -137,13 +149,17 @@ const NotOurPratner = ({navigation}) => {
           <Icon as={AntDesign} name="logout" color={Colors.dark} />
         </NeuButton>
       </View> */}
-    </View>
+      </View>
+    </GradientView>
   );
 };
 
 export default NotOurPratner;
 const styles = StyleSheet.create({
-  container: constainerStyle,
+  container: {
+    ...constainerStyle,
+    backgroundColor: 'transparent',
+  },
   image: {
     height: '100%',
   },

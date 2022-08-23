@@ -30,8 +30,8 @@ RNAsyncStorageFlipper(AsyncStorage);
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
-  largeIcon: 'ic_launcher_round',
-  smallIcon: 'ic_launcher_round',
+  largeIcon: 'ic_launcher',
+  // smallIcon: 'ic_launcher',
   foreground: true,
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {

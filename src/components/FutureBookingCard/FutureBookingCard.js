@@ -25,7 +25,6 @@ import GenericPopup from '../GenericPopup/GenericPopup';
 import moment from 'moment';
 
 const FutureBookingCard = ({time, getData, booking}) => {
-  console.log('qwqw', booking.slot_session.slot_start_time);
   const [loading, setloading] = useState(false);
   const [showCancelPopup, setshowCancelPopup] = useState(false);
   const toast = useToast();

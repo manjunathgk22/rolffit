@@ -36,7 +36,11 @@ import {
 } from './apiService';
 import RfBold from '../../components/RfBold/RfBold';
 import {StyleSheet} from 'react-native';
-import {LOGIN_DATA, windowWidth} from '../../constant/AppConstant';
+import {
+  LOGIN_DATA,
+  windowHeight,
+  windowWidth,
+} from '../../constant/AppConstant';
 import RfText from '../../components/RfText/RfText';
 import SimpleLoader from '../../components/SimpleLoader/SimpleLoader';
 import ToastMessage from '../../components/ToastMessage/ToastMessage';
@@ -55,6 +59,7 @@ import NotOurPratner from './components/NotOurPratner';
 import {sendEvent} from './util';
 import {LAND_ON_HOME} from '../../constant/analyticsConstant';
 import Entypo from 'react-native-vector-icons/Entypo';
+import GradientView from '../../components/GradientView/GradientView';
 
 function HomeScreen({navigation}) {
   const {
@@ -144,102 +149,98 @@ function HomeScreen({navigation}) {
         selectedSlot,
       });
     } else {
-      console.log('1212', res);
       errorToast(res.error);
     }
     setapiLoading(false);
   };
 
-  return isObjectEmpty(loginData?.user.employee) &&
-    isObjectEmpty(loginData?.user.therapist) ? (
-    // not our customer flow
-    <NotOurPratner navigation={navigation} />
-  ) : !isObjectEmpty(loginData?.user.employee) ? (
-    <VStack p={4} flex={1} backgroundColor={Colors.bg}>
-      <HStack justifyContent={'space-between'} alignItems={'center'}>
-        <HStack alignItems={'center'}>
-          <NeuButton
-            onPress={() => {
-              NavigationService.navigate(routes.Options);
-            }}
-            height={40}
-            width={40}
-            borderRadius={50}>
-            {/* <Icon as={SimpleLineIcons} name="menu" color={Colors.white} /> */}
-            <Image source={require('../../assets/images/menu.png')} />
-          </NeuButton>
-          <RfBold ml={4}>Book your slot </RfBold>
-        </HStack>
-        <HStack alignItems={'center'}>
-          <Icon as={Entypo} name="location" color={Colors.white} />
-          <RfBold ml={2}>{loginData?.user?.business_partner?.name}</RfBold>
-        </HStack>
-
-        {/* <NeuButton
-          onPress={() => {
-            NavigationService.navigate(routes.Options);
-          }}
-          height={40}
-          width={40}
-          borderRadius={50}>
-          <Image source={require('../../assets/images/menu.png')} />
-        </NeuButton> */}
-      </HStack>
-      <Center paddingX={4} mt={2}>
-        <FutureBooking getData={getData} />
-        {loading ? (
-          <View height={380}>
-            <Loader />
-          </View>
-        ) : (
-          <VStack mt={4}>
-            <Tabs settabSelect={settabSelect} tabSelect={tabSelect} />
-            <Slots
-              setselectedSlot={setselectedSlot}
-              selectedSlot={selectedSlot}
-              tabSelect={tabSelect}
-            />
-          </VStack>
-        )}
-      </Center>
-      {showReschedulePopup ? (
-        <RescheduleActionSheet
-          errorToast={errorToast}
-          open={showReschedulePopup}
-          currentSlot={pastSelectedSlot}
-          newSlot={selectedSlot}
-          onClose={() => setshowReschedulePopup(false)}
-        />
-      ) : null}
-      {loading ? null : (
-        <View
-          position={'absolute'}
-          bottom={0}
-          width={windowWidth}
-          pb={2}
-          bg={Colors.bg}>
-          <Center opacity={selectedSlot ? 1 : 0.5} mt={3}>
-            <NeuButton
-              active={!selectedSlot}
-              borderRadius={8}
-              height={40}
-              width={windowWidth - 60}
-              {...(true ? {convex: true, customGradient: Colors.gradient} : {})}
-              onPress={handleBooking}>
-              {apiLoading ? (
-                <SimpleLoader color={Colors.white} />
-              ) : selectedSlot ? (
-                <RfBold color={Colors.white}>Confirm Booking</RfBold>
-              ) : (
-                <RfBold color={Colors.white}>Confirm Booking</RfBold>
-              )}
-            </NeuButton>
-          </Center>
-        </View>
+  return (
+    <>
+      {isObjectEmpty(loginData?.user.employee) &&
+      isObjectEmpty(loginData?.user.therapist) ? (
+        // not our customer flow
+        <NotOurPratner navigation={navigation} />
+      ) : !isObjectEmpty(loginData?.user.employee) ? (
+        <>
+          <GradientView style={{height: windowHeight, flex: 1}}>
+            <VStack p={4} flex={1}>
+              <HStack justifyContent={'space-between'} alignItems={'center'}>
+                <HStack alignItems={'center'}>
+                  <NeuButton
+                    onPress={() => {
+                      NavigationService.navigate(routes.Options);
+                    }}
+                    height={40}
+                    width={40}
+                    borderRadius={50}>
+                    {/* <Icon as={SimpleLineIcons} name="menu" color={Colors.white} /> */}
+                    <Image source={require('../../assets/images/menu.png')} />
+                  </NeuButton>
+                  <RfBold ml={4}>Book your slot </RfBold>
+                </HStack>
+                <HStack alignItems={'center'}>
+                  <Icon as={Entypo} name="location" color={Colors.white} />
+                  <RfBold ml={2}>
+                    {loginData?.user?.business_partner?.name}
+                  </RfBold>
+                </HStack>
+              </HStack>
+              <Center paddingX={4} mt={2}>
+                <FutureBooking getData={getData} />
+                {loading ? (
+                  <View height={380}>
+                    <Loader />
+                  </View>
+                ) : (
+                  <VStack mt={4}>
+                    <Tabs settabSelect={settabSelect} tabSelect={tabSelect} />
+                    <Slots
+                      setselectedSlot={setselectedSlot}
+                      selectedSlot={selectedSlot}
+                      tabSelect={tabSelect}
+                    />
+                  </VStack>
+                )}
+              </Center>
+              {showReschedulePopup ? (
+                <RescheduleActionSheet
+                  errorToast={errorToast}
+                  open={showReschedulePopup}
+                  currentSlot={pastSelectedSlot}
+                  newSlot={selectedSlot}
+                  onClose={() => setshowReschedulePopup(false)}
+                />
+              ) : null}
+            </VStack>
+          </GradientView>
+          {loading ? null : (
+            <View position={'absolute'} bottom={0} width={windowWidth} pb={2}>
+              <Center opacity={selectedSlot ? 1 : 0.5} mt={3}>
+                <NeuButton
+                  active={!selectedSlot}
+                  borderRadius={8}
+                  height={40}
+                  width={windowWidth - 60}
+                  {...(true
+                    ? {convex: true, customGradient: Colors.gradient}
+                    : {})}
+                  onPress={handleBooking}>
+                  {apiLoading ? (
+                    <SimpleLoader color={Colors.white} />
+                  ) : selectedSlot ? (
+                    <RfBold color={Colors.white}>Confirm Booking</RfBold>
+                  ) : (
+                    <RfBold color={Colors.white}>Confirm Booking</RfBold>
+                  )}
+                </NeuButton>
+              </Center>
+            </View>
+          )}
+        </>
+      ) : (
+        <TherapistHome navigation={navigation} />
       )}
-    </VStack>
-  ) : (
-    <TherapistHome navigation={navigation} />
+    </>
   );
 }
 

@@ -3,6 +3,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import Loader from '../../../../components/Loader/Loader';
 import RfBold from '../../../../components/RfBold/RfBold';
+import RfText from '../../../../components/RfText/RfText';
 import {windowHeight, windowWidth} from '../../../../constant/AppConstant';
 import Colors from '../../../../constant/Colors';
 import {GlobalContext} from '../../../../ContextApi/GlobalContextProvider';
@@ -29,6 +30,7 @@ const MyBookings = () => {
   } = useContext(GlobalContext);
 
   const [bookingData, setbookingData] = useState(data);
+  const [apiLoading, setapiLoading] = useState(true);
 
   useEffect(() => {
     getData();
@@ -36,7 +38,8 @@ const MyBookings = () => {
 
   useEffect(() => {
     setbookingData(data);
-  }, [data]);
+    setapiLoading(loading);
+  }, [data, loading]);
 
   const getData = async () => {
     optionsDispatch(getMybooking());
@@ -73,7 +76,7 @@ const MyBookings = () => {
     setbookingData(newData);
   };
 
-  return loading ? (
+  return apiLoading ? (
     <Center minHeight={200} flex={1}>
       <Loader />
     </Center>
@@ -92,6 +95,11 @@ const MyBookings = () => {
           ))
         : null}
     </Center>
+  ) : !apiLoading ? (
+    <View mt={12} ml={4} width={windowWidth - 40} justifyContent={'flex-start'}>
+      <RfBold>No bookings</RfBold>
+      <RfText>Your slot bookings will appear here.</RfText>
+    </View>
   ) : null;
 };
 

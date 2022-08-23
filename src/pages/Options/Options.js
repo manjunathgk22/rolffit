@@ -17,7 +17,11 @@ import Colors from '../../constant/Colors';
 import {StyleSheet} from 'react-native';
 import {setLoginData} from '../../ContextApi/GlobalContext.actions';
 import {removeData} from '../../utility/StorageUtility';
-import {LOGIN_DATA, windowWidth} from '../../constant/AppConstant';
+import {
+  LOGIN_DATA,
+  windowHeight,
+  windowWidth,
+} from '../../constant/AppConstant';
 import routes from '../../Navigator/routes';
 import NeuButton from '../../HOC/NeuView/NeuButton';
 import {constainerStyle} from '../../utility/Styles';
@@ -26,13 +30,14 @@ import Profile from './components/Profile';
 import MyBookings from './components/MyBookings/MyBookings';
 import OptionsProvider from './ContextApi/OptionsProvider';
 import RfBold from '../../components/RfBold/RfBold';
+import GradientView from '../../components/GradientView/GradientView';
 
 function Options({navigation}) {
   const [showLogout, setshowLogout] = useState(false);
   const {globalDispatch} = useContext(GlobalContext);
 
   return (
-    <>
+    <GradientView style={{height: windowHeight, width: windowWidth}}>
       <VStack
         width={windowWidth}
         // mt={4}
@@ -50,7 +55,7 @@ function Options({navigation}) {
           position={'absolute'}
           // left={5}
           width={'100%'}
-          background={Colors.bg}
+          // background={Colors.bg}
           pt={4}
           // top={4}
         >
@@ -89,7 +94,7 @@ function Options({navigation}) {
         setshowLogout={setshowLogout}
         navigation={navigation}
       />
-    </>
+    </GradientView>
   );
 }
 const WrappedOptions = props => (
@@ -102,6 +107,7 @@ export default WrappedOptions;
 const styles = StyleSheet.create({
   container: {
     ...constainerStyle,
+    backgroundColor: 'transparent',
     justifyContent: 'flex-start',
   },
 });

@@ -124,14 +124,29 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
                   marginLeft: i % 3 === 0 ? 5 : 0,
                 }}>
                 {item.isSelected || item.has_user_booked ? (
-                  <RfBold
-                    textAlign="center"
-                    lineHeight={23}
-                    color={Colors.white}>
-                    {item.has_user_booked
-                      ? 'Booked ' + item.slot.time
-                      : item.slot.time}
-                  </RfBold>
+                  item.has_user_booked ? (
+                    <VStack>
+                      <RfBold
+                        textAlign="center"
+                        lineHeight={23}
+                        color={Colors.white}>
+                        Booked
+                      </RfBold>
+                      <RfBold
+                        textAlign="center"
+                        lineHeight={23}
+                        color={Colors.white}>
+                        {item.slot.time}
+                      </RfBold>
+                    </VStack>
+                  ) : (
+                    <RfBold
+                      textAlign="center"
+                      lineHeight={23}
+                      color={Colors.white}>
+                      {item.slot.time}
+                    </RfBold>
+                  )
                 ) : (
                   <RfText fontWeight={'bold'}>{item.slot.time}</RfText>
                 )}

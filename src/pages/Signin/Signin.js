@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Box,
   Center,
@@ -57,6 +58,7 @@ import four from '../../assets/images/4.png';
 import five from '../../assets/images/5.png';
 import six from '../../assets/images/6.png';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
+import GradientView from '../../components/GradientView/GradientView';
 
 const images = {
   // 1: one,
@@ -70,6 +72,7 @@ const images = {
 export function Signin({navigation}) {
   const {globalStore, globalDispatch} = useContext(GlobalContext);
   const [signinDisabled, setsigninDisabled] = useState(false);
+  const [apiLoading, setapiLoading] = useState(false);
   const [activeslide, setactiveslide] = useState(0);
   const toast = useToast();
   const errorToast = () => {
@@ -85,6 +88,7 @@ export function Signin({navigation}) {
   }, []);
 
   const signIn = async () => {
+    if (signinDisabled) return;
     try {
       setsigninDisabled(true);
       await GoogleSignin.hasPlayServices();
@@ -93,6 +97,7 @@ export function Signin({navigation}) {
       global.userData = userInfo.user;
       printLog(userInfo.user);
       sendEvent({event: SIGNIN_SUCCESS});
+      setapiLoading(true);
       const businessPartner = await getData({key: BUSINESS_PARTNER_ID});
       console.log('dynamiclinnk6666333', businessPartner);
       const res = await createUser({
@@ -113,6 +118,8 @@ export function Signin({navigation}) {
       } else {
         errorToast();
       }
+      setapiLoading(false);
+
       // globalDispatch(setLoginData(userInfo.user));
     } catch (error) {
       sendEvent({event: SIGNIN_FAIL});
@@ -140,7 +147,7 @@ export function Signin({navigation}) {
     return (
       <Center maxHeight={500}>
         <Image
-          // maxHeight={500}
+          maxHeight={500}
           borderRadius={12}
           source={item}
           style={styles.image}
@@ -150,41 +157,44 @@ export function Signin({navigation}) {
     );
   };
 
-  const pagination = () => {
-    // const {entries, activeSlide} = this.state;
-    return (
-      <Pagination
-        dotsLength={Object.values(images).length}
-        activeDotIndex={activeslide}
-        // containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 5,
-          marginHorizontal: 8,
-          backgroundColor: 'rgba(255, 255, 255, 1)',
-          border: `1px solid ${Colors.dark}`,
-        }}
-        inactiveDotStyle={{
-          width: 8,
-          height: 8,
-          borderRadius: 5,
-          marginHorizontal: 8,
-          backgroundColor: Colors.dark,
-          // Define styles for inactive dots here
-        }}
-        inactiveDotOpacity={0.4}
-        inactiveDotScale={0.6}
-      />
-    );
-  };
+  // const pagination = () => {
+  //   // const {entries, activeSlide} = this.state;
+  //   return (
+  //     <Pagination
+  //       dotsLength={Object.values(images).length}
+  //       activeDotIndex={activeslide}
+  //       // containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}
+  //       dotStyle={{
+  //         width: 10,
+  //         height: 10,
+  //         borderRadius: 5,
+  //         marginHorizontal: 8,
+  //         backgroundColor: 'rgba(255, 255, 255, 1)',
+  //         border: `1px solid ${Colors.dark}`,
+  //       }}
+  //       inactiveDotStyle={{
+  //         width: 8,
+  //         height: 8,
+  //         borderRadius: 5,
+  //         marginHorizontal: 8,
+  //         backgroundColor: Colors.dark,
+  //         // Define styles for inactive dots here
+  //       }}
+  //       inactiveDotOpacity={0.4}
+  //       inactiveDotScale={0.6}
+  //     />
+  //   );
+  // };
 
   return (
-    <View height={windowHeight} flex={1}>
-      <ScrollView contentContainerStyle={styles.container} flex={1}>
-        <View style={styles.container}>
-          <View mt={4} maxHeight={650}>
-            <Center maxHeight={460}>
+    <GradientView style={{height: windowHeight, width: windowWidth}}>
+      <View height={windowHeight} flex={1}>
+        <ScrollView contentContainerStyle={styles.container} flex={1}>
+          <View
+            width={windowWidth}
+            style={{...styles.container, borderRadius: 0}}>
+            <View mt={6}>
+              {/* <Center maxHeight={460}>
               <Carousel
                 layout={'default'}
                 data={Object.values(images)}
@@ -201,75 +211,73 @@ export function Signin({navigation}) {
                 onSnapToItem={index => setactiveslide(index)}
               />
             </Center>
-            <Center mt={-3}>{pagination()}</Center>
-
-            {/* <Center>
-              <HStack>
-                <RfBold>
-                  {activeslide + 1}/{Object.values(images).length}
-                </RfBold>
-              </HStack>
-            </Center> */}
-          </View>
-          <VStack mt={-2}>
-            <NeuView height={230} width={windowWidth - 30} borderRadius={12}>
-              <Center>
-                {/* <Image
-                  mt={-4}
-                  height={90}
-                  resizeMode={'contain'}
-                  source={require('../../assets/images/logosingleline.png')}
-                />
-                <RfText color={Colors.dark} textAlign={'center'} fontSize={16}>
-                  Login with your official google account
-                </RfText>
-                <View mt={4}>
-                  <NeuButton
-                    width={250}
-                    height={50}
-                    onPress={signIn}
-                    active={signinDisabled}
-                    borderRadius={16}
-                    flexDirection={'row'}
-                    style={{flexDirection: 'row'}}>
-                    <HStack>
-                      <Image
-                        resizeMode="contain"
-                        width={25}
-                        style={styles.google}
-                        source={require(`../../assets/images/google.png`)}
-                      />
-                      <RfBold ml={2}> Enter Relax Mode</RfBold>
-                    </HStack>
-                  </NeuButton>
-                </View> */}
-                <TouchableOpacity onPress={signIn} activeOpacity={0.7}>
+            <Center mt={-3}>{pagination()}</Center> */}
+              <NeuView borderRadius={12} width={windowWidth - 30} height={400}>
+                <Center>
                   <Image
-                    source={require('../../assets/images/signin.png')}
-                    resizeMode={'stretch'}
-                    width={windowWidth - 30}
                     borderRadius={12}
-                    height={230}
-                    style={{aspectRatio: 1917 / 1080}}
+                    width={windowWidth - 30}
+                    height={395}
+                    resizeMode={'contain'}
+                    // style={{aspectRatio: 1075 / 1350}}
+                    source={require('../../assets/images/brief.png')}
                   />
-                </TouchableOpacity>
-              </Center>
-            </NeuView>
-          </VStack>
-        </View>
-      </ScrollView>
-    </View>
+                </Center>
+              </NeuView>
+            </View>
+            <VStack mt={12}>
+              <NeuView height={230} width={windowWidth - 30} borderRadius={12}>
+                <Center>
+                  <TouchableOpacity onPress={signIn} activeOpacity={0.7}>
+                    <Image
+                      source={require('../../assets/images/signin.png')}
+                      resizeMode={'contain'}
+                      width={windowWidth - 30}
+                      borderRadius={12}
+                      height={230}
+                      // style={{aspectRatio: 1917 / 1080}}
+                    />
+                  </TouchableOpacity>
+                </Center>
+              </NeuView>
+            </VStack>
+          </View>
+        </ScrollView>
+        {signinDisabled ? (
+          <Center
+            position={'absolute'}
+            flex={1}
+            width={'100%'}
+            height={'100%'}
+            borderRadius={12}
+            background={'#000000dd'}>
+            <View>
+              <View height={50} mt={6}>
+                {/* <Loader /> */}
+              </View>
+              <RfBold fontSize={'2xl'} textAlign={'center'} letterSpacing={1}>
+                Signing you in...
+              </RfBold>
+            </View>
+          </Center>
+        ) : null}
+      </View>
+    </GradientView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    ...constainerStyle,
     marginTop: 0,
     justifyContent: 'flex-start',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    flex: 1,
+    borderRadius: 0,
   },
   image: {
-    width: windowWidth,
+    width: windowWidth - 30,
     height: '100%',
     aspectRatio: 1075 / 1350,
     shadowColor: '#000',

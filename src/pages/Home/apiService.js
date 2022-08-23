@@ -106,7 +106,6 @@ export const employeeCheckinApiHelper = async json => {
 
 export const employeeCheckoutApiHelper = async json => {
   const response = await callAPIs(employeeCheckoutApi(json));
-  console.log('qq', response);
   if (response.status_code === STATUS.SUCCESS) {
     return response.data;
   } else {
