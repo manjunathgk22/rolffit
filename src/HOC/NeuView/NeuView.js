@@ -116,6 +116,7 @@ const NeuView = props => {
             end={{x: 1, y: 0}}
             style={{
               borderRadius,
+              ...style,
             }}>
             <View
               style={{
@@ -146,7 +147,6 @@ const NeuView = props => {
               style={{
                 ...styles.view,
                 ...containerStyle,
-
                 backgroundColor: 'transparent',
               }}>
               {children}

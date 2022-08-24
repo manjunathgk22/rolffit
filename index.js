@@ -6,16 +6,21 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
-import {printLog} from './src/utility/AppUtility';
+import {printLog, sendFCMTokenHelper} from './src/utility/AppUtility';
 import {getMacAddress, getUniqueId} from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {APP_STATE, LOGIN_DATA, NOTIFDATA} from './src/constant/AppConstant';
+import {
+  APP_STATE,
+  FCM_TOKEN,
+  LOGIN_DATA,
+  NOTIFDATA,
+} from './src/constant/AppConstant';
 import {NotifHandler} from './src/utility/NotifHandler';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import codePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
 import {LogBox} from 'react-native';
-import {getData} from './src/utility/StorageUtility';
+import {getData, storeData} from './src/utility/StorageUtility';
 import {callAPIs, sendFCMToken} from './src/api/apiRequest';
 import RNAsyncStorageFlipper from 'rn-async-storage-flipper';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
@@ -36,18 +41,10 @@ PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {
     printLog('TOKEN:', token);
-    let data = null;
-    const device_id = getUniqueId();
-    let json = {
-      device_id: device_id,
-      fcm_registration_id: token.token,
-    };
-    const res = await getData({key: LOGIN_DATA});
-    if (res) {
-      json.user_id = res?.user?.id;
-    }
+    await storeData({key: FCM_TOKEN, value: token});
+
     setTimeout(() => {
-      callAPIs(sendFCMToken(json));
+      sendFCMTokenHelper();
     }, 1000);
   },
 

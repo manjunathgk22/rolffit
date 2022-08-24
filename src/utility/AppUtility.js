@@ -1,4 +1,6 @@
-import {LOGIN_DATA} from '../constant/AppConstant';
+import {getUniqueId} from 'react-native-device-info';
+import {callAPIs, sendFCMToken} from '../api/apiRequest';
+import {FCM_TOKEN, LOGIN_DATA} from '../constant/AppConstant';
 import {getData} from './StorageUtility';
 
 export const printLog = (text, ...rest) => {
@@ -36,3 +38,17 @@ export function isObjectEmpty(obj) {
   for (const i in obj) return false;
   return true;
 }
+
+export const sendFCMTokenHelper = async () => {
+  const token = await getData({key: FCM_TOKEN});
+  const device_id = getUniqueId();
+  let json = {
+    device_id: device_id,
+    fcm_registration_id: token?.token,
+  };
+  const res = await getData({key: LOGIN_DATA});
+  if (res) {
+    json.user_id = res?.user?.id;
+  }
+  callAPIs(sendFCMToken(json));
+};

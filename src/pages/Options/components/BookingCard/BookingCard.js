@@ -54,7 +54,7 @@ const BookingCard = ({booking, index, handleRating}) => {
           </HStack>
           {booking.show_nps && !booking?.rating_and_reviews?.rating ? (
             <HStack mt={2} flex={1} justifyContent={'space-around'}>
-              {nps.reverse().map(smiley => (
+              {nps.map(smiley => (
                 <TouchableOpacity
                   onPress={() => {
                     handleRating(booking, smiley.star);
@@ -89,25 +89,25 @@ const styles = StyleSheet.create({
 
 const nps = [
   {
-    url: require('../../../../assets/images/star.png'),
-    star: 5,
-    text: 'Loved it!',
-  },
-  {
-    url: require('../../../../assets/images/hello.png'),
-    star: 4,
-  },
-  {
-    url: require('../../../../assets/images/mask.png'),
-    star: 3,
+    url: require('../../../../assets/images/pain.png'),
+    star: 1,
   },
   {
     url: require('../../../../assets/images/bored.png'),
     star: 2,
   },
   {
-    url: require('../../../../assets/images/pain.png'),
-    star: 1,
+    url: require('../../../../assets/images/mask.png'),
+    star: 3,
+  },
+  {
+    url: require('../../../../assets/images/hello.png'),
+    star: 4,
+  },
+  {
+    url: require('../../../../assets/images/star.png'),
+    star: 5,
+    text: 'Loved it!',
   },
 ];
 const starMapping = {

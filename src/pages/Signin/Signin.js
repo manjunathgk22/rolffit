@@ -19,7 +19,7 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {printLog} from '../../utility/AppUtility';
+import {printLog, sendFCMTokenHelper} from '../../utility/AppUtility';
 import Loader from '../../components/Loader/Loader';
 import {createUser} from './apiService';
 import Colors from '../../constant/Colors';
@@ -111,10 +111,11 @@ export function Signin({navigation}) {
       }
       // printLog('qwqwqw', res);
       if (res) {
-        storeData({key: LOGIN_DATA, value: res});
+        await storeData({key: LOGIN_DATA, value: res});
         globalDispatch(setLoginData(res));
         await initApiClients();
         NavigationService.replace(routes.HomeScreen);
+        sendFCMTokenHelper();
       } else {
         errorToast();
       }

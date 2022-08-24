@@ -151,7 +151,8 @@ const TherapistHome = ({navigation}) => {
                           <HStack>
                             <RfText>Time: </RfText>
                             <RfBold>
-                              {tConvert(slot.slot_session.slot?.start_time)}
+                              {slot.slot_session.slot?.start_time_display} -{' '}
+                              {slot.slot_session.slot?.end_time_display}
                             </RfBold>
                           </HStack>
                           <RfText ml={2} fontSize="sm">

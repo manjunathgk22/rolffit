@@ -29,45 +29,51 @@ const Tabs = ({tabSelect, settabSelect}) => {
       borderRadius={8}>
       <NeuBorderView borderWidth={0} borderRadius={12} height={50} width={320}>
         <HStack>
-          {tabSelect === 1 ? (
-            <NeuButton height={50} width={TOMORROW?.slot_sessions ? 160 : 315}>
-              <VStack>
-                <Center>
-                  <RfBold color={Colors.blue}>{TODAY.title}</RfBold>
-                  {TODAY.sub_title ? (
-                    <RfBold color={Colors.blue} fontSize="xs">
-                      {TODAY.sub_title}
-                    </RfBold>
-                  ) : null}
-                </Center>
-              </VStack>
-            </NeuButton>
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                settabSelect(1);
-              }}>
-              <Center width={TOMORROW?.slot_sessions ? 160 : 315}>
-                <RfText
-                  style={{fontFamily: 'Comfortaa-Bold'}}
-                  textAlign="center">
-                  {TODAY.title}
-                </RfText>
-                {TODAY.sub_title ? (
-                  <RfText
-                    fontSize="xs"
-                    style={{fontFamily: 'Comfortaa-Bold'}}
-                    textAlign="center">
-                    {TODAY.sub_title}
-                  </RfText>
-                ) : null}
-              </Center>
-            </TouchableOpacity>
-          )}
+          {TODAY?.slot_sessions ? (
+            <>
+              {tabSelect === 1 ? (
+                <NeuButton
+                  height={50}
+                  width={TOMORROW?.slot_sessions ? 160 : 315}>
+                  <VStack>
+                    <Center>
+                      <RfBold color={Colors.blue}>{TODAY.title}</RfBold>
+                      {TODAY.sub_title ? (
+                        <RfBold color={Colors.blue} fontSize="xs">
+                          {TODAY.sub_title}
+                        </RfBold>
+                      ) : null}
+                    </Center>
+                  </VStack>
+                </NeuButton>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    settabSelect(1);
+                  }}>
+                  <Center width={TOMORROW?.slot_sessions ? 160 : 315}>
+                    <RfText
+                      style={{fontFamily: 'Comfortaa-Bold'}}
+                      textAlign="center">
+                      {TODAY.title}
+                    </RfText>
+                    {TODAY.sub_title ? (
+                      <RfText
+                        fontSize="xs"
+                        style={{fontFamily: 'Comfortaa-Bold'}}
+                        textAlign="center">
+                        {TODAY.sub_title}
+                      </RfText>
+                    ) : null}
+                  </Center>
+                </TouchableOpacity>
+              )}
+            </>
+          ) : null}
           {TOMORROW?.slot_sessions ? (
             <>
               {tabSelect === 2 ? (
-                <NeuButton height={50} width={160}>
+                <NeuButton height={50} width={TODAY?.slot_sessions ? 160 : 315}>
                   <VStack>
                     <Center>
                       <RfBold color={Colors.blue}>{TOMORROW.title}</RfBold>
@@ -84,7 +90,7 @@ const Tabs = ({tabSelect, settabSelect}) => {
                   onPress={() => {
                     settabSelect(2);
                   }}>
-                  <Center width={160}>
+                  <Center width={TODAY?.slot_sessions ? 160 : 315}>
                     <RfText
                       style={{fontFamily: 'Comfortaa-Bold'}}
                       textAlign="center">

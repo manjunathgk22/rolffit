@@ -6,7 +6,7 @@ const GradientView = ({
   gradient = Colors.darkGradient,
   borderRadius = 0,
   children,
-  style = {}
+  style = {},
 }) => {
   return (
     <LinearGradient
@@ -17,7 +17,7 @@ const GradientView = ({
       end={{x: 1, y: 0}}
       style={{
         borderRadius,
-        ...style
+        ...style,
       }}>
       {children}
     </LinearGradient>
