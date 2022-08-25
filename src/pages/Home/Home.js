@@ -104,6 +104,8 @@ function HomeScreen({navigation}) {
     // getData();
     if (tabSelect === 1 && data?.TODAY?.booked) {
       setpastSelectedSlot(data?.TODAY?.booked);
+    } else {
+      setpastSelectedSlot(data?.TOMORROW?.booked);
     }
   }, [tabSelect, data]);
 

@@ -101,14 +101,14 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 5,
     marginHorizontal: 8,
-    backgroundColor: Colors.bg_dark,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
   activeDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
     marginHorizontal: 8,
-    backgroundColor: 'rgba(255, 255, 255, 1)',
+    backgroundColor: '#0478FF',
     border: `1px solid ${Colors.dark}`,
   },
 });

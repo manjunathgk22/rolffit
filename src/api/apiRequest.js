@@ -110,6 +110,12 @@ export const employeeCheckinApi = json => {
 export const employeeCheckoutApi = json => {
   return userApiClient.put('rolffit/slots/app/therapists/checkout/', json);
 };
+export const employeeMarkUpdateApi = json => {
+  return userApiClient.put(
+    'rolffit/slots/app/therapists/employee-absent/',
+    json,
+  );
+};
 export const rateMassageApi = json => {
   return userApiClient.post('rolffit/ratingreview/v1/', json);
 };

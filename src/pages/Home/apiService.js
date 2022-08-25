@@ -3,6 +3,7 @@ import {
   callAPIs,
   employeeCheckinApi,
   employeeCheckoutApi,
+  employeeMarkUpdateApi,
   getFutureBookingApi,
   getSlotsApi,
   getTherapistSlotsApi,
@@ -120,4 +121,9 @@ export const rateMassageApiHelper = async json => {
   } else {
     return false;
   }
+};
+
+export const employeeAbsentApiHelper = async json => {
+  const response = await callAPIs(employeeMarkUpdateApi(json));
+  return response;
 };

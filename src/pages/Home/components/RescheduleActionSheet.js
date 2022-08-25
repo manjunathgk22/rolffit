@@ -1,5 +1,6 @@
 import {Actionsheet, Center, HStack, View, VStack} from 'native-base';
 import React, {useState} from 'react';
+import GradientView from '../../../components/GradientView/GradientView';
 import Loader from '../../../components/Loader/Loader';
 import RfBold from '../../../components/RfBold/RfBold';
 import RfText from '../../../components/RfText/RfText';
@@ -52,8 +53,10 @@ const RescheduleActionSheet = ({
     <Actionsheet hideDragIndicator isOpen={open} onClose={onClose}>
       <Actionsheet.Content padding={0}>
         {rescheduleState.loading ? (
-          <Center width={'100%'} background={Colors.bg} height={300}>
-            <Loader />
+          <Center width={windowWidth} background={Colors.bg} height={300}>
+            <GradientView style={{width: windowWidth, height: 300}}>
+              <Loader />
+            </GradientView>
           </Center>
         ) : (
           <NeuView height={300} width={windowWidth}>

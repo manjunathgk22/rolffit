@@ -34,8 +34,5 @@ export const sendEvent = async ({event = 'nothing', data = {}}) => {
       ...(global.userData ? global.userData : {}),
       ...data,
     });
-    console.error('qqqq', 'done');
-  } catch (error) {
-    console.error('qqqq', error);
-  }
+  } catch (error) {}
 };

@@ -21,6 +21,7 @@ import {tConvert} from '../../../utility/AppUtility';
 import {getData} from '../../../utility/StorageUtility';
 import LogoutActionSheet from '../../Options/components/LogoutActionSheet/LogoutActionSheet';
 import {
+  employeeAbsentApiHelper,
   employeeCheckinApiHelper,
   employeeCheckoutApiHelper,
   getTherapistSlotsApiHelper,
@@ -35,6 +36,7 @@ import {AntDesign} from '@native-base/icons';
 import moment from 'moment';
 import ToastMessage from '../../../components/ToastMessage/ToastMessage';
 import GradientView from '../../../components/GradientView/GradientView';
+import {STATUS} from '../../../api/apiRequest';
 
 const TherapistHome = ({navigation}) => {
   const {
@@ -112,6 +114,21 @@ const TherapistHome = ({navigation}) => {
     }
   };
 
+  const markAbsent = async (slot, i) => {
+    const newData = therapistData.filter(
+      therapistSlot => therapistSlot.id !== slot.id,
+    );
+    const res = await employeeAbsentApiHelper({
+      slot_booking_id: slot.id,
+    });
+    console.log('poiuy', res);
+    if (res.status_code === STATUS.SUCCESS) {
+      settherapistData(newData);
+    } else {
+      errorToast(res?.error);
+    }
+  };
+
   return (
     <View flex={1} height={windowHeight}>
       <GradientView style={{height: windowHeight}}>
@@ -135,7 +152,7 @@ const TherapistHome = ({navigation}) => {
                 {therapistData.map((slot, i) => (
                   <VStack mt={4}>
                     <NeuView
-                      height={i === 0 ? 170 : 120}
+                      height={i === 0 ? 235 : 120}
                       borderRadius={8}
                       width={windowWidth - 60}>
                       <VStack
@@ -177,14 +194,27 @@ const TherapistHome = ({navigation}) => {
                                 <RfBold>Checkout</RfBold>
                               </NeuButton>
                             ) : (
-                              <NeuButton
-                                style={{marginRight: 15}}
-                                onPress={() => {
-                                  handleCheckIn(slot, i);
-                                }}
-                                height={40}>
-                                <RfBold>Checkin</RfBold>
-                              </NeuButton>
+                              <VStack space={6}>
+                                <NeuButton
+                                  // active
+                                  style={{marginRight: 15}}
+                                  onPress={() => {
+                                    markAbsent(slot, i);
+                                  }}
+                                  width={150}
+                                  height={40}>
+                                  <RfBold>Mark absent</RfBold>
+                                </NeuButton>
+                                <NeuButton
+                                  style={{marginRight: 15}}
+                                  onPress={() => {
+                                    handleCheckIn(slot, i);
+                                  }}
+                                  width={150}
+                                  height={40}>
+                                  <RfBold>Checkin</RfBold>
+                                </NeuButton>
+                              </VStack>
                             )}
                           </HStack>
                         ) : null}
