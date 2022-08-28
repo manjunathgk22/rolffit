@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>982846620366-qa2ttn874bt47cj10r86pv02q2n0hhuu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.982846620366-qa2ttn874bt47cj10r86pv02q2n0hhuu</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>982846620366-0kgjqppel97v20tb4ft59c77a2rfiaqe.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA0UBxvr26627AZZXX2H5izqeybv7qHQMw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>982846620366</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.rolffit</string>
+	<key>PROJECT_ID</key>
+	<string>rolffit-e5676</string>
+	<key>STORAGE_BUCKET</key>
+	<string>rolffit-e5676.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:982846620366:ios:67aa25a63b52c72549c69f</string>
+</dict>
+</plist>

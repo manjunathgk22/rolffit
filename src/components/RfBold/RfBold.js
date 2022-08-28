@@ -6,7 +6,7 @@ const RfBold = props => {
   return (
     <Text
       color={Colors.dark}
-      style={{fontFamily: 'Geomanist-Bold'}}
+      // style={{fontFamily: 'Geomanist-Bold'}}
       fontSize={'lg'}
       {...props}>
       {props.children}

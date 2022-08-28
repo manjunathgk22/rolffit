@@ -7,7 +7,7 @@ function RfText(props) {
       color={'rf.dark'}
       letterSpacing={1}
       fontSize={'md'}
-      style={{fontFamily: 'Comfortaa-Regular'}}
+      // style={{fontFamily: 'Comfortaa-Regular'}}
       fontWeight={'normal'}
       {...props}>
       {props.children}

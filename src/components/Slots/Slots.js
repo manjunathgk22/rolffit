@@ -55,9 +55,9 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
 
   useEffect(() => {
     if (tabSelect === 1) {
-      setselectedDateSlots(todaySlots);
+      setselectedDateSlots(todaySlots || []);
     } else if (tabSelect === 2) {
-      setselectedDateSlots(tomorrowSlots);
+      setselectedDateSlots(tomorrowSlots || []);
     }
   }, [todaySlots, tomorrowSlots, tabSelect]);
 

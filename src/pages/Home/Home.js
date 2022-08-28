@@ -58,8 +58,8 @@ import {constainerStyle} from '../../utility/Styles';
 import NotOurPratner from './components/NotOurPratner';
 import {sendEvent} from './util';
 import {LAND_ON_HOME} from '../../constant/analyticsConstant';
-import Entypo from 'react-native-vector-icons/Entypo';
 import GradientView from '../../components/GradientView/GradientView';
+import {Entypo, Ionicons, AntDesign} from '@native-base/icons';
 
 function HomeScreen({navigation}) {
   const {

@@ -8,7 +8,7 @@
  */
 
 import React, {Fragment} from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {Box, NativeBaseProvider, StatusBar, extendTheme} from 'native-base';
 import {Center, HStack, Text, Spacer} from 'native-base';
 import Appnavigator from './src/Appnavigator';
@@ -63,24 +63,58 @@ GoogleSignin.configure({
   webClientId:
     '982846620366-ruah2ibtqp8d33ontrt0qai4q4ju1av1.apps.googleusercontent.com',
 });
+
+const MyStatusBar = ({backgroundColor, ...props}) => (
+  <View style={[styles.statusBar, {backgroundColor}]}>
+    <SafeAreaView>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </SafeAreaView>
+  </View>
+);
+
 const App = () => {
   useEffect(() => {}, []);
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <NativeBaseProvider theme={theme}>
-        <GlobalProvider>
-          <StatusBar
-            translucent={true}
-            animated={true}
-            backgroundColor={Colors.bg}
-            barStyle="light-content"
-            hidden={false}
-          />
-          <SplashScreen />
-        </GlobalProvider>
-      </NativeBaseProvider>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <MyStatusBar backgroundColor={Colors.bg} barStyle="light-content" />
+      <View style={styles.appBar} />
+      <View style={styles.content}>
+        <NativeBaseProvider theme={theme}>
+          <GlobalProvider>
+            <StatusBar
+              translucent={true}
+              animated={true}
+              backgroundColor={Colors.bg}
+              barStyle="light-content"
+              hidden={false}
+            />
+
+            <SplashScreen />
+          </GlobalProvider>
+        </NativeBaseProvider>
+      </View>
+    </View>
   );
 };
 
 export default App;
+
+const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
+  },
+  appBar: {
+    backgroundColor: Colors.bg,
+    height: APPBAR_HEIGHT,
+  },
+  content: {
+    flex: 1,
+    backgroundColor: Colors.bg,
+  },
+});

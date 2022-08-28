@@ -16,10 +16,11 @@ import Options from './pages/Options/Options';
 import routes from './Navigator/routes';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import BookedScreen from './pages/BookedScreen/BookedScreen';
-import dynamicLinks from '@react-native-firebase/dynamic-links';
+// import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {storeData} from './utility/StorageUtility';
 import {URL, URLSearchParams} from 'react-native-url-polyfill';
 import {BUSINESS_PARTNER_ID} from './constant/AppConstant';
+import NavigationService from './Navigator/NavigationService';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,29 +33,50 @@ function Appnavigator() {
       if (link.url) {
         const url = new URL(link.url);
         const urlParams = new URLSearchParams(url.search);
-        console.log('dynamiclinnk2323', link.url);
-        try {
-          const businessPartner = urlParams.get('unique_code');
-          console.log('dynamiclinnk333', businessPartner);
-          await storeData({key: BUSINESS_PARTNER_ID, value: businessPartner});
-        } catch (error) {
-          console.log('dynamiclinnk333444', error);
+        if (urlParams.get('unique_code')) {
+          try {
+            const businessPartner = urlParams.get('unique_code');
+            await storeData({key: BUSINESS_PARTNER_ID, value: businessPartner});
+          } catch (error) {}
+        } else {
+          handleDeepLinknavigation(link);
         }
       }
-      // handleDeepLinknavigation(link.url);
+    }
+  };
+
+  const handleDeepLinknavigation = link => {
+    const url = new URL(link?.url);
+    const urlParams = new URLSearchParams(url?.search);
+
+    if (urlParams?.get('fragment')) {
+      const fragment = urlParams.get('fragment');
+      switch (fragment) {
+        case 'bookings':
+          if (globalStore.loginData) {
+            NavigationService.navigate(routes.Options, {
+              callback: () => {
+                NavigationService.replace(routes.HomeScreen);
+              },
+            });
+          }
+          break;
+        default:
+          return;
+      }
     }
   };
 
   useEffect(() => {
-    dynamicLinks().onLink(async link => {
-      handleDeeplink(link);
-    });
-    dynamicLinks()
-      .getInitialLink()
-      .then(async link => {
-        console.log('dynamiclinnk2', link);
-        await handleDeeplink(link);
-      });
+    // dynamicLinks().onLink(async link => {
+    //   handleDeeplink(link);
+    // });
+    // dynamicLinks()
+    //   .getInitialLink()
+    //   .then(async link => {
+    //     console.log('dynamiclinnk2', link);
+    //     await handleDeeplink(link);
+    //   });
   }, []);
 
   return (
