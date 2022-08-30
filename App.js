@@ -84,7 +84,7 @@ const onRemoteNotification = notification => {
 };
 
 const setNotificationCategories = () => {
-  PushNotificationIOS.setNotificationCategories([
+  PushNotificationIOS?.setNotificationCategories?.([
     {
       id: 'userAction',
       actions: [
@@ -109,14 +109,16 @@ const App = () => {
   useEffect(() => {
     const type = 'notification';
     PushNotificationIOS.addEventListener(type, onRemoteNotification);
-    setNotificationCategories();
+    Platform.OS === 'ios' ? setNotificationCategories() : null;
     return () => {
       PushNotificationIOS.removeEventListener(type);
     };
   }, []);
   return (
     <View style={styles.container}>
-      <MyStatusBar backgroundColor={Colors.bg} barStyle="light-content" />
+      {Platform.OS === 'ios' ? (
+        <MyStatusBar backgroundColor={Colors.bg} barStyle="light-content" />
+      ) : null}
       <View style={styles.appBar} />
       <View style={styles.content}>
         <NativeBaseProvider theme={theme}>
@@ -128,7 +130,6 @@ const App = () => {
               barStyle="light-content"
               hidden={false}
             />
-
             <SplashScreen />
           </GlobalProvider>
         </NativeBaseProvider>
@@ -140,7 +141,7 @@ const App = () => {
 export default App;
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 14;
 
 const styles = StyleSheet.create({
   container: {
