@@ -18,6 +18,7 @@ import Colors from './src/constant/Colors';
 import GlobalProvider from './src/ContextApi/GlobalContextProvider';
 import SplashScreen from './src/pages/SplashScreen/SplashScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const theme = extendTheme({
   colors: {
@@ -72,8 +73,47 @@ const MyStatusBar = ({backgroundColor, ...props}) => (
   </View>
 );
 
+const onRemoteNotification = notification => {
+  const isClicked = notification.getData().userInteraction === 1;
+
+  if (isClicked) {
+    // Navigate user to another screen
+  } else {
+    // Do something else with push notification
+  }
+};
+
+const setNotificationCategories = () => {
+  PushNotificationIOS.setNotificationCategories([
+    {
+      id: 'userAction',
+      actions: [
+        {id: 'open', title: 'Open', options: {foreground: true}},
+        {
+          id: 'ignore',
+          title: 'Desruptive',
+          options: {foreground: true, destructive: true},
+        },
+        // {
+        //   id: 'text',
+        //   title: 'Text Input',
+        //   options: {foreground: true},
+        //   textInput: {buttonTitle: 'Send'},
+        // },
+      ],
+    },
+  ]);
+};
+
 const App = () => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const type = 'notification';
+    PushNotificationIOS.addEventListener(type, onRemoteNotification);
+    setNotificationCategories();
+    return () => {
+      PushNotificationIOS.removeEventListener(type);
+    };
+  }, []);
   return (
     <View style={styles.container}>
       <MyStatusBar backgroundColor={Colors.bg} barStyle="light-content" />

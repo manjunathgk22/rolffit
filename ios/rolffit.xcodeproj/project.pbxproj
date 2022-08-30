@@ -118,6 +118,7 @@
 		13B07FAE1A68108700A75B9A /* rolffit */ = {
 			isa = PBXGroup;
 			children = (
+				4DCFAF3728BAB51D00B184E3 /* GoogleService-Info.plist */,
 				4D5C7D8628BBF12E006A000A /* Assets.xcassets */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -178,7 +179,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				4DCFAF3728BAB51D00B184E3 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* rolffit */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* rolffitTests */,

@@ -51,7 +51,7 @@ const RescheduleActionSheet = ({
   };
   return (
     <Actionsheet hideDragIndicator isOpen={open} onClose={onClose}>
-      <Actionsheet.Content padding={0}>
+      <Actionsheet.Content background={Colors.bg} padding={0}>
         {rescheduleState.loading ? (
           <Center width={windowWidth} background={Colors.bg} height={300}>
             <GradientView style={{width: windowWidth, height: 300}}>

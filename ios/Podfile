@@ -1,12 +1,13 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+# $RNFirebaseAsStaticFramework = true
 
 platform :ios, '11.0'
 install! 'cocoapods', :deterministic_uuids => false
-# pod 'Firebase', :modular_headers => true
-# pod 'FirebaseCoreInternal', :modular_headers => true
-# pod 'GoogleUtilities', :modular_headers => true
-# pod 'GoogleSignIn', '~> 6.1.0'
+pod 'Firebase', :modular_headers => true
+pod 'FirebaseCoreInternal', :modular_headers => true
+pod 'GoogleUtilities', :modular_headers => true
+pod 'GoogleSignIn', '~> 6.1.0'
 
 
 # use_frameworks! :linkage => :static

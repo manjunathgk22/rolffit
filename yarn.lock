@@ -1850,11 +1850,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-14.11.1.tgz#d7438aba230a27b17cbd2a36d7eb46a62cc24cf3"
   integrity sha512-PfSsWoHgkwny8Q4UoNIKlptT4T1AYPQ43GRaU5U9AT64LwSfHA03mdhhDzqWGbbIT/hJnczGFgYgLCccmbu0Xg==
 
-"@react-native-firebase/firestore@^14.7.0":
-  version "14.11.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.11.1.tgz#66fc92470c02f5b003e5a9b27118b839d1410bb0"
-  integrity sha512-1/Ap0EDlAueUDHrH7WxU5ZfEF+qcT1NfUJU4qkFBvcg9pdnMS7cch4nzifRHr6jqyfUYiHgFrRe2wYfqQ0gK+w==
-
 "@react-native-firebase/messaging@^14.7.0":
   version "14.11.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-14.11.1.tgz#891b92f5606386e83ae377e72659d0836ac7bd6b"
@@ -3201,9 +3196,9 @@ camelcase@^6.0.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001370:
-  version "1.0.30001383"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001383.tgz#aecf317ccd940690725ae3ae4f28293c5fb8050e"
-  integrity sha512-swMpEoTp5vDoGBZsYZX7L7nXHe6dsHxi9o6/LKf/f0LukVtnrxly5GVb/fWdCDTqi/yw6Km6tiJ0pmBacm0gbg==
+  version "1.0.30001384"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001384.tgz#029527c2d781a3cfef13fa63b3a78a6088e35973"
+  integrity sha512-BBWt57kqWbc0GYZXb47wTXpmAgqr5LSibPzNjk/AWMdmJMQhLqOl3c/Kd4OAU/tu4NLfYkMx8Tlq3RVBkOBolQ==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -9427,9 +9422,9 @@ vlq@^1.0.0:
   integrity sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==
 
 vm2@^3.9.8:
-  version "3.9.10"
-  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.9.10.tgz#c66543096b5c44c8861a6465805c23c7cc996a44"
-  integrity sha512-AuECTSvwu2OHLAZYhG716YzwodKCIJxB6u1zG7PgSQwIgAlEaoXH52bxdcvT8GkGjnYK7r7yWDW0m0sOsPuBjQ==
+  version "3.9.11"
+  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.9.11.tgz#a880f510a606481719ec3f9803b940c5805a06fe"
+  integrity sha512-PFG8iJRSjvvBdisowQ7iVF580DXb1uCIiGaXgm7tynMR1uTBlv7UJlB1zdv5KJ+Tmq1f0Upnj3fayoEOPpCBKg==
   dependencies:
     acorn "^8.7.0"
     acorn-walk "^8.2.0"

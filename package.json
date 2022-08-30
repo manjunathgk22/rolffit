@@ -16,7 +16,8 @@
     "setIcon": "react-native set-icon --path ~/Downloads/logo_full_height.png --background white --platform android",
     "report": "cd android && ./gradlew signingReport",
     "clean": "watchman watch-del-all && react-native start --reset-cache",
-    "full-clean": "npx react-native-clean-project"
+    "full-clean": "npx react-native-clean-project",
+    "pod-install": "cd ios && rm -rf Podfile.lock  && arch -x86_64 pod install --repo-update"
   },
   "dependencies": {
     "@bam.tech/react-native-make": "3.0.3",
@@ -27,7 +28,6 @@
     "@react-native-firebase/analytics": "^14.7.0",
     "@react-native-firebase/app": "^14.7.0",
     "@react-native-firebase/dynamic-links": "^14.7.0",
-    "@react-native-firebase/firestore": "^14.7.0",
     "@react-native-firebase/messaging": "^14.7.0",
     "@react-native-google-signin/google-signin": "^7.2.2",
     "@react-navigation/bottom-tabs": "^6.3.1",

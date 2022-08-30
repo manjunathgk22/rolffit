@@ -1,6 +1,7 @@
 import {Actionsheet, HStack, VStack} from 'native-base';
 import React from 'react';
 import {windowWidth} from '../../constant/AppConstant';
+import Colors from '../../constant/Colors';
 import NeuButton from '../../HOC/NeuView/NeuButton';
 import NeuView from '../../HOC/NeuView/NeuView';
 import RfBold from '../RfBold/RfBold';
@@ -16,7 +17,7 @@ const GenericPopup = ({
 }) => {
   return (
     <Actionsheet hideDragIndicator isOpen={true} onClose={onClose}>
-      <Actionsheet.Content padding={0}>
+      <Actionsheet.Content background={Colors.bg} padding={0}>
         <NeuView height={300} width={windowWidth}>
           <VStack my={8}>
             <RfBold>{title}</RfBold>

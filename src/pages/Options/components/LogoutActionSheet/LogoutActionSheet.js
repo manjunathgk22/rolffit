@@ -11,6 +11,7 @@ import {setLoginData} from '../../../../ContextApi/GlobalContext.actions';
 import routes from '../../../../Navigator/routes';
 import {sendEvent} from '../../../Home/util';
 import {LAND_ON_LOGOUT} from '../../../../constant/analyticsConstant';
+import Colors from '../../../../constant/Colors';
 
 const LogoutActionSheet = ({showLogout, setshowLogout, navigation}) => {
   const {globalDispatch} = useContext(GlobalContext);
@@ -32,7 +33,7 @@ const LogoutActionSheet = ({showLogout, setshowLogout, navigation}) => {
       onClose={() => {
         setshowLogout(false);
       }}>
-      <Actionsheet.Content padding={0}>
+      <Actionsheet.Content background={Colors.bg} padding={0}>
         <NeuView height={300} width={windowWidth}>
           <VStack my={8}>
             <RfBold>Are you sure you want to logout?</RfBold>

@@ -16,7 +16,7 @@ import Options from './pages/Options/Options';
 import routes from './Navigator/routes';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import BookedScreen from './pages/BookedScreen/BookedScreen';
-// import dynamicLinks from '@react-native-firebase/dynamic-links';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {storeData} from './utility/StorageUtility';
 import {URL, URLSearchParams} from 'react-native-url-polyfill';
 import {BUSINESS_PARTNER_ID} from './constant/AppConstant';
@@ -68,15 +68,15 @@ function Appnavigator() {
   };
 
   useEffect(() => {
-    // dynamicLinks().onLink(async link => {
-    //   handleDeeplink(link);
-    // });
-    // dynamicLinks()
-    //   .getInitialLink()
-    //   .then(async link => {
-    //     console.log('dynamiclinnk2', link);
-    //     await handleDeeplink(link);
-    //   });
+    dynamicLinks().onLink(async link => {
+      handleDeeplink(link);
+    });
+    dynamicLinks()
+      .getInitialLink()
+      .then(async link => {
+        console.log('dynamiclinnk2', link);
+        await handleDeeplink(link);
+      });
   }, []);
 
   return (
