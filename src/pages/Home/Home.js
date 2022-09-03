@@ -50,7 +50,10 @@ import Carousel from 'react-native-snap-carousel';
 import FutureBooking from './components/FutureBooking';
 import {isObjectEmpty} from '../../utility/AppUtility';
 import {removeData} from '../../utility/StorageUtility';
-import {setLoginData} from '../../ContextApi/GlobalContext.actions';
+import {
+  setLoginData,
+  setMaintenanceData,
+} from '../../ContextApi/GlobalContext.actions';
 import RescheduleActionSheet from './components/RescheduleActionSheet';
 import TherapistHome from './components/TherapistHome';
 import NeuView from '../../HOC/NeuView/NeuView';
@@ -60,6 +63,8 @@ import {sendEvent} from './util';
 import {LAND_ON_HOME} from '../../constant/analyticsConstant';
 import Entypo from 'react-native-vector-icons/Entypo';
 import GradientView from '../../components/GradientView/GradientView';
+import {callAPIs, getMaintenanceApi, STATUS} from '../../api/apiRequest';
+import Maintenance from '../../components/Maintenance/Maintenance';
 
 function HomeScreen({navigation}) {
   const {
@@ -69,7 +74,7 @@ function HomeScreen({navigation}) {
     homeDispatch,
   } = useContext(HomeContext);
   const {
-    globalStore: {loginData},
+    globalStore: {loginData, maintenance},
     globalDispatch,
   } = useContext(GlobalContext);
 
@@ -98,6 +103,7 @@ function HomeScreen({navigation}) {
       //Update the state you want to be updated
       isFocused && getData();
     }
+    checkMaintenance();
   }, [isFocused]);
 
   useEffect(() => {
@@ -108,6 +114,17 @@ function HomeScreen({navigation}) {
       setpastSelectedSlot(data?.TOMORROW?.booked);
     }
   }, [tabSelect, data]);
+
+  const checkMaintenance = async () => {
+    console.log('qqqhere');
+    const response = await callAPIs(getMaintenanceApi());
+    console.log('qqqhere11', response);
+    if (response.status === STATUS.SUCCESS) {
+      globalDispatch(setMaintenanceData(response.data));
+    } else {
+      globalDispatch(setMaintenanceData(null));
+    }
+  };
 
   const getData = async () => {
     homeDispatch(getSlots());
@@ -158,8 +175,10 @@ function HomeScreen({navigation}) {
 
   return (
     <>
-      {isObjectEmpty(loginData?.user.employee) &&
-      isObjectEmpty(loginData?.user.therapist) ? (
+      {maintenance ? (
+        <Maintenance />
+      ) : isObjectEmpty(loginData?.user.employee) &&
+        isObjectEmpty(loginData?.user.therapist) ? (
         // not our customer flow
         <NotOurPratner navigation={navigation} />
       ) : !isObjectEmpty(loginData?.user.employee) ? (

@@ -122,3 +122,6 @@ export const rateMassageApi = json => {
 
 export const setUniqueCode = json =>
   userApiClient.post('rolffit/centraluser/app/unique-code/', json);
+
+export const getMaintenanceApi = () =>
+  userApiClient.get('rolffit/api/app/open/dialog/');
