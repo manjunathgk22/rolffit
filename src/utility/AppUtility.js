@@ -1,3 +1,5 @@
+import {Toast} from 'native-base';
+import {Linking} from 'react-native';
 import {getUniqueId} from 'react-native-device-info';
 import {callAPIs, sendFCMToken} from '../api/apiRequest';
 import {FCM_TOKEN, LOGIN_DATA} from '../constant/AppConstant';
@@ -51,4 +53,26 @@ export const sendFCMTokenHelper = async () => {
     json.user_id = res?.user?.id;
   }
   callAPIs(sendFCMToken(json));
+};
+
+export const showToast = ({
+  text,
+  duration = 4000,
+  showButton = false,
+  buttonText = 'Okay',
+  type = 'default',
+}) => {
+  Toast.show({text, type, duration, ...(showButton ? {buttonText} : {})});
+};
+
+export const openUrl = url => {
+  Linking.canOpenURL(url)
+    .then(supported => {
+      if (!supported) {
+        showToast({text: 'Your phone does not support'});
+      } else {
+        return Linking.openURL(url);
+      }
+    })
+    .catch(err => console.log('An error occurred', err));
 };

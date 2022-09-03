@@ -9,7 +9,7 @@ import {
   VStack,
   Icon,
 } from 'native-base';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import Colors from '../../constant/Colors';
 import FutureBookingCard from '../../components/FutureBookingCard/FutureBookingCard';
@@ -33,6 +33,7 @@ import {
   bookSlotApiHelper,
   futureBookingApiHelper,
   getSlotsApiHelper,
+  rescheduleApiHelper,
 } from './apiService';
 import RfBold from '../../components/RfBold/RfBold';
 import {StyleSheet} from 'react-native';
@@ -50,7 +51,10 @@ import Carousel from 'react-native-snap-carousel';
 import FutureBooking from './components/FutureBooking';
 import {isObjectEmpty} from '../../utility/AppUtility';
 import {removeData} from '../../utility/StorageUtility';
-import {setLoginData} from '../../ContextApi/GlobalContext.actions';
+import {
+  setLoginData,
+  setMaintenanceData,
+} from '../../ContextApi/GlobalContext.actions';
 import RescheduleActionSheet from './components/RescheduleActionSheet';
 import TherapistHome from './components/TherapistHome';
 import NeuView from '../../HOC/NeuView/NeuView';
@@ -60,6 +64,9 @@ import {sendEvent} from './util';
 import {LAND_ON_HOME} from '../../constant/analyticsConstant';
 import GradientView from '../../components/GradientView/GradientView';
 import {Entypo, Ionicons, AntDesign} from '@native-base/icons';
+import SlotInfo from './components/SlotInfo';
+import Maintenance from '../../components/Maintenance/Maintenance';
+import {callAPIs, getMaintenanceApi, STATUS} from '../../api/apiRequest';
 
 function HomeScreen({navigation}) {
   const {
@@ -69,15 +76,16 @@ function HomeScreen({navigation}) {
     homeDispatch,
   } = useContext(HomeContext);
   const {
-    globalStore: {loginData},
+    globalStore: {loginData, maintenance},
     globalDispatch,
   } = useContext(GlobalContext);
 
   const [tabSelect, settabSelect] = useState(1); // tabs
-  const [selectedSlot, setselectedSlot] = useState({}); //current selected slot
+  const [selectedSlot, setselectedSlot] = useState(null); //current selected slot
   const [apiLoading, setapiLoading] = useState(false); //
   const [showReschedulePopup, setshowReschedulePopup] = useState(false); // reeschedule popup
   const [pastSelectedSlot, setpastSelectedSlot] = useState(null);
+  const [showSlotInfo, setshowSlotInfo] = useState(false);
 
   const toast = useToast();
   const errorToast = msg => {
@@ -89,6 +97,19 @@ function HomeScreen({navigation}) {
   };
   const isFocused = useIsFocused();
 
+  useEffect(() => {}, []);
+
+  const checkMaintenance = async () => {
+    console.log('qqqhere');
+    const response = await callAPIs(getMaintenanceApi());
+    console.log('qqqhere11', response);
+    if (response.status === STATUS.SUCCESS) {
+      globalDispatch(setMaintenanceData(response.data));
+    } else {
+      globalDispatch(setMaintenanceData(null));
+    }
+  };
+
   useEffect(() => {
     sendEvent({event: LAND_ON_HOME});
   }, []);
@@ -97,6 +118,7 @@ function HomeScreen({navigation}) {
     if (!isObjectEmpty(loginData?.user.employee)) {
       //Update the state you want to be updated
       isFocused && getData();
+      checkMaintenance();
     }
   }, [isFocused]);
 
@@ -108,6 +130,20 @@ function HomeScreen({navigation}) {
       setpastSelectedSlot(data?.TOMORROW?.booked);
     }
   }, [tabSelect, data]);
+
+  useEffect(() => {
+    console.log(selectedSlot);
+    if (selectedSlot) {
+      // if (shouldReschedule()) {
+      //   handleRescheduleFLow();
+      // } else {
+      //   setshowSlotInfo(true);
+      // }
+      setshowSlotInfo(true);
+    } else {
+      setshowSlotInfo(false);
+    }
+  }, [selectedSlot]);
 
   const getData = async () => {
     homeDispatch(getSlots());
@@ -135,34 +171,64 @@ function HomeScreen({navigation}) {
     setshowReschedulePopup(true);
   };
 
-  const handleBooking = async () => {
-    if (!selectedSlot || apiLoading) return;
+  const shouldReschedule = () => {
     if (
       (tabSelect === 1 && data?.TODAY?.booked) ||
       (tabSelect === 2 && data?.TOMORROW?.booked)
     ) {
-      handleRescheduleFLow();
-      return;
+      return true;
     }
+  };
+
+  const handleBooking = async () => {
+    if (!selectedSlot || apiLoading) return;
     setapiLoading(true);
-    const res = await bookSlotApiHelper(selectedSlot.id);
-    if (res.is_booked) {
+    let res;
+    if (pastSelectedSlot) {
+      const json = {
+        reschedule_slot_session_data: {
+          // therapist_id: 1,
+          slot_session_id: selectedSlot.id,
+        },
+        cancel_slot_data: {
+          slot_booking_id: pastSelectedSlot.slot_booking_id,
+        },
+      };
+      res = await rescheduleApiHelper(json);
+    } else {
+      res = await bookSlotApiHelper(selectedSlot.id);
+    }
+    if (selectedSlot && !pastSelectedSlot) {
+      if (res.is_booked) {
+        navigation.navigate(routes.BookedScreen, {
+          selectedSlot,
+        });
+      } else {
+        errorToast(res.error);
+      }
+    } else {
       navigation.navigate(routes.BookedScreen, {
         selectedSlot,
       });
-    } else {
-      errorToast(res.error);
     }
     setapiLoading(false);
+    setselectedSlot(null);
   };
 
-  return (
-    <>
-      {isObjectEmpty(loginData?.user.employee) &&
-      isObjectEmpty(loginData?.user.therapist) ? (
-        // not our customer flow
-        <NotOurPratner navigation={navigation} />
-      ) : !isObjectEmpty(loginData?.user.employee) ? (
+  const renderView = () => {
+    if (maintenance) {
+      return <Maintenance />;
+    }
+    if (
+      isObjectEmpty(loginData?.user.employee) &&
+      isObjectEmpty(loginData?.user.therapist)
+    ) {
+      // new user. neither an employee nor a therapist
+      return <NotOurPratner navigation={navigation} />;
+    }
+    // is employee
+    if (!isObjectEmpty(loginData?.user.employee)) {
+      return (
         <>
           <GradientView style={{height: windowHeight, flex: 1}}>
             <VStack p={4} flex={1}>
@@ -178,7 +244,7 @@ function HomeScreen({navigation}) {
                     {/* <Icon as={SimpleLineIcons} name="menu" color={Colors.white} /> */}
                     <Image source={require('../../assets/images/menu.png')} />
                   </NeuButton>
-                  <RfBold ml={4}>Book your slot </RfBold>
+                  <RfBold ml={4}>Book your slot</RfBold>
                 </HStack>
                 <HStack alignItems={'center'}>
                   <Icon as={Entypo} name="location" color={Colors.white} />
@@ -213,37 +279,28 @@ function HomeScreen({navigation}) {
                   onClose={() => setshowReschedulePopup(false)}
                 />
               ) : null}
+              {showSlotInfo && selectedSlot ? (
+                <SlotInfo
+                  onClose={() => {
+                    setselectedSlot(null);
+                  }}
+                  handleBooking={handleBooking}
+                  currentSlot={pastSelectedSlot}
+                  selectedSlot={selectedSlot}
+                  apiLoading={apiLoading}
+                />
+              ) : null}
             </VStack>
           </GradientView>
-          {loading ? null : (
-            <View position={'absolute'} bottom={0} width={windowWidth} pb={2}>
-              <Center opacity={selectedSlot ? 1 : 0.5} mt={3}>
-                <NeuButton
-                  active={!selectedSlot}
-                  borderRadius={8}
-                  height={40}
-                  width={windowWidth - 60}
-                  {...(true
-                    ? {convex: true, customGradient: Colors.gradient}
-                    : {})}
-                  onPress={handleBooking}>
-                  {apiLoading ? (
-                    <SimpleLoader color={Colors.white} />
-                  ) : selectedSlot ? (
-                    <RfBold color={Colors.white}>Confirm Booking</RfBold>
-                  ) : (
-                    <RfBold color={Colors.white}>Confirm Booking</RfBold>
-                  )}
-                </NeuButton>
-              </Center>
-            </View>
-          )}
         </>
-      ) : (
-        <TherapistHome navigation={navigation} />
-      )}
-    </>
-  );
+      );
+    } else {
+      // therapist
+      return <TherapistHome navigation={navigation} />;
+    }
+  };
+
+  return renderView();
 }
 
 const WrappedHomeScreen = props => (
@@ -252,13 +309,3 @@ const WrappedHomeScreen = props => (
   </HomeProvider>
 );
 export default WrappedHomeScreen;
-
-const styles = StyleSheet.create({
-  container: constainerStyle,
-  image: {
-    height: '100%',
-  },
-  google: {
-    height: 30,
-  },
-});

@@ -5,6 +5,7 @@ import RfText from '../../../components/RfText/RfText';
 import Colors from '../../../constant/Colors';
 import {GlobalContext} from '../../../ContextApi/GlobalContextProvider';
 import NeuView from '../../../HOC/NeuView/NeuView';
+import {Platform} from 'react-native';
 
 function Profile() {
   const {
@@ -40,7 +41,10 @@ function Profile() {
           <NeuView inset height={130} borderRadius={130} width={130}>
             <Text
               color={Colors.dark}
-              style={{fontFamily: 'Geomanist-Bold'}}
+              style={{
+                fontFamily: Platform.OS === 'ios' ? '' : 'Geomanist-Bold',
+              }}
+              // style={{fontFamily: 'Geomanist-Bold'}}
               textTransform={'uppercase'}
               fontSize={'6xl'}>
               {userData.dispName}

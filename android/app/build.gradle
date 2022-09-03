@@ -140,8 +140,8 @@ android {
         applicationId "com.rolffit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 25
-        versionName "1.1.25"
+        versionCode 999999
+        versionName "1.1.999999"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
@@ -221,6 +221,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        releaseStaging{
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
@@ -232,7 +240,17 @@ android {
     }
     buildTypes {
         debug {
+            resValue "string", "CodePushDeploymentKey", '""'
             signingConfig signingConfigs.debug
+        }
+        releaseStaging {
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.releaseStaging
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro" 
+            // resValue "string", "CodePushDeploymentKey", '"hGqFHvQLuDtb0rBbAvyDoAC1frI5CP1Yj3tIs"' //prod
+            resValue "string", "CodePushDeploymentKey", '"R34kZe3yoFnEspnypJvmcPDH41f7YTVcksiWm"' // staging
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -240,6 +258,8 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            // resValue "string", "CodePushDeploymentKey", '"hGqFHvQLuDtb0rBbAvyDoAC1frI5CP1Yj3tIs"' // prod
+            resValue "string", "CodePushDeploymentKey", '"R34kZe3yoFnEspnypJvmcPDH41f7YTVcksiWm"' // staging
         }
     }
 

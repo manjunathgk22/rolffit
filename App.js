@@ -68,7 +68,14 @@ GoogleSignin.configure({
 const MyStatusBar = ({backgroundColor, ...props}) => (
   <View style={[styles.statusBar, {backgroundColor}]}>
     <SafeAreaView>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+      <StatusBar
+        translucent={true}
+        animated={true}
+        backgroundColor={Colors.bg}
+        barStyle="light-content"
+        hidden={false}
+        {...props}
+      />
     </SafeAreaView>
   </View>
 );
@@ -108,10 +115,15 @@ const setNotificationCategories = () => {
 const App = () => {
   useEffect(() => {
     const type = 'notification';
-    PushNotificationIOS.addEventListener(type, onRemoteNotification);
-    Platform.OS === 'ios' ? setNotificationCategories() : null;
+    if (Platform.OS === 'ios') {
+      PushNotificationIOS.addEventListener(type, onRemoteNotification);
+      setNotificationCategories();
+    }
+
     return () => {
-      PushNotificationIOS.removeEventListener(type);
+      if (Platform.OS === 'ios') {
+        PushNotificationIOS.removeEventListener(type);
+      }
     };
   }, []);
   return (
@@ -141,7 +153,7 @@ const App = () => {
 export default App;
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 14;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 25;
 
 const styles = StyleSheet.create({
   container: {

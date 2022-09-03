@@ -28,30 +28,64 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
     homeDispatch,
   } = useContext(HomeContext);
 
+  const getSlots = key => {
+    return {
+      free: key?.free?.map(item => {
+        return {
+          ...item,
+          slot: {
+            ...item.slot,
+            time: tConvert(item.slot.start_time),
+          },
+        };
+      }),
+      paid: key?.paid?.map(item => {
+        return {
+          ...item,
+          slot: {
+            ...item.slot,
+            time: tConvert(item.slot.start_time),
+          },
+        };
+      }),
+      allSlots: key?.slot_sessions?.map(item => {
+        return {
+          ...item,
+          slot: {
+            ...item.slot,
+            time: tConvert(item.slot.start_time),
+          },
+        };
+      }),
+    };
+  };
+
+  const setSlot = (selectedItem, key) => {
+    return {
+      free: key.free.map(item => {
+        item.isSelected = selectedItem.id === item.id;
+        return item;
+      }),
+      paid: key.paid.map(item => {
+        item.isSelected = selectedItem.id === item.id;
+        return item;
+      }),
+      allSlots: key.allSlots.map(item => {
+        if (selectedItem.id === item.id) {
+          setselectedSlot(selectedItem);
+        }
+        item.isSelected = selectedItem.id === item.id;
+        return item;
+      }),
+    };
+  };
+
   useEffect(() => {
-    settodaySlots(
-      TODAY?.slot_sessions?.map(item => {
-        return {
-          ...item,
-          slot: {
-            ...item.slot,
-            time: tConvert(item.slot.start_time),
-          },
-        };
-      }),
-    );
-    settomorrowSlots(
-      TOMORROW?.slot_sessions?.map(item => {
-        return {
-          ...item,
-          slot: {
-            ...item.slot,
-            time: tConvert(item.slot.start_time),
-          },
-        };
-      }),
-    );
-  }, [TODAY, TOMORROW, tabSelect]);
+    if (!selectedSlot) {
+      settodaySlots(getSlots(TODAY));
+      settomorrowSlots(getSlots(TOMORROW));
+    }
+  }, [TODAY, TOMORROW, tabSelect, selectedSlot]);
 
   useEffect(() => {
     if (tabSelect === 1) {
@@ -67,26 +101,9 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
 
   const handleSlotSelection = selectedItem => {
     if (tabSelect === 1) {
-      settodaySlots(
-        todaySlots.map(item => {
-          if (selectedItem.id === item.id) {
-            setselectedSlot(selectedItem);
-          }
-          item.isSelected = selectedItem.id === item.id;
-
-          return item;
-        }),
-      );
+      settodaySlots(setSlot(selectedItem, todaySlots));
     } else {
-      settomorrowSlots(
-        tomorrowSlots.map(item => {
-          if (selectedItem.id === item.id) {
-            setselectedSlot(selectedItem);
-          }
-          item.isSelected = selectedItem.id === item.id;
-          return item;
-        }),
-      );
+      settomorrowSlots(setSlot(selectedItem, tomorrowSlots));
     }
   };
 
@@ -95,64 +112,77 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
       style={{
         height: futureBookingData?.length
           ? windowHeight - (320 + 0)
-          : windowHeight - 320,
+          : windowHeight - 120,
       }}>
       <ScrollView contentContainerStyle={{flexGrow: 0}}>
         <VStack pb={10}>
-          <HStack mt={6} pl={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
-            {selectedDateSlots.map((item, i) => (
-              <NeuButton
-                active={item.is_booked}
-                onPress={() => {
-                  !item.is_booked && handleSlotSelection(item);
-                }}
-                {...(item.isSelected
-                  ? {convex: true, customGradient: Colors.gradient}
-                  : {})}
-                key={i}
-                flex={1}
-                flexBasis={10}
-                width={windowWidth < 380 ? 85 : 95}
-                borderRadius={8}
-                height={50}
-                {...(item.has_user_booked
-                  ? {convex: true, customGradient: Colors.gradient}
-                  : {})}
-                style={{
-                  marginBottom: 15,
-                  marginRight: (i + 1) % 3 === 0 ? 0 : 10,
-                  marginLeft: i % 3 === 0 ? 5 : 0,
-                }}>
-                {item.isSelected || item.has_user_booked ? (
-                  item.has_user_booked ? (
-                    <VStack>
-                      <RfBold
-                        textAlign="center"
-                        lineHeight={23}
-                        color={Colors.white}>
-                        Booked
-                      </RfBold>
-                      <RfBold
-                        textAlign="center"
-                        lineHeight={23}
-                        color={Colors.white}>
-                        {item.slot.time}
-                      </RfBold>
-                    </VStack>
-                  ) : (
-                    <RfBold
-                      textAlign="center"
-                      lineHeight={23}
-                      color={Colors.white}>
-                      {item.slot.time}
-                    </RfBold>
-                  )
-                ) : (
-                  <RfText fontWeight={'bold'}>{item.slot.time}</RfText>
-                )}
-              </NeuButton>
-            ))}
-          </HStack>
+          <VStack mt={6}>
+            {['free', 'paid']?.map(key =>
+              selectedDateSlots?.[key]?.length ? (
+                <VStack>
+                  <RfBold ml={4}>{key}</RfBold>
+                  <HStack
+                    mt={6}
+                    pl={2}
+                    flexWrap={'wrap'}
+                    justifyContent={'flex-start'}>
+                    {selectedDateSlots?.[key]?.map((item, i) => (
+                      <NeuButton
+                        active={item.is_booked}
+                        onPress={() => {
+                          !item.is_booked && handleSlotSelection(item);
+                        }}
+                        {...(item.isSelected
+                          ? {convex: true, customGradient: Colors.gradient}
+                          : {})}
+                        key={i}
+                        flex={1}
+                        flexBasis={10}
+                        width={windowWidth < 380 ? 85 : 95}
+                        borderRadius={8}
+                        height={50}
+                        {...(item.has_user_booked
+                          ? {convex: true, customGradient: Colors.gradient}
+                          : {})}
+                        style={{
+                          marginBottom: 15,
+                          marginRight: (i + 1) % 3 === 0 ? 0 : 10,
+                          marginLeft: i % 3 === 0 ? 5 : 0,
+                        }}>
+                        {item.isSelected || item.has_user_booked ? (
+                          item.has_user_booked ? (
+                            <VStack>
+                              <RfBold
+                                textAlign="center"
+                                lineHeight={23}
+                                color={Colors.white}>
+                                Booked
+                              </RfBold>
+                              <RfBold
+                                textAlign="center"
+                                lineHeight={23}
+                                color={Colors.white}>
+                                {item.slot.time}
+                              </RfBold>
+                            </VStack>
+                          ) : (
+                            <RfBold
+                              textAlign="center"
+                              lineHeight={23}
+                              color={Colors.white}>
+                              {item.slot.time}
+                            </RfBold>
+                          )
+                        ) : (
+                          <RfText fontWeight={'bold'}>{item.slot.time}</RfText>
+                        )}
+                      </NeuButton>
+                    ))}
+                  </HStack>
+                </VStack>
+              ) : null,
+            )}
+          </VStack>
         </VStack>
       </ScrollView>
     </View>

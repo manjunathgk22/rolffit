@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "bundle-release": "cd android/ && ./gradlew clean && ./gradlew bundleRelease",
     "build-release": "cd android/ && ./gradlew clean && ./gradlew assembleRelease",
+    "build-releaseStaging": "cd android/ && ./gradlew clean && ./gradlew assembleReleaseStaging",
     "code-push-prod": "appcenter codepush release-react -a manjunathgk/rolf.fit -d Production",
     "code-push-stag": "appcenter codepush release-react -a manjunathgk/rolf.fit -d Staging",
     "setIcon": "react-native set-icon --path ~/Downloads/logo_full_height.png --background white --platform android",

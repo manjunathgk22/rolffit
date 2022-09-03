@@ -2,11 +2,20 @@ import {Center, Text} from 'native-base';
 import React, {Fragment, useContext, useEffect, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 // import {NeuView} from 'react-native-neu-element';
-import {initApiClients} from '../../api/apiRequest';
+import {
+  callAPIs,
+  employeeMarkUpdateApi,
+  getMaintenanceApi,
+  initApiClients,
+  STATUS,
+} from '../../api/apiRequest';
 import Appnavigator from '../../Appnavigator';
 import {LOGIN_DATA} from '../../constant/AppConstant';
 import Colors from '../../constant/Colors';
-import {setLoginData} from '../../ContextApi/GlobalContext.actions';
+import {
+  setLoginData,
+  setMaintenanceData,
+} from '../../ContextApi/GlobalContext.actions';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
 import {printLog} from '../../utility/AppUtility';
 import {getData} from '../../utility/StorageUtility';

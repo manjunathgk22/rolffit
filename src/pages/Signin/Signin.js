@@ -219,7 +219,7 @@ export function Signin({navigation}) {
                     borderRadius={12}
                     width={windowWidth - 30}
                     height={395}
-                    resizeMode={'contain'}
+                    resizeMode={'stretch'}
                     // style={{aspectRatio: 1075 / 1350}}
                     source={require('../../assets/images/brief.png')}
                   />
@@ -232,7 +232,7 @@ export function Signin({navigation}) {
                   <TouchableOpacity onPress={signIn} activeOpacity={0.7}>
                     <Image
                       source={require('../../assets/images/signin.png')}
-                      resizeMode={'contain'}
+                      resizeMode={'stretch'}
                       width={windowWidth - 30}
                       borderRadius={12}
                       height={230}

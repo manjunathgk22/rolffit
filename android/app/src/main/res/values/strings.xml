@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">rolf.fit</string>
-    <string moduleConfig="true" name="CodePushDeploymentKey">hGqFHvQLuDtb0rBbAvyDoAC1frI5CP1Yj3tIs</string>
-
 </resources>

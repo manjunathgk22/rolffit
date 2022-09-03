@@ -5,6 +5,7 @@ export const GlobalContext = createContext();
 const initialState = {
   testData: 'qqq',
   loginData: null,
+  maintenance: null,
 };
 const GlobalProvider = ({children}) => {
   const [state, dispatch] = useReducer(globalContextReducer, initialState);

@@ -32,6 +32,25 @@ export const getSlotsApiHelper = async () => {
       }
       return false;
     });
+    if (response.data.slots_data) {
+      response.data.slots_data = response.data.slots_data?.map(day => {
+        const free = [];
+        const paid = [];
+        day.slot_sessions?.map(slot => {
+          if (slot.payment_details) {
+            paid.push(slot);
+          } else {
+            free.push(slot);
+          }
+        });
+
+        return {
+          ...day,
+          free,
+          paid,
+        };
+      });
+    }
     const normalisedResponse = {
       ...response,
       data: {
