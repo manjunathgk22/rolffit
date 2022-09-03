@@ -103,7 +103,7 @@ function HomeScreen({navigation}) {
       //Update the state you want to be updated
       isFocused && getData();
     }
-    checkMaintenance();
+    isFocused && checkMaintenance();
   }, [isFocused]);
 
   useEffect(() => {
