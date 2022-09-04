@@ -222,7 +222,7 @@ export function Signin({navigation}) {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <NeuView borderRadius={12} height={180} width={windowWidth - 30}>
+              <NeuView borderRadius={12} height={180} width={windowWidth - 40}>
                 <Center flex={1}>
                   <VStack
                     alignItems={'center'}
@@ -275,9 +275,9 @@ export function Signin({navigation}) {
                 <NeuView
                   borderRadius={12}
                   height={220}
-                  width={windowWidth - 30}>
+                  width={windowWidth - 40}>
                   <View height={220} overflow={'hidden'}>
-                    <Center width={windowWidth - 30}>
+                    <Center width={windowWidth - 40}>
                       <HStack alignItems={'center'}>
                         <View
                           flex={1}
@@ -293,7 +293,7 @@ export function Signin({navigation}) {
                           <RfBold
                             textAlign={'center'}
                             fontSize={30}
-                            color={Colors.blueDark}
+                            color={Colors.white}
                             maxWidth={200}
                             style={{
                               fontFamily:
@@ -325,42 +325,39 @@ export function Signin({navigation}) {
               <View mt={10}>
                 <View>
                   <NeuButton
+                    customGradient={Colors.gradient}
+                    // inset
+                    // convex
+                    // active
                     onPress={signIn}
-                    height={100}
+                    style={{position: 'relative'}}
+                    height={80}
                     borderRadius={80}
-                    width={windowWidth - 30}>
-                    <Center px={8}>
-                      <HStack
-                        justifyContent={'space-around'}
-                        alignItems={'center'}>
-                        <NeuView
-                          borderRadius={42}
-                          height={52}
-                          width={52}
-                          inset
-                          concave>
-                          <Image
-                            source={require('../../assets/images/google.png')}
-                            style={{height: 40, width: 40}}
-                            resizeMode={'contain'}
-                          />
-                        </NeuView>
-                        <View style={{marginLeft: 45}}>
-                          <VStack>
-                            <RfBold flexWrap={'wrap'} fontSize={22}>
-                              login with
-                            </RfBold>
-                            <RfBold mt={-2} flexWrap={'wrap'} fontSize={22}>
-                              company email account
-                            </RfBold>
-                          </VStack>
-                        </View>
-                      </HStack>
+                    width={80}>
+                    <Center position={'absolute'}>
+                      {/* <Image
+                        source={require('../../assets/images/google.png')}
+                        style={{height: 32, width: 32}}
+                        resizeMode={'contain'}
+                      /> */}
+                      <Icon
+                        size={30}
+                        as={AntDesign}
+                        name="google"
+                        color={Colors.white}
+                      />
                     </Center>
                   </NeuButton>
                 </View>
+
                 {/* </NeuView> */}
               </View>
+              <VStack>
+                <RfText textAlign={'center'} mt={2}>
+                  Tap to login with your
+                </RfText>
+                <RfBold textAlign={'center'}>company email id</RfBold>
+              </VStack>
             </View>
           </Center>
         </ScrollView>

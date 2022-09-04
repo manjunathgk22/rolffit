@@ -1,5 +1,7 @@
+import {Image, View} from 'native-base';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import {windowHeight, windowWidth} from '../../constant/AppConstant';
 import Colors from '../../constant/Colors';
 
 const GradientView = ({
@@ -19,7 +21,24 @@ const GradientView = ({
         borderRadius,
         ...style,
       }}>
-      {children}
+      <View elevation={1} zIndex={1} flex={1}>
+        {children}
+      </View>
+      <Image
+        position={'absolute'}
+        left={-(windowWidth / 2) - 15}
+        top={0}
+        source={require('../../assets/images/signinBackground.png')}
+        height={300}
+        resizeMode={'contain'}
+      />
+      <Image
+        position={'absolute'}
+        bottom={0}
+        source={require('../../assets/images/signinBackground1.png')}
+        height={300}
+        resizeMode={'contain'}
+      />
     </LinearGradient>
   );
 };

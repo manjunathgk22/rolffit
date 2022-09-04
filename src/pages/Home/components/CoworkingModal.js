@@ -28,12 +28,15 @@ import NavigationService from '../../../Navigator/NavigationService';
 import routes from '../../../Navigator/routes';
 import {storeData} from '../../../utility/StorageUtility';
 import {Ionicons} from '@native-base/icons';
+import {ScrollView} from 'react-native';
+import {useKeyboard} from '../../../hooks/useKeyboard';
 
 const CoworkingModal = ({onClose}) => {
   const [loading, setloading] = useState(false);
   const [value, setvalue] = useState('');
   const [errorMsg, seterrorMsg] = useState(null);
   const {globalStore, globalDispatch} = useContext(GlobalContext);
+  const keyboardHeight = useKeyboard();
 
   const handleRegister = async () => {
     if (value.length !== 4) {
@@ -61,9 +64,9 @@ const CoworkingModal = ({onClose}) => {
 
   return (
     <Actionsheet isOpen={true} onClose={onClose}>
-      <Actionsheet.Content background={Colors.bg} padding={'0 10px'}>
+      <Actionsheet.Content background={Colors.bg}>
         {loading ? (
-          <Center width={'100%'} background={Colors.bg} minHeight={300}>
+          <Center background={Colors.bg} minHeight={300}>
             <Loader />
           </Center>
         ) : (
@@ -75,7 +78,13 @@ const CoworkingModal = ({onClose}) => {
               source={require('../../../assets/images/code.png')}
             />
 
-            <HStack space={5} mb={8} mt={4}>
+            <HStack
+              space={5}
+              mb={8}
+              mt={4}
+              style={{
+                marginBottom: keyboardHeight ? keyboardHeight + 130 : 0,
+              }}>
               <NeuInput
                 textStyle={{fontSize: 20}}
                 borderRadius={10}
@@ -107,7 +116,7 @@ const CoworkingModal = ({onClose}) => {
                     : {})}
                   height={45}
                   width={45}
-                  borderRadius={'50%'}
+                  borderRadius={45}
                   onPress={handleRegister}>
                   <Icon
                     as={Ionicons}
