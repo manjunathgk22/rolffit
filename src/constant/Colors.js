@@ -9,6 +9,7 @@ export default {
   whiteBg: '#e3edf7',
   bg_dark: '#27292c',
   blue: '#0a91e0',
-  gradient: ['#50CAFF', '#0a91e0', '#077BFF', '#0478FF'],
-  darkGradient: ['#2f343a', '#1f2126', '#18191d'],
+  blueDark: '#0478FF',
+  gradient: ['#50CAFF', '#0a91e0', '#077BFF', '#0478FF'].reverse(),
+  darkGradient: ['#1f2126', '#1f2126', '#1f2126', '#18191d', '#18191d'],
 };

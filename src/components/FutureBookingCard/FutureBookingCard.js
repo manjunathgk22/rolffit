@@ -84,7 +84,7 @@ const FutureBookingCard = ({time, getData, booking}) => {
                           ml={5}
                           fontWeight={'bold'}
                           fontSize={'lg'}
-                          colors={Colors.gradient.reverse()}>
+                          colors={Colors.gradient}>
                           {time}
                         </GradientText>
                         <RfText ml={2} fontSize="sm">

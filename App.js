@@ -127,26 +127,40 @@ const App = () => {
     };
   }, []);
   return (
-    <View style={styles.container}>
-      {Platform.OS === 'ios' ? (
-        <MyStatusBar backgroundColor={Colors.bg} barStyle="light-content" />
-      ) : null}
-      <View style={styles.appBar} />
-      <View style={styles.content}>
-        <NativeBaseProvider theme={theme}>
-          <GlobalProvider>
-            <StatusBar
-              translucent={true}
-              animated={true}
-              backgroundColor={Colors.bg}
-              barStyle="light-content"
-              hidden={false}
-            />
-            <SplashScreen />
-          </GlobalProvider>
-        </NativeBaseProvider>
-      </View>
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <NativeBaseProvider theme={theme}>
+        <GlobalProvider>
+          <StatusBar
+            translucent={true}
+            animated={true}
+            backgroundColor={Colors.bg}
+            barStyle="light-content"
+            hidden={false}
+          />
+          <SplashScreen />
+        </GlobalProvider>
+      </NativeBaseProvider>
+    </SafeAreaView>
+    // <View style={styles.container}>
+    //   {Platform.OS === 'ios' ? (
+    //     <MyStatusBar backgroundColor={Colors.bg} barStyle="light-content" />
+    //   ) : null}
+    //   <View style={styles.appBar} />
+    //   <View style={styles.content}>
+    //     <NativeBaseProvider theme={theme}>
+    //       <GlobalProvider>
+    //         <StatusBar
+    //           translucent={true}
+    //           animated={true}
+    //           backgroundColor={Colors.bg}
+    //           barStyle="light-content"
+    //           hidden={false}
+    //         />
+    //         <SplashScreen />
+    //       </GlobalProvider>
+    //     </NativeBaseProvider>
+    //   </View>
+    // </View>
   );
 };
 

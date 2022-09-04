@@ -3,23 +3,23 @@ import {TouchableWithoutFeedback, Text, View} from 'react-native';
 import NeuView from './NeuView';
 import PropTypes from 'prop-types';
 
-const NeuButton = props => {
+const NeuButton = ({
+  children,
+  isConvex,
+  active,
+  noPressEffect,
+  onPressIn,
+  onPressOut,
+  onPress,
+  onLongPress,
+  accessibilityRole,
+  accessibilityStates,
+  accessibilityLabel,
+  testID,
+  borderRadius = 8,
+  ...props
+}) => {
   const [toggleEffect, setToggleEffect] = useState(false);
-  const {
-    children,
-    isConvex,
-    active,
-    noPressEffect,
-    onPressIn,
-    onPressOut,
-    onPress,
-    onLongPress,
-    accessibilityRole,
-    accessibilityStates,
-    accessibilityLabel,
-    testID,
-    borderRadius = 8,
-  } = props;
 
   const pressOut = () => {
     if (noPressEffect) {
@@ -84,7 +84,7 @@ const NeuButton = props => {
       <View>
         <NeuView
           {...props}
-          borderRadius={8}
+          borderRadius={borderRadius}
           inset={noPressEffect ? false : active ? active : toggleEffect}>
           {children}
         </NeuView>

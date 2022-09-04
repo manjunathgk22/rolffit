@@ -37,7 +37,7 @@ import {
 import NavigationService from '../../Navigator/NavigationService';
 import routes from '../../Navigator/routes';
 import {initApiClients} from '../../api/apiRequest';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import {constainerStyle} from '../../utility/Styles';
 import NeuView from '../../HOC/NeuView/NeuView';
 import {AntDesign} from '@native-base/icons';
@@ -189,60 +189,180 @@ export function Signin({navigation}) {
 
   return (
     <GradientView style={{height: windowHeight, width: windowWidth}}>
-      <View height={windowHeight} flex={1}>
-        <ScrollView contentContainerStyle={styles.container} flex={1}>
-          <View
-            width={windowWidth}
-            style={{...styles.container, borderRadius: 0}}>
-            <View mt={6}>
-              {/* <Center maxHeight={460}>
-              <Carousel
-                layout={'default'}
-                data={Object.values(images)}
-                renderItem={_renderItem}
-                sliderWidth={Math.round(windowWidth)}
-                itemWidth={Math.round(windowWidth)}
-                autoplay={true}
-                autoplayDelay={1200}
-                autoplayInterval={5000}
-                loop={true}
-                enableSnap={true}
-                firstItem={0}
-                loopClonesPerSide={Object.values(images).length}
-                onSnapToItem={index => setactiveslide(index)}
-              />
-            </Center>
-            <Center mt={-3}>{pagination()}</Center> */}
-              <NeuView borderRadius={12} width={windowWidth - 30} height={400}>
-                <Center>
-                  <Image
-                    borderRadius={12}
-                    width={windowWidth - 30}
-                    height={395}
-                    resizeMode={'stretch'}
-                    // style={{aspectRatio: 1075 / 1350}}
-                    source={require('../../assets/images/brief.png')}
-                  />
-                </Center>
-              </NeuView>
-            </View>
-            <VStack mt={12}>
-              <NeuView height={230} width={windowWidth - 30} borderRadius={12}>
-                <Center>
-                  <TouchableOpacity onPress={signIn} activeOpacity={0.7}>
+      <View mt={-4} height={windowHeight} flex={1}>
+        <Image
+          position={'absolute'}
+          left={-(windowWidth / 2) - 15}
+          top={0}
+          source={require('../../assets/images/signinBackground.png')}
+          height={300}
+          // width={undefined}
+          resizeMode={'contain'}
+        />
+        <Image
+          position={'absolute'}
+          // left={windowWidth / 2}
+          // right={0}
+          bottom={0}
+          source={require('../../assets/images/signinBackground1.png')}
+          height={300}
+          // width={undefined}
+          resizeMode={'contain'}
+        />
+        <ScrollView
+          style={{zIndex: 10, elevation: 10}}
+          contentContainerStyle={styles.container}
+          flex={1}>
+          <Center flex={1}>
+            <View
+              width={windowWidth}
+              style={{
+                ...styles.container,
+                borderRadius: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <NeuView borderRadius={12} height={180} width={windowWidth - 30}>
+                <Center flex={1}>
+                  <VStack
+                    alignItems={'center'}
+                    // backgroundColor={Colors.blue}
+                    mt={6}>
+                    <VStack mt={4}>
+                      <RfBold
+                        fontSize={30}
+                        width={150}
+                        style={{
+                          fontFamily:
+                            Platform.OS === 'ios' ? '' : 'Geomanist-Regular',
+                        }}
+                        flexWrap={'wrap'}
+                        // position={'absolute'}
+                        alignSelf={'center'}
+                        textAlign={'center'}
+                        ml={20}>
+                        greetings
+                      </RfBold>
+                      <RfBold
+                        fontSize={30}
+                        width={150}
+                        style={{
+                          fontFamily:
+                            Platform.OS === 'ios' ? '' : 'Geomanist-Regular',
+                        }}
+                        flexWrap={'wrap'}
+                        // position={'absolute'}
+                        alignSelf={'center'}
+                        textAlign={'center'}
+                        mt={-4}
+                        ml={20}>
+                        from
+                      </RfBold>
+                    </VStack>
+
                     <Image
-                      source={require('../../assets/images/signin.png')}
-                      resizeMode={'stretch'}
-                      width={windowWidth - 30}
-                      borderRadius={12}
-                      height={230}
-                      // style={{aspectRatio: 1917 / 1080}}
+                      source={require('../../assets/images/logosingleline.png')}
+                      height={185}
+                      style={{marginTop: -77}}
+                      width={undefined}
+                      resizeMode={'contain'}
                     />
-                  </TouchableOpacity>
+                  </VStack>
                 </Center>
               </NeuView>
-            </VStack>
-          </View>
+              {/* <Center flex={1}> */}
+              <View mt={10}>
+                <NeuView
+                  borderRadius={12}
+                  height={220}
+                  width={windowWidth - 30}>
+                  <View height={220} overflow={'hidden'}>
+                    <Center width={windowWidth - 30}>
+                      <HStack alignItems={'center'}>
+                        <View
+                          flex={1}
+                          height={220}
+                          // backgroundColor={Colors.blue}
+                          mt={-4}
+                          justifyContent={'center'}
+                          width={
+                            (windowWidth - 30) / 3 + (windowWidth - 30) / 3
+                          }
+                          // background={Colors.blue}
+                          alignItems={'center'}>
+                          <RfBold
+                            textAlign={'center'}
+                            fontSize={30}
+                            color={Colors.blueDark}
+                            maxWidth={200}
+                            style={{
+                              fontFamily:
+                                Platform.OS === 'ios'
+                                  ? ''
+                                  : 'Geomanist-Regular',
+                              lineHeight: 32,
+                            }}
+                            flexWrap={'wrap'}>
+                            we provide mini massage breaks during your office
+                            time!
+                          </RfBold>
+                        </View>
+                        <Image
+                          source={require('../../assets/images/relax_and_login.png')}
+                          height={250}
+                          mt={2}
+                          mr={2}
+                          width={(windowWidth - 30) / 3}
+                          // width={undefined}
+                          resizeMode={'contain'}
+                        />
+                      </HStack>
+                    </Center>
+                  </View>
+                </NeuView>
+              </View>
+              {/* </Center> */}
+              <View mt={10}>
+                <View>
+                  <NeuButton
+                    onPress={signIn}
+                    height={100}
+                    borderRadius={80}
+                    width={windowWidth - 30}>
+                    <Center px={8}>
+                      <HStack
+                        justifyContent={'space-around'}
+                        alignItems={'center'}>
+                        <NeuView
+                          borderRadius={42}
+                          height={52}
+                          width={52}
+                          inset
+                          concave>
+                          <Image
+                            source={require('../../assets/images/google.png')}
+                            style={{height: 40, width: 40}}
+                            resizeMode={'contain'}
+                          />
+                        </NeuView>
+                        <View style={{marginLeft: 45}}>
+                          <VStack>
+                            <RfBold flexWrap={'wrap'} fontSize={22}>
+                              login with
+                            </RfBold>
+                            <RfBold mt={-2} flexWrap={'wrap'} fontSize={22}>
+                              company email account
+                            </RfBold>
+                          </VStack>
+                        </View>
+                      </HStack>
+                    </Center>
+                  </NeuButton>
+                </View>
+                {/* </NeuView> */}
+              </View>
+            </View>
+          </Center>
         </ScrollView>
         {signinDisabled ? (
           <Center
@@ -250,6 +370,7 @@ export function Signin({navigation}) {
             flex={1}
             width={'100%'}
             height={'100%'}
+            style={{zIndex: 15, elevation: 15}}
             borderRadius={12}
             background={'#000000dd'}>
             <View>
