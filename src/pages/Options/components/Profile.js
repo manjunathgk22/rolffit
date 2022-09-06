@@ -6,6 +6,7 @@ import Colors from '../../../constant/Colors';
 import {GlobalContext} from '../../../ContextApi/GlobalContextProvider';
 import NeuView from '../../../HOC/NeuView/NeuView';
 import {Platform} from 'react-native';
+import {getGeomanistbold} from '../../../utility/fontUtility';
 
 function Profile() {
   const {
@@ -41,10 +42,10 @@ function Profile() {
           <NeuView inset height={130} borderRadius={130} width={130}>
             <Text
               color={Colors.dark}
+              fontWeight="700"
               style={{
-                fontFamily: Platform.OS === 'ios' ? '' : 'Geomanist-Bold',
+                fontFamily: getGeomanistbold(),
               }}
-              // style={{fontFamily: 'Geomanist-Bold'}}
               textTransform={'uppercase'}
               fontSize={'6xl'}>
               {userData.dispName}

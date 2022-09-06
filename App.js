@@ -12,7 +12,7 @@ import {Platform, StyleSheet, View} from 'react-native';
 import {Box, NativeBaseProvider, StatusBar, extendTheme} from 'native-base';
 import {Center, HStack, Text, Spacer} from 'native-base';
 import Appnavigator from './src/Appnavigator';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useEffect, useState} from 'react';
 import Colors from './src/constant/Colors';
 import GlobalProvider from './src/ContextApi/GlobalContextProvider';
@@ -65,20 +65,17 @@ GoogleSignin.configure({
     '982846620366-ruah2ibtqp8d33ontrt0qai4q4ju1av1.apps.googleusercontent.com',
 });
 
-const MyStatusBar = ({backgroundColor, ...props}) => (
-  <View style={[styles.statusBar, {backgroundColor}]}>
-    <SafeAreaView>
-      <StatusBar
-        translucent={true}
-        animated={true}
-        backgroundColor={Colors.bg}
-        barStyle="light-content"
-        hidden={false}
-        {...props}
-      />
-    </SafeAreaView>
-  </View>
-);
+const CustomStatusBar = ({backgroundColor, ...props}) => {
+  const {top} = useSafeAreaInsets();
+
+  return (
+    <View style={{height: StatusBar.currentHeight || top, backgroundColor}}>
+      <SafeAreaView style={{backgroundColor}}>
+        <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+      </SafeAreaView>
+    </View>
+  );
+};
 
 const onRemoteNotification = notification => {
   const isClicked = notification.getData().userInteraction === 1;
@@ -130,7 +127,7 @@ const App = () => {
     <SafeAreaView style={{flex: 1}}>
       <NativeBaseProvider theme={theme}>
         <GlobalProvider>
-          <StatusBar
+          <CustomStatusBar
             translucent={true}
             animated={true}
             backgroundColor={Colors.bg}

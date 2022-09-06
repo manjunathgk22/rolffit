@@ -95,6 +95,16 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     center.delegate = self;
   
+  // for (NSString* family in [UIFont familyNames])
+  // {
+  //     NSLog(@"%@", family);
+
+  //     for (NSString* name in [UIFont fontNamesForFamilyName: family])
+  //     {
+  //         NSLog(@"Family name:  %@", name);
+  //     }
+  // }
+  
   return YES;
 }
 

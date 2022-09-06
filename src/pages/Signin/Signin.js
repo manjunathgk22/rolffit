@@ -59,6 +59,7 @@ import five from '../../assets/images/5.png';
 import six from '../../assets/images/6.png';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import GradientView from '../../components/GradientView/GradientView';
+import {getGeomanistRegular} from '../../utility/fontUtility';
 
 const images = {
   // 1: one,
@@ -233,8 +234,7 @@ export function Signin({navigation}) {
                         fontSize={30}
                         width={150}
                         style={{
-                          fontFamily:
-                            Platform.OS === 'ios' ? '' : 'Geomanist-Regular',
+                          fontFamily: getGeomanistRegular(),
                         }}
                         flexWrap={'wrap'}
                         // position={'absolute'}
@@ -247,8 +247,7 @@ export function Signin({navigation}) {
                         fontSize={30}
                         width={150}
                         style={{
-                          fontFamily:
-                            Platform.OS === 'ios' ? '' : 'Geomanist-Regular',
+                          fontFamily: getGeomanistRegular(),
                         }}
                         flexWrap={'wrap'}
                         // position={'absolute'}
@@ -296,10 +295,7 @@ export function Signin({navigation}) {
                             color={Colors.white}
                             maxWidth={200}
                             style={{
-                              fontFamily:
-                                Platform.OS === 'ios'
-                                  ? ''
-                                  : 'Geomanist-Regular',
+                              fontFamily: getGeomanistRegular(),
                               lineHeight: 32,
                             }}
                             flexWrap={'wrap'}>

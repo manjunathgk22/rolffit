@@ -38,6 +38,7 @@ import {
 import RfBold from '../../components/RfBold/RfBold';
 import {StyleSheet} from 'react-native';
 import {
+  FCM_TOKEN,
   LOGIN_DATA,
   windowHeight,
   windowWidth,
@@ -96,8 +97,6 @@ function HomeScreen({navigation}) {
     });
   };
   const isFocused = useIsFocused();
-
-  useEffect(() => {}, []);
 
   const checkMaintenance = async () => {
     console.log('qqqhere');

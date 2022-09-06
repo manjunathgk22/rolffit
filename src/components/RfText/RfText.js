@@ -1,6 +1,7 @@
 import {Text} from 'native-base';
 import React from 'react';
 import {Platform} from 'react-native';
+import {getComfortaaRegular} from '../../utility/fontUtility';
 
 function RfText(props) {
   return (
@@ -9,7 +10,7 @@ function RfText(props) {
       letterSpacing={1}
       fontSize={'md'}
       // style={{fontFamily: 'Comfortaa-Regular'}}
-      style={{fontFamily: Platform.OS === 'ios' ? '' : 'Comfortaa-Regular'}}
+      style={{fontFamily: getComfortaaRegular()}}
       fontWeight={'normal'}
       {...props}>
       {props.children}

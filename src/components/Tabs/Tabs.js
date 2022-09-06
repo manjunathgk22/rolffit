@@ -8,6 +8,7 @@ import NeuButton from '../../HOC/NeuView/NeuButton';
 import NeuView from '../../HOC/NeuView/NeuView';
 import {HomeContext} from '../../pages/Home/ContextApi/HomeProvider';
 import {printLog} from '../../utility/AppUtility';
+import {getComfortaaBold} from '../../utility/fontUtility';
 import RfBold from '../RfBold/RfBold';
 import RfText from '../RfText/RfText';
 
@@ -53,14 +54,20 @@ const Tabs = ({tabSelect, settabSelect}) => {
                   }}>
                   <Center width={TOMORROW?.slot_sessions ? 160 : 315}>
                     <RfText
-                      style={{fontFamily: 'Comfortaa-Bold'}}
+                      style={{
+                        fontFamily: getComfortaaBold(),
+                        fontWeight: '700',
+                      }}
                       textAlign="center">
                       {TODAY.title}
                     </RfText>
                     {TODAY.sub_title ? (
                       <RfText
                         fontSize="xs"
-                        style={{fontFamily: 'Comfortaa-Bold'}}
+                        style={{
+                          fontFamily: getComfortaaBold(),
+                          fontWeight: '700',
+                        }}
                         textAlign="center">
                         {TODAY.sub_title}
                       </RfText>
@@ -92,14 +99,20 @@ const Tabs = ({tabSelect, settabSelect}) => {
                   }}>
                   <Center width={TODAY?.slot_sessions ? 160 : 315}>
                     <RfText
-                      style={{fontFamily: 'Comfortaa-Bold'}}
+                      style={{
+                        fontFamily: getComfortaaBold(),
+                        fontWeight: '700',
+                      }}
                       textAlign="center">
                       {TOMORROW.title}
                     </RfText>
                     {TOMORROW.sub_title ? (
                       <RfText
                         fontSize="xs"
-                        style={{fontFamily: 'Comfortaa-Bold'}}
+                        style={{
+                          fontFamily: getComfortaaBold(),
+                          fontWeight: '700',
+                        }}
                         textAlign="center">
                         {TOMORROW.sub_title}
                       </RfText>

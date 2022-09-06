@@ -40,7 +40,7 @@ PushNotification.configure({
   foreground: true,
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {
-    printLog('TOKEN:', token);
+    printLog('notification TOKEN:', token);
     await storeData({key: FCM_TOKEN, value: token});
 
     setTimeout(() => {

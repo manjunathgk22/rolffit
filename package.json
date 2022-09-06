@@ -1,6 +1,6 @@
 {
   "name": "rolffit",
-  "version": "0.0.1",
+  "version": "1.1.31",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -18,7 +18,8 @@
     "report": "cd android && ./gradlew signingReport",
     "clean": "watchman watch-del-all && react-native start --reset-cache",
     "full-clean": "npx react-native-clean-project",
-    "pod-install": "cd ios && rm -rf Podfile.lock  && arch -x86_64 pod install --repo-update"
+    "pod-install": "cd ios && rm -rf Podfile.lock  && arch -x86_64 pod install --repo-update",
+    "version-update": "npx react-native-version --never-amend"
   },
   "dependencies": {
     "@bam.tech/react-native-make": "3.0.3",
