@@ -5,6 +5,7 @@ import {
   employeeCheckoutApi,
   employeeMarkUpdateApi,
   getFutureBookingApi,
+  getMainCardApi,
   getSlotsApi,
   getTherapistSlotsApi,
   rateMassageApi,
@@ -92,6 +93,15 @@ export const futureBookingApiHelper = async () => {
   const response = await callAPIs(getFutureBookingApi());
   if (response.status_code === STATUS.SUCCESS) {
     return response.data?.slot_bookings;
+  } else {
+    return false;
+  }
+};
+
+export const mainCardApiHelper = async () => {
+  const response = await callAPIs(getMainCardApi());
+  if (response.status_code === STATUS.SUCCESS) {
+    return response.data;
   } else {
     return false;
   }

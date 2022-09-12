@@ -3,12 +3,15 @@ import {
   GET_FUTURE_BOOKING,
   GET_FUTURE_BOOKING_FAILURE,
   GET_FUTURE_BOOKING_SUCCESS,
+  GET_MAIN_LIST_CARD,
   GET_SLOTS,
   GET_SLOTS_FAILURE,
   GET_SLOTS_SUCCESS,
   GET_THERAPIST_SLOTS,
   GET_THERAPIST_SLOTS_FAILURE,
   GET_THERAPIST_SLOTS_SUCCESS,
+  MAIN_LIST_CARD_FAILURE,
+  MAIN_LIST_CARD_SUCCESS,
 } from './Home.actionTypes';
 
 export const homeContextReducer = (state, action) => {
@@ -53,6 +56,28 @@ export const homeContextReducer = (state, action) => {
         draft.futureBookings.data = null;
         draft.futureBookings.loading = false;
         draft.futureBookings.error = true;
+        return draft;
+      });
+
+    case GET_MAIN_LIST_CARD:
+      return produce(state, draft => {
+        draft.mainCard.loading = true;
+        draft.mainCard.error = null;
+        draft.mainCard.data = null;
+        return draft;
+      });
+    case MAIN_LIST_CARD_SUCCESS:
+      return produce(state, draft => {
+        draft.mainCard.data = action.payload;
+        draft.mainCard.loading = false;
+        draft.mainCard.error = null;
+        return draft;
+      });
+    case MAIN_LIST_CARD_FAILURE:
+      return produce(state, draft => {
+        draft.mainCard.data = null;
+        draft.mainCard.loading = false;
+        draft.mainCard.error = true;
         return draft;
       });
 

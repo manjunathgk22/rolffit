@@ -128,3 +128,9 @@ export const setUniqueCode = json =>
 
 export const getMaintenanceApi = () =>
   userApiClient.get('rolffit/api/app/open/dialog/');
+
+export const deleteAccount = () =>
+  userApiClient.delete('rolffit/centraluser/app/deactivate/');
+
+export const getMainCardApi = () =>
+  userApiClient.get('rolffit/feedcard/employee/main-list/');

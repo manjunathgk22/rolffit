@@ -9,7 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../../constant/Colors';
 
 const NeuView = props => {
-  const {
+  let {
     color = Colors.bg,
     width = 100,
     height = 100,
@@ -29,6 +29,7 @@ const NeuView = props => {
     noShadow,
   } = props;
 
+  // borderRadius = 12;
   const {h, s, l} = hexToHsl(color);
   const light = hslToHex(h - 2 < 0 ? 0 : h - 2, s, l + 5 > 100 ? 100 : l + 5);
   const dark = hslToHex(h, s, l - 20 < 0 ? 0 : l - 20);

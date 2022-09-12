@@ -28,7 +28,7 @@ import NavigationService from '../../../Navigator/NavigationService';
 import routes from '../../../Navigator/routes';
 import {storeData} from '../../../utility/StorageUtility';
 import {Ionicons} from '@native-base/icons';
-import {ScrollView} from 'react-native';
+import {Platform, ScrollView} from 'react-native';
 import {useKeyboard} from '../../../hooks/useKeyboard';
 
 const CoworkingModal = ({onClose}) => {
@@ -89,7 +89,7 @@ const CoworkingModal = ({onClose}) => {
                 textStyle={{fontSize: 20}}
                 borderRadius={10}
                 inputProps={{
-                  keyboardType: 'number',
+                  keyboardType: Platform.OS === 'ios' ? 'numeric' : 'number',
                   // autoFocus: true,
                   color: Colors.dark,
                   placeholderTextColor: Colors.dark,

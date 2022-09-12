@@ -8,6 +8,7 @@ import {
   useToast,
   VStack,
   Icon,
+  ScrollView,
 } from 'native-base';
 import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import {GlobalContext} from '../../ContextApi/GlobalContextProvider';
@@ -25,6 +26,8 @@ import {
   getFutureBooking,
   getFutureBookingFailure,
   getFutureBookingSuccess,
+  getMainCardFailure,
+  getMainCardSuccess,
   getSlots,
   getSlotsFailure,
   getSlotsSuccess,
@@ -33,6 +36,7 @@ import {
   bookSlotApiHelper,
   futureBookingApiHelper,
   getSlotsApiHelper,
+  mainCardApiHelper,
   rescheduleApiHelper,
 } from './apiService';
 import RfBold from '../../components/RfBold/RfBold';
@@ -68,6 +72,7 @@ import {Entypo, Ionicons, AntDesign} from '@native-base/icons';
 import SlotInfo from './components/SlotInfo';
 import Maintenance from '../../components/Maintenance/Maintenance';
 import {callAPIs, getMaintenanceApi, STATUS} from '../../api/apiRequest';
+import MainCard from '../../components/MainCard/MainCard';
 
 function HomeScreen({navigation}) {
   const {
@@ -149,9 +154,10 @@ function HomeScreen({navigation}) {
     homeDispatch(getFutureBooking());
     // const slots = await getSlotsApiHelper();
     // const futurebooking = await futureBookingApiHelper();
-    const [slots, futurebooking] = await Promise.all([
+    const [slots, futurebooking, mainCardData] = await Promise.all([
       getSlotsApiHelper(),
       futureBookingApiHelper(),
+      mainCardApiHelper(),
     ]);
     if (slots) {
       homeDispatch(getSlotsSuccess(slots));
@@ -162,6 +168,11 @@ function HomeScreen({navigation}) {
       homeDispatch(getFutureBookingSuccess(futurebooking));
     } else {
       homeDispatch(getFutureBookingFailure());
+    }
+    if (mainCardData) {
+      homeDispatch(getMainCardSuccess(mainCardData));
+    } else {
+      homeDispatch(getMainCardFailure());
     }
   };
 
@@ -231,7 +242,10 @@ function HomeScreen({navigation}) {
         <>
           <GradientView style={{height: windowHeight, flex: 1}}>
             <VStack p={4} flex={1}>
-              <HStack justifyContent={'space-between'} alignItems={'center'}>
+              <HStack
+                pb={2}
+                justifyContent={'space-between'}
+                alignItems={'center'}>
                 <HStack alignItems={'center'}>
                   <NeuButton
                     onPress={() => {
@@ -252,43 +266,45 @@ function HomeScreen({navigation}) {
                   </RfBold>
                 </HStack>
               </HStack>
-              <Center paddingX={4} mt={2}>
-                <FutureBooking getData={getData} />
-                {loading ? (
-                  <View height={380}>
-                    <Loader />
-                  </View>
-                ) : (
-                  <VStack mt={4}>
-                    <Tabs settabSelect={settabSelect} tabSelect={tabSelect} />
-                    <Slots
-                      setselectedSlot={setselectedSlot}
-                      selectedSlot={selectedSlot}
-                      tabSelect={tabSelect}
-                    />
-                  </VStack>
-                )}
-              </Center>
-              {showReschedulePopup ? (
-                <RescheduleActionSheet
-                  errorToast={errorToast}
-                  open={showReschedulePopup}
-                  currentSlot={pastSelectedSlot}
-                  newSlot={selectedSlot}
-                  onClose={() => setshowReschedulePopup(false)}
-                />
-              ) : null}
-              {showSlotInfo && selectedSlot ? (
-                <SlotInfo
-                  onClose={() => {
-                    setselectedSlot(null);
-                  }}
-                  handleBooking={handleBooking}
-                  currentSlot={pastSelectedSlot}
-                  selectedSlot={selectedSlot}
-                  apiLoading={apiLoading}
-                />
-              ) : null}
+              <ScrollView>
+                <Center paddingX={4} mt={2}>
+                  <FutureBooking getData={getData} />
+                  {loading ? (
+                    <View height={380}>
+                      <Loader />
+                    </View>
+                  ) : (
+                    <VStack mt={4}>
+                      <Tabs settabSelect={settabSelect} tabSelect={tabSelect} />
+                      <Slots
+                        setselectedSlot={setselectedSlot}
+                        selectedSlot={selectedSlot}
+                        tabSelect={tabSelect}
+                      />
+                    </VStack>
+                  )}
+                </Center>
+                {showReschedulePopup ? (
+                  <RescheduleActionSheet
+                    errorToast={errorToast}
+                    open={showReschedulePopup}
+                    currentSlot={pastSelectedSlot}
+                    newSlot={selectedSlot}
+                    onClose={() => setshowReschedulePopup(false)}
+                  />
+                ) : null}
+                {showSlotInfo && selectedSlot ? (
+                  <SlotInfo
+                    onClose={() => {
+                      setselectedSlot(null);
+                    }}
+                    handleBooking={handleBooking}
+                    currentSlot={pastSelectedSlot}
+                    selectedSlot={selectedSlot}
+                    apiLoading={apiLoading}
+                  />
+                ) : null}
+              </ScrollView>
             </VStack>
           </GradientView>
         </>

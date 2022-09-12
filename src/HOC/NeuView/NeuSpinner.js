@@ -3,12 +3,13 @@ import Animated, {Easing} from 'react-native-reanimated';
 import {runInfinite} from './utils/animation/presets';
 import NeuView from './NeuView';
 import PropTypes from 'prop-types';
+import Colors from '../../constant/Colors';
 
 const NeuSpinner = props => {
   const {Clock, concat} = Animated;
 
   const {
-    color,
+    color = Colors.blueDark,
     indicatorColor = '#000',
     duration = 1000,
     size = 50,

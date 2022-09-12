@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>982846620366-qa2ttn874bt47cj10r86pv02q2n0hhuu.apps.googleusercontent.com</string>
+	<string>982846620366-50ho92pkfbj927ufm7qkmb0qicv6k79b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.982846620366-qa2ttn874bt47cj10r86pv02q2n0hhuu</string>
+	<string>com.googleusercontent.apps.982846620366-50ho92pkfbj927ufm7qkmb0qicv6k79b</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>982846620366-0kgjqppel97v20tb4ft59c77a2rfiaqe.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.rolffit</string>
+	<string>org.reactjs.native.example.rolffit</string>
 	<key>PROJECT_ID</key>
 	<string>rolffit-e5676</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:982846620366:ios:67aa25a63b52c72549c69f</string>
+	<string>1:982846620366:ios:005527bc76a48fcf49c69f</string>
 </dict>
 </plist>

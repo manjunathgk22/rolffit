@@ -2,6 +2,8 @@ import {Toast} from 'native-base';
 import {Linking} from 'react-native';
 import {getUniqueId} from 'react-native-device-info';
 import {callAPIs, sendFCMToken} from '../api/apiRequest';
+import RfBold from '../components/RfBold/RfBold';
+import ToastMessage from '../components/ToastMessage/ToastMessage';
 import {FCM_TOKEN, LOGIN_DATA} from '../constant/AppConstant';
 import {getData} from './StorageUtility';
 
@@ -37,7 +39,7 @@ export function tConvert(time) {
 }
 
 export function isObjectEmpty(obj) {
-  for (const i in obj) return false;
+  for (const _i in obj) return false;
   return true;
 }
 
@@ -60,19 +62,21 @@ export const showToast = ({
   duration = 4000,
   showButton = false,
   buttonText = 'Okay',
-  type = 'default',
+  type = 'error',
 }) => {
-  Toast.show({text, type, duration, ...(showButton ? {buttonText} : {})});
+  Toast.show({
+    text,
+    description: text,
+    type,
+    duration,
+    ...(showButton ? {buttonText} : {}),
+  });
 };
 
 export const openUrl = url => {
-  Linking.canOpenURL(url)
-    .then(supported => {
-      if (!supported) {
-        showToast({text: 'Your phone does not support'});
-      } else {
-        return Linking.openURL(url);
-      }
-    })
-    .catch(err => console.log('An error occurred', err));
+  Linking.openURL(url).catch(_err => {
+    showToast({
+      text: "Couldn't load page",
+    });
+  });
 };

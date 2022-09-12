@@ -13,6 +13,11 @@ const initialState = {
     loading: true,
     error: null,
   },
+  mainCard: {
+    data: null,
+    loading: true,
+    error: null,
+  },
   therapistData: {
     data: null,
     loading: true,

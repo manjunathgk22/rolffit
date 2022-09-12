@@ -12,6 +12,11 @@ import {tConvert} from '../../utility/AppUtility';
 import RfBold from '../RfBold/RfBold';
 import RfText from '../RfText/RfText';
 
+const title = {
+  free: 'free slots',
+  paid: 'paid slots',
+};
+
 const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
   const [todaySlots, settodaySlots] = useState([]);
   const [tomorrowSlots, settomorrowSlots] = useState([]);
@@ -108,83 +113,76 @@ const Slots = ({tabSelect, setselectedSlot, selectedSlot}) => {
   };
 
   return (
-    <View
-      style={{
-        height: futureBookingData?.length
-          ? windowHeight - (320 + 0)
-          : windowHeight - 120,
-      }}>
-      <ScrollView contentContainerStyle={{flexGrow: 0}}>
-        <VStack pb={10}>
-          <VStack mt={6}>
-            {['free', 'paid']?.map(key =>
-              selectedDateSlots?.[key]?.length ? (
-                <VStack>
-                  <RfBold ml={4}>{key}</RfBold>
-                  <HStack
-                    mt={6}
-                    pl={2}
-                    flexWrap={'wrap'}
-                    justifyContent={'flex-start'}>
-                    {selectedDateSlots?.[key]?.map((item, i) => (
-                      <NeuButton
-                        active={item.is_booked}
-                        onPress={() => {
-                          !item.is_booked && handleSlotSelection(item);
-                        }}
-                        {...(item.isSelected
-                          ? {convex: true, customGradient: Colors.gradient}
-                          : {})}
-                        key={i}
-                        flex={1}
-                        flexBasis={10}
-                        width={windowWidth < 380 ? 85 : 95}
-                        borderRadius={8}
-                        height={50}
-                        {...(item.has_user_booked
-                          ? {convex: true, customGradient: Colors.gradient}
-                          : {})}
-                        style={{
-                          marginBottom: 15,
-                          marginRight: (i + 1) % 3 === 0 ? 0 : 10,
-                          marginLeft: i % 3 === 0 ? 5 : 0,
-                        }}>
-                        {item.isSelected || item.has_user_booked ? (
-                          item.has_user_booked ? (
-                            <VStack>
-                              <RfBold
-                                textAlign="center"
-                                lineHeight={23}
-                                color={Colors.white}>
-                                Booked
-                              </RfBold>
-                              <RfBold
-                                textAlign="center"
-                                lineHeight={23}
-                                color={Colors.white}>
-                                {item.slot.time}
-                              </RfBold>
-                            </VStack>
-                          ) : (
+    <View>
+      <VStack pb={2}>
+        <VStack mt={6}>
+          {['free', 'paid']?.map(key =>
+            selectedDateSlots?.[key]?.length ? (
+              <VStack>
+                <RfBold ml={4}>{title[key]}</RfBold>
+                <HStack
+                  mt={4}
+                  pl={2}
+                  flexWrap={'wrap'}
+                  justifyContent={'flex-start'}>
+                  {selectedDateSlots?.[key]?.map((item, i) => (
+                    <NeuButton
+                      active={item.is_booked}
+                      onPress={() => {
+                        !item.is_booked && handleSlotSelection(item);
+                      }}
+                      {...(item.isSelected
+                        ? {convex: true, customGradient: Colors.gradient}
+                        : {})}
+                      key={i}
+                      flex={1}
+                      flexBasis={10}
+                      width={windowWidth < 380 ? 85 : 95}
+                      borderRadius={8}
+                      height={50}
+                      {...(item.has_user_booked
+                        ? {convex: true, customGradient: Colors.gradient}
+                        : {})}
+                      style={{
+                        marginBottom: 15,
+                        marginRight: (i + 1) % 3 === 0 ? 0 : 10,
+                        marginLeft: i % 3 === 0 ? 5 : 0,
+                      }}>
+                      {item.isSelected || item.has_user_booked ? (
+                        item.has_user_booked ? (
+                          <VStack>
+                            <RfBold
+                              textAlign="center"
+                              lineHeight={23}
+                              color={Colors.white}>
+                              Booked
+                            </RfBold>
                             <RfBold
                               textAlign="center"
                               lineHeight={23}
                               color={Colors.white}>
                               {item.slot.time}
                             </RfBold>
-                          )
+                          </VStack>
                         ) : (
-                          <RfText fontWeight={'bold'}>{item.slot.time}</RfText>
-                        )}
-                      </NeuButton>
-                    ))}
-                  </HStack>
-                </VStack>
-              ) : null,
-            )}
-          </VStack>
+                          <RfBold
+                            textAlign="center"
+                            lineHeight={23}
+                            color={Colors.white}>
+                            {item.slot.time}
+                          </RfBold>
+                        )
+                      ) : (
+                        <RfText fontWeight={'bold'}>{item.slot.time}</RfText>
+                      )}
+                    </NeuButton>
+                  ))}
+                </HStack>
+              </VStack>
+            ) : null,
+          )}
         </VStack>
-      </ScrollView>
+      </VStack>
     </View>
   );
 };

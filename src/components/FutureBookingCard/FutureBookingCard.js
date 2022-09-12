@@ -51,72 +51,52 @@ const FutureBookingCard = ({time, getData, booking}) => {
   };
 
   return (
-    <NeuView height={140} borderRadius={8} width={windowWidth - 40}>
-      <Center>
-        <VStack>
-          <View
-            // background={Colors.error}
-            flex={1}
-            alignItems={'flex-end'}
-            width={windowWidth - 40}>
-            {/* <Image
-              // background={Colors.darker}
-              resizeMode="contain"
-              width={220}
-              height={120}
-              source={require('../../assets/images/upcoming.png')}
-            /> */}
-            <View width={windowWidth - 40} mt={3}>
-              <Center>
-                <NeuView borderRadius={8} height={60} width={windowWidth - 60}>
-                  <HStack px={5} alignItems={'center'} flex={1} width={'100%'}>
-                    <NeuView height={38} width={38} borderRadius={8}>
-                      <Icon
-                        as={AntDesign}
-                        name="calendar"
-                        color={Colors.dark}
-                      />
-                    </NeuView>
-                    <View>
-                      <RfText ml={5}>Upcoming booking </RfText>
-                      <HStack alignItems={'baseline'}>
-                        <GradientText
-                          ml={5}
-                          fontWeight={'bold'}
-                          fontSize={'lg'}
-                          colors={Colors.gradient}>
-                          {time}
-                        </GradientText>
-                        <RfText ml={2} fontSize="sm">
-                          {moment(booking.slot_session.slot_start_time).format(
-                            'Do MMM',
-                          )}
-                        </RfText>
-                      </HStack>
-                    </View>
-                  </HStack>
-                </NeuView>
-                <Center mt={4}>
-                  {loading ? (
-                    <HStack>
-                      <Loader size={38} />
-                    </HStack>
-                  ) : (
-                    <NeuButton
-                      onPress={() => {
-                        setshowCancelPopup(true);
-                      }}
-                      borderRadius={6}
-                      height={35}
-                      width={110}>
-                      <RfText>Cancel</RfText>
-                    </NeuButton>
+    <NeuView height={145} borderRadius={8} width={windowWidth - 40}>
+      <Center p={3} flex={1}>
+        <HStack flex={1}>
+          <View height={'100%'} flex={6}>
+            <VStack flex={1}>
+              <RfText mt={2} textAlign={'left'}>
+                Upcoming booking on
+              </RfText>
+
+              <HStack alignItems={'baseline'}>
+                {/* <GradientText
+                  // ml={5}
+                  fontWeight={'bold'}
+                  fontSize={'lg'}
+                  colors={Colors.gradient}>
+                  {time}
+                </GradientText> */}
+                <RfText fontSize="sm">
+                  {moment(booking.slot_session.slot_start_time).format(
+                    'Do MMM',
                   )}
-                </Center>
-              </Center>
-            </View>
+                  {' at '}
+                </RfText>
+                <RfBold>{time}</RfBold>
+              </HStack>
+              {true ? (
+                <HStack alignSelf={'flex-start'} mt={4}>
+                  <NeuButton
+                    onPress={() => setshowCancelPopup(true)}
+                    borderRadius={6}
+                    height={35}
+                    width={110}>
+                    <RfBold>Cancel</RfBold>
+                  </NeuButton>
+                </HStack>
+              ) : null}
+            </VStack>
           </View>
-        </VStack>
+          <Center flex={3}>
+            <Image
+              flex={1}
+              resizeMode="contain"
+              source={require('../../assets/images/timer.png')}
+            />
+          </Center>
+        </HStack>
       </Center>
       {showCancelPopup ? (
         <GenericPopup

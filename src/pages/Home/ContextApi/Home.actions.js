@@ -8,6 +8,9 @@ import {
   GET_THERAPIST_SLOTS,
   GET_THERAPIST_SLOTS_SUCCESS,
   GET_THERAPIST_SLOTS_FAILURE,
+  GET_MAIN_LIST_CARD,
+  MAIN_LIST_CARD_SUCCESS,
+  MAIN_LIST_CARD_FAILURE,
 } from './Home.actionTypes';
 
 export const getSlots = payload => ({
@@ -35,6 +38,19 @@ export const getFutureBookingSuccess = payload => ({
 });
 export const getFutureBookingFailure = payload => ({
   type: GET_FUTURE_BOOKING_FAILURE,
+  payload,
+});
+
+export const getMainCard = payload => ({
+  type: GET_MAIN_LIST_CARD,
+  payload,
+});
+export const getMainCardSuccess = payload => ({
+  type: MAIN_LIST_CARD_SUCCESS,
+  payload,
+});
+export const getMainCardFailure = payload => ({
+  type: MAIN_LIST_CARD_FAILURE,
   payload,
 });
 

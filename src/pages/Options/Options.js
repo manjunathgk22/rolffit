@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   Text,
+  useToast,
   View,
   VStack,
 } from 'native-base';
@@ -28,13 +29,49 @@ import {constainerStyle} from '../../utility/Styles';
 import LogoutActionSheet from './components/LogoutActionSheet/LogoutActionSheet';
 import Profile from './components/Profile';
 import MyBookings from './components/MyBookings/MyBookings';
-import OptionsProvider from './ContextApi/OptionsProvider';
+import OptionsProvider, {OptionsContext} from './ContextApi/OptionsProvider';
 import RfBold from '../../components/RfBold/RfBold';
 import GradientView from '../../components/GradientView/GradientView';
+import NeuSpinner from '../../HOC/NeuView/NeuSpinner';
+import Loader from '../../components/Loader/Loader';
+import {callAPIs, deleteAccount, STATUS} from '../../api/apiRequest';
+import ToastMessage from '../../components/ToastMessage/ToastMessage';
 
 function Options({navigation}) {
   const [showLogout, setshowLogout] = useState(false);
   const {globalDispatch} = useContext(GlobalContext);
+  const [apiLoading, setapiLoading] = useState(false);
+  const {
+    optionsStore: {
+      myBookings: {data, loading, error},
+    },
+    optionsDispatch,
+  } = useContext(OptionsContext);
+  const toast = useToast();
+  const errorToast = msg => {
+    toast.show({
+      render: () => {
+        return <ToastMessage width={300} viewProps={{p: 2}} text={msg} />;
+      },
+    });
+  };
+
+  const handleDeleteAccount = async () => {
+    setapiLoading(true);
+
+    const response = await callAPIs(deleteAccount());
+    if (response.status === STATUS.SUCCESS) {
+      await removeData({key: LOGIN_DATA});
+      globalDispatch(setLoginData(null));
+      navigation.reset({
+        index: 0,
+        routes: [{name: routes.Signin}],
+      });
+    } else {
+      errorToast('Something went wrong!');
+    }
+    setapiLoading(false);
+  };
 
   return (
     <GradientView style={{height: windowHeight, width: windowWidth}}>
@@ -48,6 +85,22 @@ function Options({navigation}) {
           <Profile />
           {/* <Divider backgroundColor={Colors.dark} mt={4} thickness={0.5} /> */}
           <MyBookings />
+          <View
+            justifyContent={'center'}
+            alignItems={'center'}
+            my={data ? 6 : windowHeight - 455}
+            py={10}>
+            <NeuButton
+              onPress={handleDeleteAccount}
+              height={44}
+              width={windowWidth - 60}>
+              {apiLoading ? (
+                <Loader indicatorColor={Colors.error} />
+              ) : (
+                <RfBold color={Colors.error}>Delete Account</RfBold>
+              )}
+            </NeuButton>
+          </View>
         </ScrollView>
         <View
           flexDirection={'row'}
