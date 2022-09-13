@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {AppRegistry, Platform} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
@@ -22,6 +22,8 @@ import 'react-native-gesture-handler';
 import {LogBox} from 'react-native';
 import {getData, storeData} from './src/utility/StorageUtility';
 import {callAPIs, sendFCMToken} from './src/api/apiRequest';
+import messaging from '@react-native-firebase/messaging';
+
 import RNAsyncStorageFlipper from 'rn-async-storage-flipper';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreLogs(['Could not']); // Ignore log notification by message
@@ -33,6 +35,25 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 global.userData = null;
 RNAsyncStorageFlipper(AsyncStorage);
 
+const requestUserPermission = async () => {
+  await messaging().requestPermission();
+};
+
+const getToken = async () => {
+  const fcmToken = await messaging().getToken();
+  if (fcmToken) {
+    console.log('xxx1 tokkkk', fcmToken);
+    // user has a device token set it into store
+    await storeData({key: FCM_TOKEN, value: fcmToken});
+    setTimeout(() => {
+      sendFCMTokenHelper();
+    }, 1000);
+  } else {
+    console.log('xxx2 error');
+  }
+};
+
+getToken();
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   largeIcon: 'ic_launcher',
@@ -50,11 +71,39 @@ PushNotification.configure({
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
-    printLog('NOTIFICATION:', notification);
+    printLog('xxx3', JSON.stringify(notification));
+    // notification = notification.data;
     // NOTIFDATA = notification;
     if (APP_STATE === 'active' || APP_STATE === 'background') {
       NotifHandler();
     }
+    if (
+      Platform.OS === 'ios' &&
+      notification.foreground &&
+      notification.userInteraction === false &&
+      notification.title
+    ) {
+      PushNotificationIOS.addNotificationRequest({
+        id: `${Date.now}`,
+        title: notification.title,
+        body: notification.message,
+        // userInfo: {
+        //   qq: 'qq',
+        // },
+      });
+    }
+    // if (
+    //   notification.title &&
+    //   notification.message &&
+    //   Platform.OS === 'ios' &&
+    //   notification.data
+    // ) {
+    //   console.log('xxx99');
+    //   PushNotification.localNotification({
+    //     ...notification,
+    //     channelId: `${Date.now()}`,
+    //   });
+    // }
     notification.finish(PushNotificationIOS.FetchResult.NoData);
 
     // process the notification
@@ -71,8 +120,9 @@ PushNotification.configure({
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
   onRegistrationError: function (err) {
     printLog(err.message, err);
+    console.log('xxxxx4', err.message);
   },
-
+  ...(Platform.OS === 'ios' ? {senderID: '982846620366'} : {}),
   permissions: {
     alert: true,
     badge: true,
@@ -92,6 +142,8 @@ PushNotification.configure({
    */
   requestPermissions: true,
 });
+
+Platform.OS === 'ios' && requestUserPermission();
 
 const codePushOptions = {
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,

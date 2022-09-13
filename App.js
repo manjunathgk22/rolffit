@@ -19,6 +19,9 @@ import GlobalProvider from './src/ContextApi/GlobalContextProvider';
 import SplashScreen from './src/pages/SplashScreen/SplashScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import messaging from '@react-native-firebase/messaging';
+import PushNotification from 'react-native-push-notification';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const theme = extendTheme({
   colors: {
@@ -78,6 +81,7 @@ const CustomStatusBar = ({backgroundColor, ...props}) => {
 };
 
 const onRemoteNotification = notification => {
+  console.log('xxx5', notification);
   const isClicked = notification.getData().userInteraction === 1;
 
   if (isClicked) {
@@ -109,17 +113,31 @@ const setNotificationCategories = () => {
   ]);
 };
 
+const onRegister = token => {
+  console.log('xxx11', token);
+};
+
 const App = () => {
   useEffect(() => {
     const type = 'notification';
+    const register = 'register';
     if (Platform.OS === 'ios') {
-      PushNotificationIOS.addEventListener(type, onRemoteNotification);
-      setNotificationCategories();
+      // PushNotificationIOS.addEventListener(type, onRemoteNotification);
+      // PushNotificationIOS.addEventListener(register, onRegister);
+      // setNotificationCategories();
     }
+
+    // PushNotificationIOS.addNotificationRequest({
+    //   id: '1',
+    //   title: 'sadasdasd',
+    //   subtitle: 'sadasdasd',
+    //   body: 'asdasd',
+    // });
 
     return () => {
       if (Platform.OS === 'ios') {
-        PushNotificationIOS.removeEventListener(type);
+        // PushNotificationIOS.removeEventListener(type);
+        // PushNotificationIOS.removeEventListener(register);
       }
     };
   }, []);

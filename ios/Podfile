@@ -8,6 +8,7 @@ pod 'Firebase', :modular_headers => true
 pod 'FirebaseCoreInternal', :modular_headers => true
 pod 'GoogleUtilities', :modular_headers => true
 pod 'GoogleSignIn', '~> 6.1.0'
+pod 'Firebase/Messaging'
 
 
 # use_frameworks! :linkage => :static
@@ -26,6 +27,8 @@ target 'rolffit' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
+  pod 'RNFBMessaging', :path => '../node_modules/@react-native-firebase/messaging'
 
   target 'rolffitTests' do
     inherit! :complete

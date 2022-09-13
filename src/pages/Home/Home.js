@@ -262,7 +262,7 @@ function HomeScreen({navigation}) {
                 <HStack alignItems={'center'}>
                   <Icon as={Entypo} name="location" color={Colors.white} />
                   <RfBold ml={2}>
-                    {loginData?.user?.business_partner?.name}
+                    {loginData?.user?.slot_business_partner?.name}
                   </RfBold>
                 </HStack>
               </HStack>

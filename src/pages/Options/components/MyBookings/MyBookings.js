@@ -77,7 +77,7 @@ const MyBookings = () => {
   };
 
   return apiLoading ? (
-    <Center minHeight={200} flex={1}>
+    <Center minHeight={300} flex={1}>
       <Loader />
     </Center>
   ) : bookingData && bookingData.length > 0 ? (
@@ -96,7 +96,12 @@ const MyBookings = () => {
         : null}
     </Center>
   ) : !apiLoading ? (
-    <View mt={12} ml={4} width={windowWidth - 40} justifyContent={'flex-start'}>
+    <View
+      minHeight={300}
+      mt={12}
+      ml={4}
+      width={windowWidth - 40}
+      justifyContent={'flex-start'}>
       <RfBold>No bookings</RfBold>
       <RfText>Your slot bookings will appear here.</RfText>
     </View>

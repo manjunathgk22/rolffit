@@ -57,33 +57,38 @@ const NotOurPratner = ({navigation}) => {
           <View mt={4} flex={1}>
             <VStack my={5} px={6}>
               <HStack>
-                <RfBold>Welcome, {loginData?.user?.first_name}</RfBold>
+                <RfBold fontSize={'2xl'}>
+                  welcome, {loginData?.user?.first_name}
+                </RfBold>
               </HStack>
-              <RfText>We were not able to identify you.</RfText>
+              <RfText fontSize={'lg'}>
+                let's identify your office location
+              </RfText>
             </VStack>
-            <Center>
+            <Center mt={4}>
               <TouchableOpacity
-                onPress={() => {
-                  setshowCoworkingModal(true);
-                }}
+                // onPress={() => {
+                //   setshowCoworkingModal(true);
+                // }}
                 style={{marginBottom: 30}}
                 activeOpacity={0.8}>
                 <NeuView
-                  height={220}
+                  height={windowHeight / 2 > 350 ? 350 : windowHeight / 2}
                   width={windowWidth - 40}
-                  borderRadius={12}>
+                  borderRadius={24}>
                   <Center>
                     <Image
                       resizeMode="stretch"
-                      height={220}
-                      style={{borderRadius: 12}}
-                      source={require('../../../assets/images/cowork.png')}
+                      height={windowHeight / 2 > 350 ? 350 : windowHeight / 2}
+                      style={{borderRadius: 24}}
+                      source={require('../../../assets/images/coworking.png')}
                     />
                   </Center>
+
                   {/*  */}
                 </NeuView>
               </TouchableOpacity>
-              {isPersonalEmail(loginData?.user?.username) ? (
+              {/* {isPersonalEmail(loginData?.user?.username) ? (
                 <TouchableOpacity
                   onPress={handleLogout}
                   style={{marginBottom: 30}}
@@ -102,9 +107,9 @@ const NotOurPratner = ({navigation}) => {
                     </Center>
                   </NeuView>
                 </TouchableOpacity>
-              ) : null}
+              ) : null} */}
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => {
                   openEmail('collaboration@rolf.fit');
                 }}
@@ -123,8 +128,32 @@ const NotOurPratner = ({navigation}) => {
                     />
                   </Center>
                 </NeuView>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </Center>
+            <View mt={4} px={6}>
+              <RfBold fontSize={'2xl'}>is your office in a</RfBold>
+              <RfBold lineHeight={30} fontSize={'2xl'}>
+                co-working space?
+              </RfBold>
+              <HStack pb={4} mt={6} space={8}>
+                <NeuButton
+                  onPress={() => setshowIndependentOfficeModal(true)}
+                  borderRadius={24}
+                  width={130}
+                  height={46}>
+                  <RfBold fontSize="2xl">No</RfBold>
+                </NeuButton>
+                <NeuButton
+                  onPress={() => {
+                    setshowCoworkingModal(true);
+                  }}
+                  borderRadius={24}
+                  width={130}
+                  height={46}>
+                  <RfBold fontSize="2xl">Yes</RfBold>
+                </NeuButton>
+              </HStack>
+            </View>
             {/*  */}
           </View>
         </ScrollView>
@@ -133,11 +162,51 @@ const NotOurPratner = ({navigation}) => {
         ) : null}
         {showIndependentOfficeModal ? (
           <GenericPopup
-            onSelect={handleLogout}
-            title="lorem epsum"
             onClose={() => setshowIndependentOfficeModal(false)}
-            primaryBtn="Continue"
             space={10}
+            primaryBtnWidth={150}
+            secondaryBtn={'logout'}
+            onSecondaryBtnClick={handleLogout}
+            {...(isPersonalEmail(loginData?.user?.username || '')
+              ? {}
+              : {
+                  primaryBtn: 'request demo',
+                  onPrimaryBtnClick: () => openEmail('collaboration@rolf.fit'),
+                })}
+            height={isPersonalEmail(loginData?.user?.username) ? 200 : 430}
+            body={() => (
+              <View>
+                {isPersonalEmail(loginData?.user?.username) ? (
+                  <RfBold>Please login with your company email id</RfBold>
+                ) : (
+                  <View>
+                    <RfBold mb={4} fontSize={'xl'}>
+                      we are not in your office yet!!
+                    </RfBold>
+                    <TouchableOpacity
+                      onPress={() => {
+                        openEmail('collaboration@rolf.fit');
+                      }}
+                      style={{marginBottom: 30}}
+                      activeOpacity={0.8}>
+                      <NeuView
+                        height={220}
+                        width={windowWidth - 40}
+                        borderRadius={12}>
+                        <Center>
+                          <Image
+                            resizeMode="stretch"
+                            height={220}
+                            style={{borderRadius: 12}}
+                            source={require('../../../assets/images/contact.png')}
+                          />
+                        </Center>
+                      </NeuView>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            )}
           />
         ) : null}
         {/* <View position={'absolute'} right={4} top={4}>

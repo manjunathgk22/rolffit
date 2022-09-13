@@ -8,8 +8,10 @@ const RfBold = props => {
   return (
     <Text
       color={Colors.dark}
-      style={{fontFamily: getGeomanistbold()}}
-      fontWeight={'700'}
+      style={{
+        fontFamily: getGeomanistbold(),
+      }}
+      {...(Platform.OS === 'ios' ? {fontWeight: '700'} : {})}
       fontSize={'lg'}
       {...props}>
       {props.children}

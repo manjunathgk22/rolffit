@@ -43,8 +43,8 @@ const NeuView = props => {
     borderRadius,
     radius,
     color: inset ? dark : light,
-    offsetX: inset ? -2 : -4,
-    offsetY: inset ? -2 : -4,
+    offsetX: inset ? -1 : -2,
+    offsetY: inset ? -1 : -2,
     opacity: 1,
     ...customLightShadow,
   };
@@ -57,8 +57,8 @@ const NeuView = props => {
     radius,
     color: inset ? light : dark,
     borderRadius,
-    offsetX: inset ? 2 : 3,
-    offsetY: inset ? 2 : 3,
+    offsetX: inset ? 1 : 2,
+    offsetY: inset ? 1 : 2,
     opacity: 1,
     ...customDarkShadow,
   };

@@ -9,25 +9,42 @@ import RfText from '../RfText/RfText';
 
 const GenericPopup = ({
   onClose,
-  onSelect,
+  onPrimaryBtnClick,
+  onSecondaryBtnClick,
   title,
   primaryBtn,
-  secondaryBtn = 'cancel',
+  primaryBtnWidth = 100,
+  secondaryBtn,
   space = 3,
+  height = 300,
+  body,
+  hideDragIndicator = true,
 }) => {
   return (
-    <Actionsheet hideDragIndicator isOpen={true} onClose={onClose}>
+    <Actionsheet
+      hideDragIndicator={hideDragIndicator}
+      isOpen={true}
+      onClose={onClose}>
       <Actionsheet.Content background={Colors.bg} padding={0}>
-        <NeuView height={300} width={windowWidth}>
+        <NeuView height={height} width={windowWidth}>
           <VStack my={8}>
             <RfBold>{title}</RfBold>
-            <HStack mt={8} space={space} justifyContent={'space-around'}>
-              <NeuButton onPress={onClose} height={50}>
-                <RfText>{secondaryBtn}</RfText>
-              </NeuButton>
-              <NeuButton onPress={onSelect} height={50}>
-                <RfBold>{primaryBtn}</RfBold>
-              </NeuButton>
+            {body ? body() : null}
+            <HStack mt={8} space={space} justifyContent={'center'}>
+              {secondaryBtn && (
+                <NeuButton onPress={onSecondaryBtnClick} height={50}>
+                  <RfText>{secondaryBtn}</RfText>
+                </NeuButton>
+              )}
+
+              {primaryBtn && (
+                <NeuButton
+                  width={primaryBtnWidth}
+                  onPress={onPrimaryBtnClick}
+                  height={50}>
+                  <RfBold>{primaryBtn}</RfBold>
+                </NeuButton>
+              )}
             </HStack>
           </VStack>
         </NeuView>

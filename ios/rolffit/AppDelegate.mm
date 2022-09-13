@@ -6,7 +6,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-
+#import <Firebase.h>
 
 #import <React/RCTAppSetupUtils.h>
 #import <RNCPushNotificationIOS.h>
@@ -111,6 +111,12 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 //Called when a notification is delivered to a foreground app.
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {
+  NSDictionary *userInfo = notification.request.content.userInfo;
+    //Foreground
+   
+   
+   [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo
+   fetchCompletionHandler:^void (UIBackgroundFetchResult result){}];
   completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge);
 }
 
