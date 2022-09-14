@@ -41,7 +41,7 @@ const requestUserPermission = async () => {
 
 const getToken = async () => {
   const fcmToken = await messaging().getToken();
-  if (fcmToken) {
+  if (fcmToken && Platform.OS === 'ios') {
     console.log('xxx1 tokkkk', fcmToken);
     // user has a device token set it into store
     await storeData({key: FCM_TOKEN, value: fcmToken});
@@ -62,11 +62,13 @@ PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {
     printLog('notification TOKEN:', token);
-    await storeData({key: FCM_TOKEN, value: token});
+    if (Platform.OS === 'android') {
+      await storeData({key: FCM_TOKEN, value: token});
 
-    setTimeout(() => {
-      sendFCMTokenHelper();
-    }, 1000);
+      setTimeout(() => {
+        sendFCMTokenHelper();
+      }, 1000);
+    }
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened

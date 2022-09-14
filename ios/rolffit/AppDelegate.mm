@@ -11,7 +11,7 @@
 #import <React/RCTAppSetupUtils.h>
 #import <RNCPushNotificationIOS.h>
 #import <UserNotifications/UserNotifications.h>
-
+#import <CodePush/CodePush.h>
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -21,6 +21,7 @@
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
 #import <react/config/ReactNativeConfig.h>
+
 
 
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
@@ -128,7 +129,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  return [CodePush bundleURL];
 #endif
 }
 

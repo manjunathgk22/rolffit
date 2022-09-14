@@ -48,9 +48,11 @@ export const sendFCMTokenHelper = async () => {
   const device_id = getUniqueId();
   let json = {
     device_id: device_id,
-    fcm_registration_id: token?.token,
+    fcm_registration_id: typeof token === 'string' ? token : token?.token,
   };
+
   const res = await getData({key: LOGIN_DATA});
+  console.log('qqqqqq', token);
   if (res) {
     json.user_id = res?.user?.id;
   }

@@ -103,7 +103,9 @@ const FutureBookingCard = ({time, getData, booking}) => {
           onClose={() => {
             setshowCancelPopup(false);
           }}
-          onSelect={handleCancel}
+          space={6}
+          onSecondaryBtnClick={() => setshowCancelPopup(false)}
+          onPrimaryBtnClick={handleCancel}
           title="Are you sure you want to cancel?"
           primaryBtn={'Yes'}
           secondaryBtn={'No'}
