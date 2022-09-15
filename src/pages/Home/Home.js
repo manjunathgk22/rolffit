@@ -40,10 +40,13 @@ import {
   rescheduleApiHelper,
 } from './apiService';
 import RfBold from '../../components/RfBold/RfBold';
-import {StyleSheet} from 'react-native';
+import {AppState, StyleSheet} from 'react-native';
 import {
   FCM_TOKEN,
   LOGIN_DATA,
+  miscData,
+  NOTIFDATA,
+  setNotifData,
   windowHeight,
   windowWidth,
 } from '../../constant/AppConstant';
@@ -73,6 +76,7 @@ import SlotInfo from './components/SlotInfo';
 import Maintenance from '../../components/Maintenance/Maintenance';
 import {callAPIs, getMaintenanceApi, STATUS} from '../../api/apiRequest';
 import MainCard from '../../components/MainCard/MainCard';
+import {NotifHandler} from '../../utility/NotifHandler';
 
 function HomeScreen({navigation}) {
   const {
@@ -92,12 +96,13 @@ function HomeScreen({navigation}) {
   const [showReschedulePopup, setshowReschedulePopup] = useState(false); // reeschedule popup
   const [pastSelectedSlot, setpastSelectedSlot] = useState(null);
   const [showSlotInfo, setshowSlotInfo] = useState(false);
+  const [appState, setappState] = useState(null);
 
   const toast = useToast();
   const errorToast = msg => {
     toast.show({
       render: () => {
-        return <ToastMessage width={300} viewProps={{p: 2}} text={msg} />;
+        return <ToastMessage text={msg} />;
       },
     });
   };
@@ -112,6 +117,25 @@ function HomeScreen({navigation}) {
     } else {
       globalDispatch(setMaintenanceData(null));
     }
+  };
+
+  useLayoutEffect(() => {
+    console.log('cmcm', appState, NOTIFDATA);
+    if (NOTIFDATA && (appState === 'active' || isFocused)) {
+      NotifHandler();
+    }
+  }, [isFocused, appState]);
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleChange);
+    return () => {
+      AppState.removeEventListener('change', handleChange);
+    };
+  }, []);
+
+  const handleChange = state => {
+    setappState(state);
+    miscData.APP_STATE = state;
   };
 
   useEffect(() => {
@@ -214,12 +238,16 @@ function HomeScreen({navigation}) {
           selectedSlot,
         });
       } else {
-        errorToast(res.error);
+        errorToast(res?.message);
       }
     } else {
-      navigation.navigate(routes.BookedScreen, {
-        selectedSlot,
-      });
+      if (res?.is_booked) {
+        navigation.navigate(routes.BookedScreen, {
+          selectedSlot,
+        });
+      } else {
+        errorToast(res?.message);
+      }
     }
     setapiLoading(false);
     setselectedSlot(null);

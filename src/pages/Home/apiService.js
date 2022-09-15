@@ -82,16 +82,16 @@ export const getSlotsApiHelper = async () => {
 };
 export const bookSlotApiHelper = async slotId => {
   const response = await callAPIs(bookSlotApi(slotId));
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data;
   } else {
-    return response.data;
+    return response.error;
   }
 };
 
 export const futureBookingApiHelper = async () => {
   const response = await callAPIs(getFutureBookingApi());
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data?.slot_bookings;
   } else {
     return false;
@@ -100,7 +100,7 @@ export const futureBookingApiHelper = async () => {
 
 export const mainCardApiHelper = async () => {
   const response = await callAPIs(getMainCardApi());
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data;
   } else {
     return false;
@@ -109,16 +109,16 @@ export const mainCardApiHelper = async () => {
 
 export const rescheduleApiHelper = async json => {
   const response = await callAPIs(rescheduleApi(json));
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data;
   } else {
-    return false;
+    return response.error;
   }
 };
 
 export const getTherapistSlotsApiHelper = async () => {
   const response = await callAPIs(getTherapistSlotsApi());
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data?.slot_bookings;
   } else {
     return false;
@@ -127,7 +127,7 @@ export const getTherapistSlotsApiHelper = async () => {
 
 export const employeeCheckinApiHelper = async json => {
   const response = await callAPIs(employeeCheckinApi(json));
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data;
   } else {
     return false;
@@ -136,7 +136,7 @@ export const employeeCheckinApiHelper = async json => {
 
 export const employeeCheckoutApiHelper = async json => {
   const response = await callAPIs(employeeCheckoutApi(json));
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data;
   } else {
     return false;
@@ -145,7 +145,7 @@ export const employeeCheckoutApiHelper = async json => {
 
 export const rateMassageApiHelper = async json => {
   const response = await callAPIs(rateMassageApi(json));
-  if (response.status_code === STATUS.SUCCESS) {
+  if (response.data) {
     return response.data;
   } else {
     return false;

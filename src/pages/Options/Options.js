@@ -51,7 +51,7 @@ function Options({navigation}) {
   const errorToast = msg => {
     toast.show({
       render: () => {
-        return <ToastMessage width={300} viewProps={{p: 2}} text={msg} />;
+        return <ToastMessage viewProps={{p: 2}} text={msg} />;
       },
     });
   };

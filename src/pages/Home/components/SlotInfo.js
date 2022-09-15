@@ -68,16 +68,31 @@ const SlotInfo = ({
 
           <Center minHeight={paymentDetails ? 100 : 200}>
             <View ml={6} mt={3}>
-              <HStack>
-                <RfText>Session is from </RfText>
-                <RfBold>{tConvert(selectedSlot?.slot.start_time)}</RfBold>
-                <RfText> to </RfText>
-                <RfBold>{tConvert(selectedSlot?.slot.end_time)}</RfBold>
-              </HStack>
-              <HStack>
-                <RfText>Session duration will be </RfText>
-                <RfBold>{tConvert(selectedSlot?.duration)} minutes</RfBold>
-              </HStack>
+              {currentSlot ? (
+                <>
+                  <HStack>
+                    <RfText>You already have a booking at </RfText>
+                    <RfBold>{tConvert(currentSlot.slot.start_time)}</RfBold>
+                  </HStack>
+                  <HStack mt={0}>
+                    <RfText>Do you want to reschedule it to </RfText>
+                    <RfBold>{tConvert(selectedSlot.slot.start_time)} ?</RfBold>
+                  </HStack>
+                </>
+              ) : (
+                <>
+                  <HStack>
+                    <RfText>Session is from </RfText>
+                    <RfBold>{tConvert(selectedSlot?.slot.start_time)}</RfBold>
+                    <RfText> to </RfText>
+                    <RfBold>{tConvert(selectedSlot?.slot.end_time)}</RfBold>
+                  </HStack>
+                  <HStack>
+                    <RfText>Session duration will be </RfText>
+                    <RfBold>{tConvert(selectedSlot?.duration)} minutes</RfBold>
+                  </HStack>
+                </>
+              )}
             </View>
             <Center mt={4} mb={3}>
               <NeuButton

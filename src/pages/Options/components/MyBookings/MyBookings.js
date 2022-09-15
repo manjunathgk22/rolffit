@@ -53,10 +53,10 @@ const MyBookings = () => {
 
   const handleRating = async (booking, rating) => {
     const json = {
-      user_id: booking.employee,
+      user_id: loginData?.user?.id,
       user_type: 'employee',
       rating: rating,
-      review: 'dummy',
+      review: '',
       tag_identifier: 'slot_booking_id',
       tags: {
         slot_booking_id: booking.id,

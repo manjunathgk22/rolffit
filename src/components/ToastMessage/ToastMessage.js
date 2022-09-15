@@ -1,15 +1,28 @@
+import {View} from 'native-base';
 import React from 'react';
+import {windowWidth} from '../../constant/AppConstant';
+import Colors from '../../constant/Colors';
 import NeuView from '../../HOC/NeuView/NeuView';
 import RfText from '../RfText/RfText';
 
-const ToastMessage = ({viewProps = {}, textProps = {}, text, width = 220}) => {
-  debugger;
+const ToastMessage = ({
+  viewProps = {},
+  textProps = {},
+  text,
+  width = windowWidth - 20,
+}) => {
   return (
-    <NeuView height={50} width={width} borderRadius={40} {...viewProps}>
+    <View
+      px={4}
+      py={2}
+      background={Colors.bg_dark}
+      maxWidth={width}
+      borderRadius={12}
+      {...viewProps}>
       <RfText color={'rf.error'} {...textProps}>
         {text}
       </RfText>
-    </NeuView>
+    </View>
   );
 };
 

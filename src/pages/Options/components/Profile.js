@@ -13,10 +13,12 @@ function Profile() {
     globalStore: {loginData},
     globalDispatch,
   } = useContext(GlobalContext);
-  const [userData, setuserData] = useState('');
+  const [userData, setuserData] = useState({});
   useEffect(() => {
     if (loginData) {
-      const [firstname, secondname] = loginData?.user.first_name?.split(' ');
+      const [firstname, secondname] = loginData?.user.first_name?.split(
+        ' ',
+      ) || ['', ''];
       const dispName = `${firstname.charAt(0)}${
         secondname ? secondname?.charAt(0) : ''
       }`;
@@ -29,7 +31,7 @@ function Profile() {
   return (
     <Center mt={20}>
       <NeuView height={150} borderRadius={150} width={150}>
-        {userData.photo_url ? (
+        {userData?.photo_url ? (
           <Image
             size={140}
             borderRadius={100}

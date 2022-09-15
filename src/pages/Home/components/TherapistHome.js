@@ -55,7 +55,7 @@ const TherapistHome = ({navigation}) => {
   const errorToast = msg => {
     toast.show({
       render: () => {
-        return <ToastMessage width={300} viewProps={{p: 2}} text={msg} />;
+        return <ToastMessage viewProps={{p: 2}} text={msg} />;
       },
     });
   };
@@ -122,10 +122,10 @@ const TherapistHome = ({navigation}) => {
       slot_booking_id: slot.id,
     });
     console.log('poiuy', res);
-    if (res.status_code === STATUS.SUCCESS) {
+    if (res.data) {
       settherapistData(newData);
     } else {
-      errorToast(res?.error);
+      errorToast(res?.error?.message);
     }
   };
 

@@ -38,7 +38,7 @@ const FutureBookingCard = ({time, getData, booking}) => {
     };
 
     const response = await rescheduleApiHelper(json);
-    if (response) {
+    if (!response?.error) {
       getData?.();
     } else {
       toast.show({

@@ -13,7 +13,9 @@ import {
   APP_STATE,
   FCM_TOKEN,
   LOGIN_DATA,
+  miscData,
   NOTIFDATA,
+  setNotifData,
 } from './src/constant/AppConstant';
 import {NotifHandler} from './src/utility/NotifHandler';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -64,7 +66,6 @@ PushNotification.configure({
     printLog('notification TOKEN:', token);
     if (Platform.OS === 'android') {
       await storeData({key: FCM_TOKEN, value: token});
-
       setTimeout(() => {
         sendFCMTokenHelper();
       }, 1000);
@@ -73,17 +74,27 @@ PushNotification.configure({
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
-    printLog('xxx3', JSON.stringify(notification));
+    printLog('xxx3', JSON.stringify(notification.data));
     // notification = notification.data;
-    // NOTIFDATA = notification;
-    if (APP_STATE === 'active' || APP_STATE === 'background') {
+    if (notification.data?.activity_open) {
+      setNotifData(notification.data);
+    }
+
+    if (
+      NOTIFDATA &&
+      miscData?.APP_STATE === 'active' &&
+      notification.userInteraction
+    ) {
+      console.log('cmcmhere');
       NotifHandler();
     }
+
     if (
       Platform.OS === 'ios' &&
       notification.foreground &&
       notification.userInteraction === false &&
-      notification.title
+      notification.title &&
+      notification.data.gcm.message_id
     ) {
       PushNotificationIOS.addNotificationRequest({
         id: `${Date.now}`,
@@ -113,7 +124,7 @@ PushNotification.configure({
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction: function (notification) {
-    printLog('ACTION:', notification.action);
+    console.log('mnmnmn:', notification.action);
     printLog('NOTIFICATION:', notification);
 
     // process the action

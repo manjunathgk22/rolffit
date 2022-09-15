@@ -52,13 +52,15 @@ export const callAPIs = async apiMethodToCall => {
     const response = {...(await apiMethodToCall)};
     console.log('qqqhere22', response.data);
     apiResponse.status_code = response.status;
-    if (response.data.error != null) {
+    if (response?.data?.error) {
       apiResponse.status = STATUS.ERROR;
-      apiResponse.error = response.data.error;
+      apiResponse.error = response?.data?.error;
+      apiResponse.data = null;
       return apiResponse;
     } else {
       apiResponse.status = STATUS.SUCCESS;
       apiResponse.data = response.data;
+      apiResponse.error = null;
       return apiResponse;
     }
   } catch (error) {
