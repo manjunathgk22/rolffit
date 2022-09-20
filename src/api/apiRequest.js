@@ -1,5 +1,6 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
+import {Platform} from 'react-native';
 import {getBuildNumber} from 'react-native-device-info';
 import {URLConfig} from '../config/URLConfig';
 import {getToken, printLog} from '../utility/AppUtility';
@@ -26,6 +27,7 @@ export const initApiClients = async () => {
     Authorization: token || '',
     'x-api-key': 'SpEbM4sCarPRwnFg', //'M+T*JxXLuCD?65u%_PMs%Q'
     'x-app-version': getBuildNumber(),
+    'x-app-os': Platform.OS,
   };
   userApiClient = axios.create({
     baseURL: URLConfig.BASEURL,

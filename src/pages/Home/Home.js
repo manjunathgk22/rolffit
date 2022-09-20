@@ -303,12 +303,25 @@ function HomeScreen({navigation}) {
                     </View>
                   ) : (
                     <VStack mt={4}>
-                      <Tabs settabSelect={settabSelect} tabSelect={tabSelect} />
-                      <Slots
-                        setselectedSlot={setselectedSlot}
-                        selectedSlot={selectedSlot}
-                        tabSelect={tabSelect}
-                      />
+                      {data?.allData?.message ? (
+                        <Center>
+                          <RfBold textAlign="center" fontSize={'2xl'} mt={6}>
+                            {data?.allData?.message}
+                          </RfBold>
+                        </Center>
+                      ) : (
+                        <>
+                          <Tabs
+                            settabSelect={settabSelect}
+                            tabSelect={tabSelect}
+                          />
+                          <Slots
+                            setselectedSlot={setselectedSlot}
+                            selectedSlot={selectedSlot}
+                            tabSelect={tabSelect}
+                          />
+                        </>
+                      )}
                     </VStack>
                   )}
                 </Center>

@@ -63,6 +63,7 @@ export const getSlotsApiHelper = async () => {
           ...response.data.slots_data?.[1],
           booked: tomorrowBooked,
         },
+        allData: response.data,
       },
     };
 
