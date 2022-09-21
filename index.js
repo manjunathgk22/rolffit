@@ -163,4 +163,4 @@ const codePushOptions = {
 };
 const Init = codePush(codePushOptions)(App);
 
-AppRegistry.registerComponent(appName, () => Init);
+AppRegistry.registerComponent(appName, () => (__DEV__ ? App : Init));

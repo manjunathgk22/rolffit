@@ -1,6 +1,6 @@
 {
   "name": "rolffit",
-  "version": "1.1.38",
+  "version": "1.1.39",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -13,6 +13,7 @@
     "build-release": "cd android/ && ./gradlew clean && ./gradlew assembleRelease",
     "build-releaseStaging": "cd android/ && ./gradlew clean && ./gradlew assembleReleaseStaging",
     "code-push-prod": "appcenter codepush release-react -a manjunathgk/rolf.fit -d Production",
+    "code-push-prod-ios": "appcenter codepush release-react -a manjunathgk/tolf-fit-ios -d Production",
     "code-push-stag": "appcenter codepush release-react -a manjunathgk/rolf.fit -d Staging",
     "setIcon": "react-native set-icon --path ~/Downloads/logo_full_height.png --background white --platform android",
     "report": "cd android && ./gradlew signingReport",
