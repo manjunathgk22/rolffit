@@ -70,7 +70,7 @@ const CoworkingModal = ({onClose}) => {
   return (
     <Actionsheet isOpen={true} onClose={onClose}>
       <Actionsheet.Content maxHeight={windowHeight} background={Colors.bg_dark}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {loading ? (
             <View px={6} minHeight={200} background={Colors.bg_dark}>
               <Loader />

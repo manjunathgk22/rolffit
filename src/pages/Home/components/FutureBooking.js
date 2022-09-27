@@ -92,6 +92,8 @@ const FutureBooking = ({getData}) => {
             enableSnap={true}
             loopClonesPerSide={mainCardData?.cards.length}
             onSnapToItem={index => setactiveslide(index)}
+            enableMomentum={true}
+            decelerationRate={0.9}
           />
           {mainCardData?.cards?.length > 1 ? <VStack mb={2} /> : null}
 

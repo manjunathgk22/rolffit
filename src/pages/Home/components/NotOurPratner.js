@@ -27,6 +27,7 @@ import CoworkingModal from './CoworkingModal';
 import GenericPopup from '../../../components/GenericPopup/GenericPopup';
 import {isPersonalEmail, openEmail} from '../../../utility/emailUtil';
 import GradientView from '../../../components/GradientView/GradientView';
+import {openUrl} from '../../../utility/AppUtility';
 
 const NotOurPratner = ({navigation}) => {
   const [showCoworkingModal, setshowCoworkingModal] = useState(false);
@@ -53,7 +54,7 @@ const NotOurPratner = ({navigation}) => {
     // not our customer flow
     <GradientView style={{width: windowWidth, height: windowHeight}}>
       <View flex={1}>
-        <ScrollView flex={1}>
+        <ScrollView flex={1} showsVerticalScrollIndicator={false}>
           <View mt={4} flex={1}>
             <VStack my={5} px={6}>
               <HStack>
@@ -171,7 +172,8 @@ const NotOurPratner = ({navigation}) => {
               ? {}
               : {
                   primaryBtn: 'request demo',
-                  onPrimaryBtnClick: () => openEmail('collaboration@rolf.fit'),
+                  onPrimaryBtnClick: () =>
+                    openUrl('https://calendly.com/rolf-fit'),
                 })}
             height={isPersonalEmail(loginData?.user?.username) ? 200 : 430}
             body={() => (
@@ -185,7 +187,7 @@ const NotOurPratner = ({navigation}) => {
                     </RfBold>
                     <TouchableOpacity
                       onPress={() => {
-                        openEmail('collaboration@rolf.fit');
+                        openUrl('https://calendly.com/rolf-fit');
                       }}
                       style={{marginBottom: 30}}
                       activeOpacity={0.8}>

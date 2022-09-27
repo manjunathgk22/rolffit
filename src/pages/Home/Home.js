@@ -236,6 +236,7 @@ function HomeScreen({navigation}) {
       if (res.is_booked) {
         navigation.navigate(routes.BookedScreen, {
           selectedSlot,
+          cards: res?.cards,
         });
       } else {
         errorToast(res?.message);
@@ -244,6 +245,7 @@ function HomeScreen({navigation}) {
       if (res?.is_booked) {
         navigation.navigate(routes.BookedScreen, {
           selectedSlot,
+          cards: res?.cards,
         });
       } else {
         errorToast(res?.message);
@@ -294,7 +296,7 @@ function HomeScreen({navigation}) {
                   </RfBold>
                 </HStack>
               </HStack>
-              <ScrollView>
+              <ScrollView showsVerticalScrollIndicator={false}>
                 <Center paddingX={4} mt={2}>
                   <FutureBooking getData={getData} />
                   {loading ? (

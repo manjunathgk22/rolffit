@@ -75,13 +75,8 @@ function Options({navigation}) {
 
   return (
     <GradientView style={{height: windowHeight, width: windowWidth}}>
-      <VStack
-        width={windowWidth}
-        // mt={4}
-        // p={4}
-        flex={1}
-        style={styles.container}>
-        <ScrollView>
+      <VStack width={windowWidth} flex={1} style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Profile />
           {/* <Divider backgroundColor={Colors.dark} mt={4} thickness={0.5} /> */}
           <MyBookings />

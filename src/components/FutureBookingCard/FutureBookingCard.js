@@ -1,5 +1,6 @@
 import {
   Center,
+  Divider,
   HStack,
   Icon,
   Image,
@@ -51,30 +52,20 @@ const FutureBookingCard = ({time, getData, booking}) => {
   };
 
   return (
-    <NeuView height={145} borderRadius={8} width={windowWidth - 40}>
+    <NeuView
+      height={booking.message ? 195 : 145}
+      borderRadius={8}
+      width={windowWidth - 40}>
       <Center p={3} flex={1}>
         <HStack flex={1}>
           <View height={'100%'} flex={6}>
             <VStack flex={1}>
               <RfText mt={2} textAlign={'left'}>
-                Upcoming booking on
+                {booking.title}
               </RfText>
 
               <HStack alignItems={'baseline'}>
-                {/* <GradientText
-                  // ml={5}
-                  fontWeight={'bold'}
-                  fontSize={'lg'}
-                  colors={Colors.gradient}>
-                  {time}
-                </GradientText> */}
-                <RfText fontSize="sm">
-                  {moment(booking.slot_session.slot_start_time).format(
-                    'Do MMM',
-                  )}
-                  {' at '}
-                </RfText>
-                <RfBold>{time}</RfBold>
+                <RfBold>{booking.description}</RfBold>
               </HStack>
               {true ? (
                 <HStack alignSelf={'flex-start'} mt={4}>
@@ -97,6 +88,12 @@ const FutureBookingCard = ({time, getData, booking}) => {
             />
           </Center>
         </HStack>
+        {booking.message ? (
+          <VStack mt={4}>
+            {/* <Divider width={windowWidth - 40} bg={Colors.white} /> */}
+            <RfText>{booking.message}</RfText>
+          </VStack>
+        ) : null}
       </Center>
       {showCancelPopup ? (
         <GenericPopup

@@ -74,50 +74,54 @@ PushNotification.configure({
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
-    printLog('xxx3', JSON.stringify(notification.data));
-    // notification = notification.data;
-    if (notification.data?.activity_open) {
-      setNotifData(notification.data);
-    }
+    try {
+      printLog('xxx3', JSON.stringify(notification.data));
+      // notification = notification.data;
+      if (notification.data?.activity_open) {
+        setNotifData(notification.data);
+      }
 
-    if (
-      NOTIFDATA &&
-      miscData?.APP_STATE === 'active' &&
-      notification.userInteraction
-    ) {
-      console.log('cmcmhere');
-      NotifHandler();
-    }
+      if (
+        NOTIFDATA &&
+        miscData?.APP_STATE === 'active' &&
+        notification.userInteraction
+      ) {
+        console.log('cmcmhere');
+        NotifHandler();
+      }
 
-    if (
-      Platform.OS === 'ios' &&
-      notification.foreground &&
-      notification.userInteraction === false &&
-      notification.title &&
-      notification.data.gcm.message_id
-    ) {
-      PushNotificationIOS.addNotificationRequest({
-        id: `${Date.now}`,
-        title: notification.title,
-        body: notification.message,
-        // userInfo: {
-        //   qq: 'qq',
-        // },
-      });
+      if (
+        Platform.OS === 'ios' &&
+        notification.foreground &&
+        notification.userInteraction === false &&
+        notification.title &&
+        notification?.data?.gcm?.message_id
+      ) {
+        PushNotificationIOS.addNotificationRequest({
+          id: `${Date.now}`,
+          title: notification.title,
+          body: notification.message,
+          // userInfo: {
+          //   qq: 'qq',
+          // },
+        });
+      }
+      // if (
+      //   notification.title &&
+      //   notification.message &&
+      //   Platform.OS === 'ios' &&
+      //   notification.data
+      // ) {
+      //   console.log('xxx99');
+      //   PushNotification.localNotification({
+      //     ...notification,
+      //     channelId: `${Date.now()}`,
+      //   });
+      // }
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+    } catch (error) {
+      console.log('error', error);
     }
-    // if (
-    //   notification.title &&
-    //   notification.message &&
-    //   Platform.OS === 'ios' &&
-    //   notification.data
-    // ) {
-    //   console.log('xxx99');
-    //   PushNotification.localNotification({
-    //     ...notification,
-    //     channelId: `${Date.now()}`,
-    //   });
-    // }
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
 
     // process the notification
   },

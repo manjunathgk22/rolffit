@@ -11,7 +11,7 @@ import RfBold from '../RfBold/RfBold';
 import RfText from '../RfText/RfText';
 import SimpleGradient from '../SimpleGradient/SimpleGradient';
 
-const MainCard = ({item}) => {
+const MainCard = ({item, height = 145, activeOpacity = 0.8, jsx}) => {
   const handleCtaClick = () => {
     switch (item?.cta?.type) {
       case 'api_call':
@@ -22,8 +22,8 @@ const MainCard = ({item}) => {
     }
   };
   return (
-    <TouchableOpacity onPress={handleCtaClick} activeOpacity={0.8}>
-      <NeuView height={145} borderRadius={8} width={windowWidth - 40}>
+    <TouchableOpacity onPress={handleCtaClick} activeOpacity={activeOpacity}>
+      <NeuView height={height} borderRadius={8} width={windowWidth - 40}>
         <SimpleGradient
           gradient={item?.ui?.background?.colors || Colors.darkGradient}
           style={{flex: 1, width: '100%', borderRadius: 12}}>
@@ -43,7 +43,7 @@ const MainCard = ({item}) => {
                   <RfText
                     textAlign={'left'}
                     mt={item?.ui?.description?.['margin-top']}
-                    lineHeight={item?.ui?.description?.['font-size'] + 5}
+                    lineHeight={item?.ui?.description?.['font-size'] + 5 || 30}
                     color={item?.ui?.description?.color}
                     style={{
                       fontSize: item?.ui?.description?.['font-size'],
@@ -57,23 +57,6 @@ const MainCard = ({item}) => {
                       left={0}
                       alignSelf={'flex-start'}
                       mt={3}>
-                      {/* <NeuButton
-                        onPress={handleCtaClick}
-                        customGradient={
-                          item?.ui?.button?.['background-color']
-                            ? [
-                                item?.ui?.button?.['background-color'],
-                                item?.ui?.button?.['background-color'],
-                              ]
-                            : Colors.gradient
-                        }
-                        borderRadius={6}
-                        height={35}
-                        width={110}>
-                        <RfBold color={item?.ui?.button?.['font-color']}>
-                          {item?.ui?.button?.text || 'click'}
-                        </RfBold>
-                      </NeuButton> */}
                       <View
                         py={2}
                         px={4}
@@ -94,17 +77,16 @@ const MainCard = ({item}) => {
               {item?.ui?.['fallback-icon'] ? (
                 <HStack justifyContent={'flex-end'} flex={4}>
                   <Image
-                    // alignSelf={'flex-end'}
                     flex={1}
                     resizeMode="contain"
                     source={{
                       uri: item?.ui?.['fallback-icon'],
                     }}
-                    // source={require('../../assets/images/logo.png')}
                   />
                 </HStack>
               ) : null}
             </HStack>
+            {jsx && jsx()}
           </Center>
         </SimpleGradient>
       </NeuView>

@@ -213,7 +213,8 @@ export function Signin({navigation}) {
         <ScrollView
           style={{zIndex: 10, elevation: 10}}
           contentContainerStyle={styles.container}
-          flex={1}>
+          flex={1}
+          showsVerticalScrollIndicator={false}>
           <Center flex={1}>
             <View
               width={windowWidth}

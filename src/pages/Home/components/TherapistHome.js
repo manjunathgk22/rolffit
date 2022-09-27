@@ -37,6 +37,8 @@ import moment from 'moment';
 import ToastMessage from '../../../components/ToastMessage/ToastMessage';
 import GradientView from '../../../components/GradientView/GradientView';
 import {STATUS} from '../../../api/apiRequest';
+import {Ionicons} from '@native-base/icons';
+import {Linking} from 'react-native';
 
 const TherapistHome = ({navigation}) => {
   const {
@@ -142,7 +144,7 @@ const TherapistHome = ({navigation}) => {
               <RfBold>Error fetching data</RfBold>
             </Center>
           ) : (
-            <ScrollView flex={1}>
+            <ScrollView flex={1} showsVerticalScrollIndicator={false}>
               <VStack p={4}>
                 {!therapistData?.length ? (
                   <Center flex={1}>
@@ -152,7 +154,7 @@ const TherapistHome = ({navigation}) => {
                 {therapistData.map((slot, i) => (
                   <VStack mt={4}>
                     <NeuView
-                      height={i === 0 ? 265 : 150}
+                      height={i === 0 ? 305 : 190}
                       borderRadius={8}
                       width={windowWidth - 60}>
                       <VStack
@@ -165,14 +167,18 @@ const TherapistHome = ({navigation}) => {
                             <Center>
                               <HStack>
                                 <RfBold color={Colors.error}>
-                                  Paid slot:{'  '}
+                                  Collect amount:{'  '}
                                 </RfBold>
-                                <RfBold color={Colors.blue}>
+                                <RfBold color={Colors.error}>
                                   ₹{slot.slot_session?.payment_details.total}
                                 </RfBold>
                               </HStack>
                             </Center>
-                          ) : null}
+                          ) : (
+                            <RfBold color={Colors.blue}>
+                              Free slot:{'  '}
+                            </RfBold>
+                          )}
                           <HStack>
                             <RfText>name: </RfText>
                             <RfBold>{slot.employee.first_name}</RfBold>
@@ -208,25 +214,41 @@ const TherapistHome = ({navigation}) => {
                             ) : (
                               <Center>
                                 <VStack space={6}>
-                                  <NeuButton
-                                    // active
-                                    style={{marginRight: 15}}
-                                    onPress={() => {
-                                      markAbsent(slot, i);
-                                    }}
-                                    width={150}
-                                    height={40}>
-                                    <RfBold>Mark absent</RfBold>
-                                  </NeuButton>
-                                  <NeuButton
-                                    style={{marginRight: 15}}
-                                    onPress={() => {
-                                      handleCheckIn(slot, i);
-                                    }}
-                                    width={150}
-                                    height={40}>
-                                    <RfBold>Checkin</RfBold>
-                                  </NeuButton>
+                                  <HStack space={6}>
+                                    <NeuButton
+                                      // style={{marginRight: 15}}
+                                      onPress={() => {
+                                        markAbsent(slot, i);
+                                      }}
+                                      width={120}
+                                      height={40}>
+                                      <RfBold>Mark absent</RfBold>
+                                    </NeuButton>
+                                    <NeuButton
+                                      // style={{marginRight: 15}}
+                                      onPress={() => {
+                                        handleCheckIn(slot, i);
+                                      }}
+                                      width={120}
+                                      height={40}>
+                                      <RfBold>Checkin</RfBold>
+                                    </NeuButton>
+                                  </HStack>
+                                  <View>
+                                    <Center mt={4}>
+                                      <NeuButton
+                                        style={{marginRight: 15}}
+                                        width={120}
+                                        height={40}
+                                        onPress={() => {
+                                          Linking.openURL(
+                                            `tel:${slot.employee.mobile_no}`,
+                                          );
+                                        }}>
+                                        <RfBold>Call</RfBold>
+                                      </NeuButton>
+                                    </Center>
+                                  </View>
                                 </VStack>
                               </Center>
                             )}
