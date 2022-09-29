@@ -29,6 +29,7 @@ const theme = extendTheme({
       dark: Colors.dark,
       bg: Colors.bg,
       error: '#e3324a',
+      ...Colors,
     },
   },
   fontConfig: {

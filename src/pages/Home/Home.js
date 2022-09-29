@@ -214,7 +214,7 @@ function HomeScreen({navigation}) {
     }
   };
 
-  const handleBooking = async () => {
+  const handleBooking = async therapistId => {
     if (!selectedSlot || apiLoading) return;
     setapiLoading(true);
     let res;
@@ -222,6 +222,7 @@ function HomeScreen({navigation}) {
       const json = {
         reschedule_slot_session_data: {
           // therapist_id: 1,
+          ...(therapistId ? {therapist_id: therapistId} : {}),
           slot_session_id: selectedSlot.id,
         },
         cancel_slot_data: {
@@ -230,7 +231,10 @@ function HomeScreen({navigation}) {
       };
       res = await rescheduleApiHelper(json);
     } else {
-      res = await bookSlotApiHelper(selectedSlot.id);
+      const json = {
+        ...(therapistId ? {therapist_id: therapistId} : {}),
+      };
+      res = await bookSlotApiHelper(selectedSlot.id, json);
     }
     if (selectedSlot && !pastSelectedSlot) {
       if (res.is_booked) {
@@ -345,6 +349,7 @@ function HomeScreen({navigation}) {
                     currentSlot={pastSelectedSlot}
                     selectedSlot={selectedSlot}
                     apiLoading={apiLoading}
+                    tabSelect={tabSelect}
                   />
                 ) : null}
               </ScrollView>

@@ -88,8 +88,8 @@ export const getSlotsApi = async () => {
   return userApiClient.get('rolffit/slots/app/sessions/');
 };
 
-export const bookSlotApi = async slotId => {
-  return userApiClient.post(`rolffit/slots/app/sessions/${slotId}/book/`);
+export const bookSlotApi = async (slotId, json) => {
+  return userApiClient.post(`rolffit/slots/app/sessions/${slotId}/book/`, json);
 };
 
 export const getMybookingApi = async () => {

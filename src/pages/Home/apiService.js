@@ -81,8 +81,8 @@ export const getSlotsApiHelper = async () => {
     return null;
   }
 };
-export const bookSlotApiHelper = async slotId => {
-  const response = await callAPIs(bookSlotApi(slotId));
+export const bookSlotApiHelper = async (slotId, json) => {
+  const response = await callAPIs(bookSlotApi(slotId, json));
   if (response.data) {
     return response.data;
   } else {
